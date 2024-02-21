@@ -4,7 +4,14 @@
 <dict>
 	<key>CFBundleURLTypes</key>
 	<array>
-		<dict/>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.265400916341-qpma4knj4d89im2uv3gk8kpmu02ofsid</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>
