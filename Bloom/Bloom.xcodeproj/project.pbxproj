@@ -32,6 +32,7 @@
 		1FF59CAF2B86667F0031C580 /* MessageElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF59CAE2B86667F0031C580 /* MessageElement.swift */; };
 		1FF59CB12B8667860031C580 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF59CB02B8667860031C580 /* MessageViewModel.swift */; };
 		1FF59CB42B8670570031C580 /* MessageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF59CB32B8670570031C580 /* MessageRowView.swift */; };
+		1FF59CB72B89077E0031C580 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF59CB62B89077E0031C580 /* MessageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		1FF59CAE2B86667F0031C580 /* MessageElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageElement.swift; sourceTree = "<group>"; };
 		1FF59CB02B8667860031C580 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
 		1FF59CB32B8670570031C580 /* MessageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRowView.swift; sourceTree = "<group>"; };
+		1FF59CB62B89077E0031C580 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				1FF59CB32B8670570031C580 /* MessageRowView.swift */,
+				1FF59CB62B89077E0031C580 /* MessageView.swift */,
 			);
 			path = MessageView;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				1FF59CAF2B86667F0031C580 /* MessageElement.swift in Sources */,
 				1FF59C672B84CEEB0031C580 /* ContentView.swift in Sources */,
 				1FF59C652B84CEEB0031C580 /* BloomApp.swift in Sources */,
+				1FF59CB72B89077E0031C580 /* MessageView.swift in Sources */,
 				1FF59CB12B8667860031C580 /* MessageViewModel.swift in Sources */,
 				1FF59CB42B8670570031C580 /* MessageRowView.swift in Sources */,
 				1FF59C902B84FCD80031C580 /* FirebaseAuthUIView.swift in Sources */,
