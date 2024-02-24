@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FEF28452B8A149900EAFB3E /* UserDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF28442B8A149900EAFB3E /* UserDataModel.swift */; };
+		1FEF28472B8A217100EAFB3E /* TalkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF28462B8A217100EAFB3E /* TalkView.swift */; };
 		1FF59C652B84CEEB0031C580 /* BloomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF59C642B84CEEB0031C580 /* BloomApp.swift */; };
 		1FF59C672B84CEEB0031C580 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF59C662B84CEEB0031C580 /* ContentView.swift */; };
 		1FF59C692B84CEEC0031C580 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FF59C682B84CEEC0031C580 /* Assets.xcassets */; };
@@ -40,6 +42,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1FEF28442B8A149900EAFB3E /* UserDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataModel.swift; sourceTree = "<group>"; };
+		1FEF28462B8A217100EAFB3E /* TalkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkView.swift; sourceTree = "<group>"; };
 		1FF59C612B84CEEB0031C580 /* Bloom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bloom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FF59C642B84CEEB0031C580 /* BloomApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloomApp.swift; sourceTree = "<group>"; };
 		1FF59C662B84CEEB0031C580 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 				1FF59CBA2B89B1860031C580 /* HomeView.swift */,
 				1FF59C8D2B84FC800031C580 /* AuthenticationManager.swift */,
 				1FF59C8F2B84FCD80031C580 /* FirebaseAuthUIView.swift */,
+				1FEF28462B8A217100EAFB3E /* TalkView.swift */,
 				1FF59CB22B866D8D0031C580 /* MessageView */,
 			);
 			path = View;
@@ -154,6 +159,7 @@
 		1FF59CAD2B86603D0031C580 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1FEF28442B8A149900EAFB3E /* UserDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -266,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FEF28472B8A217100EAFB3E /* TalkView.swift in Sources */,
 				1FF59C8E2B84FC800031C580 /* AuthenticationManager.swift in Sources */,
 				1FF59CBF2B89BE600031C580 /* RegistrationViewModel.swift in Sources */,
 				1FF59CAF2B86667F0031C580 /* MessageElement.swift in Sources */,
@@ -277,6 +284,7 @@
 				1FF59CBD2B89BB9A0031C580 /* ProfileElement.swift in Sources */,
 				1FF59CB12B8667860031C580 /* MessageViewModel.swift in Sources */,
 				1FF59CB42B8670570031C580 /* MessageRowView.swift in Sources */,
+				1FEF28452B8A149900EAFB3E /* UserDataModel.swift in Sources */,
 				1FF59C902B84FCD80031C580 /* FirebaseAuthUIView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

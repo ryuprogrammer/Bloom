@@ -9,34 +9,18 @@ import Foundation
 import FirebaseFirestore
 
 /// @Observableを使うことでプロパティ変数profileの変更によって自動でデータが更新
-@Observable class RegistrationViewModel {
-    private(set) var profiles: [ProfileElement] = []
+class RegistrationViewModel: ObservableObject {
+    @Published private(set) var profiles: [ProfileElement] = []
     private var lister: ListenerRegistration?
-    /// コレクションの名称
-    private let collectionName = "profiles"
+    private var userDataModel = UserDataModel()
     
     // 初期化
     init() {
-        let db = Firestore.firestore()
-        
-        lister = db.collection(collectionName).addSnapshotListener { (querySnapshot, error) in
-            
-            if let error {
+        lister = userDataModel.listenProfiles { [weak self] (profiles, error) in
+            if let profiles = profiles {
+                self?.profiles.append(contentsOf: profiles)
+            } else if let error = error {
                 print(error.localizedDescription)
-                return
-            }
-            if let querySnapshot {
-                for documentChange in querySnapshot.documentChanges {
-                    if documentChange.type == .added {
-                        do {
-                            // Codableを使って構造体に変換する
-                            let profile = try documentChange.document.data(as: ProfileElement.self)
-                            self.profiles.append(profile)
-                        } catch {
-                            print(error.localizedDescription)
-                        }
-                    }
-                }
             }
         }
     }
@@ -47,19 +31,6 @@ import FirebaseFirestore
     
     /// Profile追加メソッド
     func addProfile(userName: String, age: Int, gender: Gender) {
-        do {
-            let profile = ProfileElement(userName: userName, age: age, gender: gender)
-            let db = Firestore.firestore()
-            try db.collection(collectionName).addDocument(from: profile) { error in
-                if let error {
-                    print(error.localizedDescription)
-                    return
-                }
-                
-                print("success")
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
+        userDataModel.addProfile(userName: userName, age: age, gender: gender)
     }
 }

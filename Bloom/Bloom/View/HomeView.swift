@@ -24,7 +24,7 @@ struct HomeView: View {
                 }
                 .tag(2)
             
-            Text("Tab Content 2")
+            TalkView()
                 .tabItem {
                     Image(systemName: "message")
                 }
