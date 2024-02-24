@@ -10,7 +10,7 @@ import SwiftUI
 struct MessageView: View {
     let name: String
     
-    fileprivate var messageVM = MessageViewModel()
+    var messageVM = MessageViewModel()
     @State private var typeMessage = ""
     
     var body: some View {
