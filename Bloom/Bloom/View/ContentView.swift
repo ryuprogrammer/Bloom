@@ -21,12 +21,8 @@ struct ContentView: View {
                         Text("Sign-In")
                     }
                 } else {
-                    // Sign-In状態なのでSign-Outボタンを表示する
-                    Button {
-                        authenticationManager.signOut()
-                    } label: {
-                        Text("Sign-Out")
-                    }
+                    // 登録画面に遷移
+                    RegistrationView()
                 }
             }
             .sheet(isPresented: $isShowSheet) {
