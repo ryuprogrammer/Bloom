@@ -67,8 +67,16 @@ class UserDataModel {
     }
     
     
+    /// プロフィール取得メソッド
     func fetchProfile() async throws -> ProfileElement? {
         let uid = fetchUid()
+        
+        // UIDが空であるか確認
+            guard !uid.isEmpty else {
+                print("UID is empty")
+                throw NSError(domain: "UserDataModel", code: 1, userInfo: [NSLocalizedDescriptionKey: "Document path cannot be empty."])
+            }
+        
         var profile: ProfileElement? = nil
         
         let docRef = db.collection(collectionName).document(uid)

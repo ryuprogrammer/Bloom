@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 /// @Observableを使うことでプロパティ変数profileの変更によって自動でデータが更新
 class RegistrationViewModel: ObservableObject {
-    @Published private(set) var profiles: [ProfileElement] = []
+    @Published private(set) var friendProfiles: [ProfileElement] = []
     private var lister: ListenerRegistration?
     private var userDataModel = UserDataModel()
     
@@ -18,7 +18,16 @@ class RegistrationViewModel: ObservableObject {
     init() {
         lister = userDataModel.listenProfiles { [weak self] (profiles, error) in
             if let profiles = profiles {
-                self?.profiles.append(contentsOf: profiles)
+                self?.friendProfiles.append(contentsOf: profiles)
+                self?.friendProfiles.removeAll(where: { profile in
+                    if let profileUid = profile.id {
+                        let myUid = self?.userDataModel.fetchUid()
+                        if profileUid == myUid {
+                            return true
+                        }
+                    }
+                    return false
+                })
             } else if let error = error {
                 print(error.localizedDescription)
             }

@@ -10,11 +10,13 @@ import FirebaseFirestore
 
 /// @Observableを使うことでプロパティ変数messageの変更によって自動でデータが更新
 @Observable class MessageViewModel {
+    let userDataModel = UserDataModel()
+    let chatDataModel = ChatDataModel()
     private(set) var messages: [MessageElement] = []
     
     private var lister: ListenerRegistration?
     /// コレクションの名称
-    private let collectionName = "messages"
+    private let collectionName = "chatRoom"
     
     // 初期化
     init() {
@@ -45,24 +47,23 @@ import FirebaseFirestore
         }
     }
     
+    // 
+    
     deinit {
         lister?.remove()
     }
     
-    func addMessage(message: String, name: String) {
+    func addMessage(chatPartnerProfile: ProfileElement, message: String) async {
+        await chatDataModel.addMessage(chatPartnerProfile: chatPartnerProfile, message: message)
+    }
+    
+    func fetchProfile() async throws -> ProfileElement? {
         do {
-            let message = MessageElement(name: name, message: message, createAt: Date())
-            let db = Firestore.firestore()
-            try db.collection(collectionName).addDocument(from: message) { error in
-                if let error = error {
-                    print(error.localizedDescription)
-                    return
-                }
-                
-                print("success")
-            }
+            return try await userDataModel.fetchProfile()
         } catch {
             print(error.localizedDescription)
         }
+        
+        return nil
     }
 }

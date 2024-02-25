@@ -8,36 +8,33 @@
 import SwiftUI
 
 struct TalkView: View {
+    var messageVM = MessageViewModel()
     @ObservedObject var friendsListData = RegistrationViewModel()
+    @State var myProfile: ProfileElement? = nil
     /// Mockデータ
     let mockData = MockData()
     
-//    var body: some View {
-//        List(friendsListData.profiles, id: \.id) { profile in
-//            Text(profile.userName)
-//        }
-//    }
-//    var body: some View {
-//        NavigationStack {
-//            List(mockData.mockUserProfiles, id: \.id) { profile in
-//                NavigationLink(profile.userName) {
-//                    MessageView(name: profile.userName)
-//                }
-//            }
-//            .listStyle(PlainListStyle())
-//            .navigationTitle("トーク")
-//        }
-//    }
-    
     var body: some View {
         NavigationStack {
-            List(friendsListData.profiles, id: \.id) { profile in
+            List(friendsListData.friendProfiles, id: \.id) { profile in
                 NavigationLink(profile.userName) {
-                    MessageView(name: profile.userName)
+                    MessageView(
+                        name: profile.userName,
+                        chatPartnerProfile: profile
+                    )
                 }
             }
             .listStyle(PlainListStyle())
             .navigationTitle("トーク")
+        }
+        .onAppear {
+            Task {
+                do {
+                    myProfile = try await messageVM.fetchProfile()
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
         }
     }
 

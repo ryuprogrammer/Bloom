@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MessageView: View {
     let name: String
+    let chatPartnerProfile: ProfileElement?
     
     var messageVM = MessageViewModel()
     @State private var typeMessage = ""
@@ -39,10 +40,14 @@ struct MessageView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 
                 Button(action: {
-                    messageVM.addMessage(
-                        message: typeMessage,
-                        name: name
-                    )
+                    Task {
+                        guard let chatPartnerProfile = chatPartnerProfile else { return }
+                        
+                        await messageVM.addMessage(
+                            chatPartnerProfile: chatPartnerProfile,
+                            message: typeMessage
+                        )
+                    }
                 }, label: {
                     Image(systemName: "arrow.up.circle.fill")
                 })
@@ -52,6 +57,6 @@ struct MessageView: View {
     }
 }
 
-#Preview {
-    MessageView(name: "もも")
-}
+//#Preview {
+//    MessageView(name: "もも", chatPartnerProfile: ProfileElement?)
+//}
