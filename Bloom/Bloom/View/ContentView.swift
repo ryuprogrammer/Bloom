@@ -13,20 +13,28 @@ struct ContentView: View {
     
     var body: some View {
             VStack {
-                if authenticationManager.isSignIn == false {
+                if authenticationManager.accountStatus == .signOut {
                     // Sign-Out状態なのでSign-Inボタンを表示する
                     Button {
                         self.isShowSheet.toggle()
                     } label: {
                         Text("Sign-In")
                     }
-                } else {
-                    // 登録画面に遷移
+                } else if authenticationManager.accountStatus == .signIn {
+                    // Profileは存在してないのでProfile作成
                     RegistrationView()
+                } else if authenticationManager.accountStatus == .existProfile {
+                    // 正常にアカウントがある
+                    HomeView()
                 }
             }
             .sheet(isPresented: $isShowSheet) {
                 FirebaseAuthUIView()
+            }
+            .onAppear {
+                Task {
+                    await authenticationManager.checkAccountStatus()
+                }
             }
         }
 }

@@ -10,6 +10,8 @@
 		1FEF28452B8A149900EAFB3E /* UserDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF28442B8A149900EAFB3E /* UserDataModel.swift */; };
 		1FEF28472B8A217100EAFB3E /* TalkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF28462B8A217100EAFB3E /* TalkView.swift */; };
 		1FEF28492B8A27F500EAFB3E /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF28482B8A27F500EAFB3E /* MockData.swift */; };
+		1FEF284B2B8B0DCD00EAFB3E /* AccountStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF284A2B8B0DCD00EAFB3E /* AccountStatus.swift */; };
+		1FEF284D2B8B197600EAFB3E /* ChatDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF284C2B8B197600EAFB3E /* ChatDataModel.swift */; };
 		1FF59C652B84CEEB0031C580 /* BloomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF59C642B84CEEB0031C580 /* BloomApp.swift */; };
 		1FF59C672B84CEEB0031C580 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF59C662B84CEEB0031C580 /* ContentView.swift */; };
 		1FF59C692B84CEEC0031C580 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FF59C682B84CEEC0031C580 /* Assets.xcassets */; };
@@ -46,6 +48,8 @@
 		1FEF28442B8A149900EAFB3E /* UserDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataModel.swift; sourceTree = "<group>"; };
 		1FEF28462B8A217100EAFB3E /* TalkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkView.swift; sourceTree = "<group>"; };
 		1FEF28482B8A27F500EAFB3E /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		1FEF284A2B8B0DCD00EAFB3E /* AccountStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatus.swift; sourceTree = "<group>"; };
+		1FEF284C2B8B197600EAFB3E /* ChatDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDataModel.swift; sourceTree = "<group>"; };
 		1FF59C612B84CEEB0031C580 /* Bloom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bloom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FF59C642B84CEEB0031C580 /* BloomApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloomApp.swift; sourceTree = "<group>"; };
 		1FF59C662B84CEEB0031C580 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -139,7 +143,6 @@
 				1FF59C662B84CEEB0031C580 /* ContentView.swift */,
 				1FF59CB82B890E490031C580 /* RegistrationView.swift */,
 				1FF59CBA2B89B1860031C580 /* HomeView.swift */,
-				1FF59C8D2B84FC800031C580 /* AuthenticationManager.swift */,
 				1FF59C8F2B84FCD80031C580 /* FirebaseAuthUIView.swift */,
 				1FF59CB22B866D8D0031C580 /* TalkView */,
 			);
@@ -149,6 +152,7 @@
 		1FF59CAC2B86602E0031C580 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				1FF59C8D2B84FC800031C580 /* AuthenticationManager.swift */,
 				1FF59CAE2B86667F0031C580 /* MessageElement.swift */,
 				1FF59CBC2B89BB9A0031C580 /* ProfileElement.swift */,
 				1FF59CBE2B89BE600031C580 /* RegistrationViewModel.swift */,
@@ -162,6 +166,8 @@
 			isa = PBXGroup;
 			children = (
 				1FEF28442B8A149900EAFB3E /* UserDataModel.swift */,
+				1FEF284C2B8B197600EAFB3E /* ChatDataModel.swift */,
+				1FEF284A2B8B0DCD00EAFB3E /* AccountStatus.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -283,6 +289,7 @@
 				1FF59C672B84CEEB0031C580 /* ContentView.swift in Sources */,
 				1FF59CBB2B89B1860031C580 /* HomeView.swift in Sources */,
 				1FF59CB92B890E490031C580 /* RegistrationView.swift in Sources */,
+				1FEF284D2B8B197600EAFB3E /* ChatDataModel.swift in Sources */,
 				1FF59C652B84CEEB0031C580 /* BloomApp.swift in Sources */,
 				1FF59CB72B89077E0031C580 /* MessageView.swift in Sources */,
 				1FF59CBD2B89BB9A0031C580 /* ProfileElement.swift in Sources */,
@@ -290,6 +297,7 @@
 				1FF59CB42B8670570031C580 /* MessageRowView.swift in Sources */,
 				1FEF28452B8A149900EAFB3E /* UserDataModel.swift in Sources */,
 				1FF59C902B84FCD80031C580 /* FirebaseAuthUIView.swift in Sources */,
+				1FEF284B2B8B0DCD00EAFB3E /* AccountStatus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
