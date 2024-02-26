@@ -15,16 +15,16 @@ class ChatDataModel {
     
     /// チャットを追加
     func addMessage(chatPartnerProfile: ProfileElement, message: String) async {
+        guard let roomID = fetchRoomID(chatPartnerProfile: chatPartnerProfile) else { return }
         do {
             guard let userName = try await userDataModel.fetchProfile()?.userName else { return }
             
             let message = MessageElement(
+                roomID: roomID,
                 name: userName,
                 message: message,
                 createAt: Date()
             )
-            
-            guard let roomID = fetchRoomID(chatPartnerProfile: chatPartnerProfile) else { return }
             
             try db.collection("chatRoom").document(roomID).setData(from: message)
         } catch {
