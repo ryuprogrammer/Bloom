@@ -11,29 +11,38 @@ struct MessageView: View {
     let name: String
     let chatPartnerProfile: ProfileElement?
     
-    var messageVM = MessageViewModel()
+    @ObservedObject var messageVM = MessageViewModel()
     @State private var typeMessage = ""
     
     var body: some View {
         VStack {
-            List(messageVM.messages, id: \.id) {message in
-                if message.name == name {
-                    MessageRowView(
-                        message: message.message,
-                        isMyMessage: true,
-                        user: message.name,
-                        date: message.createAt
-                    )
-                } else {
-                    MessageRowView(
-                        message: message.message,
-                        isMyMessage: false,
-                        user: message.name,
-                        date: message.createAt
-                    )
+            ScrollViewReader { proxy in
+                List(messageVM.messages, id: \.listId) {message in
+                    if message.name == name {
+                        MessageRowView(
+                            message: message.message,
+                            isMyMessage: true,
+                            user: message.name,
+                            date: message.createAt
+                        )
+                    } else {
+                        MessageRowView(
+                            message: message.message,
+                            isMyMessage: false,
+                            user: message.name,
+                            date: message.createAt
+                        )
+                    }
+                }
+                .listStyle(PlainListStyle())
+                .navigationBarTitle(chatPartnerProfile?.userName ?? "Chat", displayMode: .inline)
+                .onChange(of: messageVM.messages) {
+                    withAnimation {
+                        print("スクローーーーる")
+                        proxy.scrollTo(messageVM.messages.last, anchor: .bottom)
+                    }
                 }
             }
-            .navigationBarTitle("チャット", displayMode: .inline)
             
             HStack {
                 TextField("メッセージを入力", text: $typeMessage)
@@ -43,6 +52,7 @@ struct MessageView: View {
                     Task {
                         guard let chatPartnerProfile = chatPartnerProfile else { return }
                         
+                        // メッセージ追加
                         await messageVM.addMessage(
                             chatPartnerProfile: chatPartnerProfile,
                             message: typeMessage
@@ -53,6 +63,12 @@ struct MessageView: View {
                 })
             }
             .padding()
+        }
+        .onAppear {
+            guard let chatPartnerProfile = chatPartnerProfile else { return }
+            // chatPartnerProfileからmessagesを取得
+            messageVM.fetchRoomIDMessages(chatPartnerProfile: chatPartnerProfile)
+            print("messages: \(messageVM.messages)")
         }
     }
 }

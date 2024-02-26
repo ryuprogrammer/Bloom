@@ -176,8 +176,8 @@
 			isa = PBXGroup;
 			children = (
 				1FEF28462B8A217100EAFB3E /* TalkView.swift */,
-				1FF59CB32B8670570031C580 /* MessageRowView.swift */,
 				1FF59CB62B89077E0031C580 /* MessageView.swift */,
+				1FF59CB32B8670570031C580 /* MessageRowView.swift */,
 			);
 			path = TalkView;
 			sourceTree = "<group>";

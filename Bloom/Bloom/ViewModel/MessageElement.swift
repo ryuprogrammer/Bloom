@@ -8,7 +8,8 @@
 import Foundation
 import FirebaseFirestore
 
-struct MessageElement: Codable {
+struct MessageElement: Codable, Equatable, Hashable {
+    var listId = UUID()
     @DocumentID var id: String?
     var name: String
     var message: String

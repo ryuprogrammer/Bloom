@@ -8,53 +8,76 @@
 import Foundation
 import FirebaseFirestore
 
-/// @Observableを使うことでプロパティ変数messageの変更によって自動でデータが更新
-@Observable class MessageViewModel {
+class MessageViewModel: ObservableObject {
     let userDataModel = UserDataModel()
     let chatDataModel = ChatDataModel()
-    private(set) var messages: [MessageElement] = []
+    @Published var messages: [MessageElement] = []
     
     private var lister: ListenerRegistration?
+    let db = Firestore.firestore()
     /// コレクションの名称
     private let collectionName = "chatRoom"
     
-    // 初期化
-    init() {
-        let db = Firestore.firestore()
-        lister = db.collection(collectionName).addSnapshotListener { (querySnapshot, error) in
+    /// roomID取得メソッド
+    func fetchRoomID(chatPartnerProfile: ProfileElement) -> String? {
+        return chatDataModel.fetchRoomID(chatPartnerProfile: chatPartnerProfile)
+    }
+    
+    /// 最初に全てのmessagesを取得
+    func fetchMessages(chatPartnerProfile: ProfileElement) {
+        guard let roomID = fetchRoomID(chatPartnerProfile: chatPartnerProfile) else { return }
+        
+        do {
+            let querySnapshot = try db.collection(collectionName).getDocuments()
+        }
+    }
+    
+    /// roomIDを指定してmessagesを更新
+    func fetchRoomIDMessages(chatPartnerProfile: ProfileElement) {
+        guard let roomID = fetchRoomID(chatPartnerProfile: chatPartnerProfile) else { return }
+        // 以前のリスナーを削除
+        lister?.remove()
+        
+        // 新しいクエリとリスナーの設定
+        /// ここで、messagesから、roomIDが一致するもののみを選別する
+        lister = db.collection(collectionName).document(roomID)
+            .addSnapshotListener { [weak self] (documentSnapshot, error) in
+            guard let self = self else { return }
+            
             if let error {
                 print(error.localizedDescription)
                 return
             }
-            if let querySnapshot {
-                for documentChange in querySnapshot.documentChanges {
-                    if documentChange.type == .added {
-                        do {
-                            // Codableを使って構造体に変換する
-                            let message = try documentChange.document.data(as: MessageElement.self)
-                            self.messages.append(message)
-                        } catch {
-                            print(error.localizedDescription)
-                        }
-                    }
-                }
-                
-                // 日付順に並べ替えする
-                self.messages.sort { before, after in
-                    return before.createAt < after.createAt ? true : false
-                }
+            
+            guard let documentSnapshot = documentSnapshot else {
+                print("Error fetching docment: Docment snapshot is nil or not exist")
+                return
+            }
+            
+            do {
+                // Codableを使って構造体に変換
+                let message = try documentSnapshot.data(as: MessageElement.self)
+                self.messages.append(message)
+            } catch {
+                print(error.localizedDescription)
+            }
+            
+            // 日付順に並び替える
+            self.messages.sort { before, after in
+                return before.createAt < after.createAt
             }
         }
     }
-    
-    // 
     
     deinit {
         lister?.remove()
     }
     
     func addMessage(chatPartnerProfile: ProfileElement, message: String) async {
-        await chatDataModel.addMessage(chatPartnerProfile: chatPartnerProfile, message: message)
+        await chatDataModel.addMessage(
+            chatPartnerProfile: chatPartnerProfile,
+            message: message
+        )
     }
     
     func fetchProfile() async throws -> ProfileElement? {
