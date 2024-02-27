@@ -26,7 +26,8 @@ class ChatDataModel {
                 createAt: Date()
             )
             
-            try db.collection("chatRoom").document(roomID).setData(from: message)
+            let docmentRef = db.collection("chatRoom").document(roomID).collection("messages").document()
+            try docmentRef.setData(from: message)
         } catch {
             print(error.localizedDescription)
         }

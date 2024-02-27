@@ -17,8 +17,8 @@ struct MessageView: View {
     var body: some View {
         VStack {
             ScrollViewReader { proxy in
-                List(messageVM.messages, id: \.self) {message in
-                    if message.name == name {
+                List(messageVM.messages, id: \.uuid) { message in
+                    if message.name != name {
                         MessageRowView(
                             message: message.message,
                             isMyMessage: true,
@@ -36,10 +36,12 @@ struct MessageView: View {
                 }
                 .listStyle(PlainListStyle())
                 .navigationBarTitle(chatPartnerProfile?.userName ?? "Chat", displayMode: .inline)
-                .onChange(of: messageVM.isChangeMessages) {
+                .onChange(of: messageVM.messages) {
                     withAnimation {
-                        print("スクローーーーる")
-                        proxy.scrollTo(messageVM.messages.last, anchor: .bottom)
+                        if let lastMessage = messageVM.messages.last {
+                            print("スクロールできたよね？？")
+                            proxy.scrollTo(lastMessage.uuid, anchor: .bottom)
+                        }
                     }
                 }
             }
@@ -57,6 +59,7 @@ struct MessageView: View {
                             chatPartnerProfile: chatPartnerProfile,
                             message: typeMessage
                         )
+                        print("メッセージ, View: \(typeMessage)")
                     }
                 }, label: {
                     Image(systemName: "arrow.up.circle.fill")

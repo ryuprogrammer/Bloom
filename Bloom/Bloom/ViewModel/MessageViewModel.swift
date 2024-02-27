@@ -33,43 +33,30 @@ class MessageViewModel: ObservableObject {
         guard let roomID = fetchRoomID(chatPartnerProfile: chatPartnerProfile) else { return }
         
         do {
-            let querySnapshot = try await db.collection(collectionName).whereField("roomID", isEqualTo: roomID).getDocuments()
+            // `messages`サブコレクションからメッセージを取得
+            let querySnapshot = try await db.collection(collectionName).document(roomID).collection("messages").order(by: "createAt", descending: false).getDocuments()
             
             DispatchQueue.main.async {
-                for docment in querySnapshot.documents {
-                    print("docment: \(docment)")
-                    do {
-                        let message = try docment.data(as: MessageElement.self)
-                        print("message: \(message)")
-                        self.messages.append(message)
-                    } catch {
-                        print("fetchMessages error: \(error.localizedDescription)")
-                    }
+                self.messages = querySnapshot.documents.compactMap { document in
+                    try? document.data(as: MessageElement.self)
                 }
             }
         } catch {
             print("fetchMessages error: \(error.localizedDescription)")
         }
-        
-        DispatchQueue.main.async {
-            // 日付順に並び替える
-            self.messages.sort { before, after in
-                return before.createAt < after.createAt
-            }
-        }
     }
     
-    /// roomIDを指定してmessagesを更新
+    /// roomIDを指定してmessagesをリアルタイムで更新
     func fetchRoomIDMessages(chatPartnerProfile: ProfileElement) {
-        print("メッセージ更新を取得！")
+        print("メッセージ更新をリアルタイムで取得！")
         guard let roomID = fetchRoomID(chatPartnerProfile: chatPartnerProfile) else { return }
         // 以前のリスナーを削除
         lister?.remove()
         
         // 新しいクエリとリスナーの設定
-        /// ここで、messagesから、roomIDが一致するもののみを選別する
-        lister = db.collection(collectionName).document(roomID)
-            .addSnapshotListener { [weak self] (documentSnapshot, error) in
+        lister = db.collection(collectionName).document(roomID).collection("messages")
+            .order(by: "createAt", descending: false) // 日付順に並び替え
+            .addSnapshotListener { [weak self] (querySnapshot, error) in
                 guard let self = self else { return }
                 
                 if let error {
@@ -77,28 +64,37 @@ class MessageViewModel: ObservableObject {
                     return
                 }
                 
-                guard let documentSnapshot = documentSnapshot else {
-                    print("Error fetching docment: Docment snapshot is nil or not exist")
+                guard let querySnapshot = querySnapshot else {
+                    print("Error fetching documents: Query snapshot is nil")
                     return
                 }
                 
-                do {
-                    // Codableを使って構造体に変換
-                    let message = try documentSnapshot.data(as: MessageElement.self)
-                    self.messages.append(message)
-                } catch {
-                    print(error.localizedDescription)
+                // 取得したドキュメントの変更を処理
+                querySnapshot.documentChanges.forEach { change in
+                    if change.type == .added || change.type == .modified {
+                        do {
+                            let message = try change.document.data(as: MessageElement.self)
+                            if change.type == .added {
+                                self.messages.append(message)
+                            } else if let index = self.messages.firstIndex(where: { $0.id == message.id }) {
+                                self.messages[index] = message
+                            }
+                        } catch {
+                            print("Error decoding message: \(error.localizedDescription)")
+                        }
+                    }
                 }
                 
-                // 日付順に並び替える
-                self.messages.sort { before, after in
-                    return before.createAt < after.createAt
+                print("-------------------uuid-------------------")
+                for message in messages {
+                    print(message.uuid)
                 }
+                
+                // メッセージの変更をViewに通知
+                self.isChangeMessages.toggle()
             }
-        
-        // メッセージの変更をViewに通知
-        isChangeMessages.toggle()
     }
+
     
     deinit {
         lister?.remove()
@@ -109,6 +105,8 @@ class MessageViewModel: ObservableObject {
             chatPartnerProfile: chatPartnerProfile,
             message: message
         )
+        
+        print("メッセーじ, VM: \(message)")
     }
     
     func fetchProfile() async throws -> ProfileElement? {
