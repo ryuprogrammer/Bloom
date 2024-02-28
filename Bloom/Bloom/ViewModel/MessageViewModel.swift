@@ -7,62 +7,127 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
-/// @Observableを使うことでプロパティ変数messageの変更によって自動でデータが更新
-@Observable class MessageViewModel {
-    private(set) var messages: [MessageElement] = []
+class MessageViewModel: ObservableObject {
+    let userDataModel = UserDataModel()
+    let chatDataModel = ChatDataModel()
+    @Published var messages: [MessageElement] = []
     
     private var lister: ListenerRegistration?
+    let db = Firestore.firestore()
     /// コレクションの名称
-    private let collectionName = "messages"
+    private let collectionName = "chatRoom"
     
-    // 初期化
-    init() {
-        let db = Firestore.firestore()
-        lister = db.collection(collectionName).addSnapshotListener { (querySnapshot, error) in
-            if let error {
-                print(error.localizedDescription)
-                return
+    /// roomID取得メソッド
+    func fetchRoomID(chatPartnerProfile: ProfileElement) -> String? {
+        return chatDataModel.fetchRoomID(chatPartnerProfile: chatPartnerProfile)
+    }
+    
+    /// 全てのメッセージを既読に更新
+    func changeMessage(chatPartnerProfile: ProfileElement) async {
+        guard let partnerUid = chatPartnerProfile.id else { return }
+        
+        guard let roomID = fetchRoomID(chatPartnerProfile: chatPartnerProfile) else { return }
+        
+        // 対象のメッセージをクエリで取得
+            let querySnapshot = try? await db.collection(collectionName).document(roomID)
+                                                .collection("messages")
+                                                .whereField("uid", isEqualTo: partnerUid)
+                                                .whereField("isNewMessage", isEqualTo: true)
+                                                .getDocuments()
+        
+        // 各メッセージを既読に更新
+            guard let documents = querySnapshot?.documents else { return }
+            for document in documents {
+                let docRef = db.collection(collectionName).document(roomID).collection("messages").document(document.documentID)
+                do {
+                    try await docRef.updateData(["isNewMessage": false])
+                } catch {
+                    print("Error updating document: \(error)")
+                }
             }
-            if let querySnapshot {
-                for documentChange in querySnapshot.documentChanges {
-                    if documentChange.type == .added {
+    }
+    
+    /// 最初に全てのmessagesを取得
+    func fetchMessages(chatPartnerProfile: ProfileElement) async {
+        DispatchQueue.main.async {
+            self.messages.removeAll()
+        }
+        guard let roomID = fetchRoomID(chatPartnerProfile: chatPartnerProfile) else { return }
+        
+        do {
+            // `messages`サブコレクションからメッセージを取得
+            let querySnapshot = try await db.collection(collectionName).document(roomID).collection("messages").order(by: "createAt", descending: false).getDocuments()
+            
+            DispatchQueue.main.async {
+                self.messages = querySnapshot.documents.compactMap { document in
+                    try? document.data(as: MessageElement.self)
+                }
+            }
+        } catch {
+            print("fetchMessages error: \(error.localizedDescription)")
+        }
+    }
+    
+    /// roomIDを指定してmessagesをリアルタイムで更新
+    func fetchRoomIDMessages(chatPartnerProfile: ProfileElement) {
+        guard let roomID = fetchRoomID(chatPartnerProfile: chatPartnerProfile) else { return }
+        // 以前のリスナーを削除
+        lister?.remove()
+        
+        // 新しいクエリとリスナーの設定
+        lister = db.collection(collectionName).document(roomID).collection("messages")
+            .order(by: "createAt", descending: false) // 日付順に並び替え
+            .addSnapshotListener { [weak self] (querySnapshot, error) in
+                guard let self = self else { return }
+                
+                if let error {
+                    print(error.localizedDescription)
+                    return
+                }
+                
+                guard let querySnapshot = querySnapshot else {
+                    print("Error fetching documents: Query snapshot is nil")
+                    return
+                }
+                
+                // 取得したドキュメントの変更を処理
+                querySnapshot.documentChanges.forEach { change in
+                    if change.type == .added || change.type == .modified {
                         do {
-                            // Codableを使って構造体に変換する
-                            let message = try documentChange.document.data(as: MessageElement.self)
-                            self.messages.append(message)
+                            let message = try change.document.data(as: MessageElement.self)
+                            if change.type == .added {
+                                self.messages.append(message)
+                            } else if let index = self.messages.firstIndex(where: { $0.id == message.id }) {
+                                self.messages[index] = message
+                            }
                         } catch {
-                            print(error.localizedDescription)
+                            print("Error decoding message: \(error.localizedDescription)")
                         }
                     }
                 }
-                
-                // 日付順に並べ替えする
-                self.messages.sort { before, after in
-                    return before.createAt < after.createAt ? true : false
-                }
             }
-        }
     }
     
     deinit {
         lister?.remove()
     }
     
-    func addMessage(message: String, name: String) {
+    func addMessage(chatPartnerProfile: ProfileElement, message: String) async {
+        await chatDataModel.addMessage(
+            chatPartnerProfile: chatPartnerProfile,
+            message: message
+        )
+    }
+    
+    func fetchProfile() async throws -> ProfileElement? {
         do {
-            let message = MessageElement(name: name, message: message, createAt: Date())
-            let db = Firestore.firestore()
-            try db.collection(collectionName).addDocument(from: message) { error in
-                if let error = error {
-                    print(error.localizedDescription)
-                    return
-                }
-                
-                print("success")
-            }
+            return try await userDataModel.fetchProfile()
         } catch {
             print(error.localizedDescription)
         }
+        
+        return nil
     }
 }
