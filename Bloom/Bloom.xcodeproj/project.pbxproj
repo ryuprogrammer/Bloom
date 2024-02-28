@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F2F1FBD2B8F298900A9615D /* SingleCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F1FBC2B8F298900A9615D /* SingleCardView.swift */; };
+		1F2F1FBF2B8F532F00A9615D /* SwipeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F1FBE2B8F532F00A9615D /* SwipeCardView.swift */; };
 		1F9C2DD02B8DB7DE00994981 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DCF2B8DB7DE00994981 /* Date+.swift */; };
 		1F9C2DD42B8DD3D500994981 /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */; };
 		1F9C2DD62B8DE54400994981 /* MessageCountElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */; };
@@ -49,6 +51,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F2F1FBC2B8F298900A9615D /* SingleCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCardView.swift; sourceTree = "<group>"; };
+		1F2F1FBE2B8F532F00A9615D /* SwipeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeCardView.swift; sourceTree = "<group>"; };
 		1F9C2DCF2B8DB7DE00994981 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountElement.swift; sourceTree = "<group>"; };
@@ -104,6 +108,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F2F1FBA2B8F264A00A9615D /* TalkViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				1FF59C8D2B84FC800031C580 /* AuthenticationManager.swift */,
+				1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */,
+				1FF59CBE2B89BE600031C580 /* RegistrationViewModel.swift */,
+				1FF59CB02B8667860031C580 /* MessageViewModel.swift */,
+			);
+			path = TalkViewModel;
+			sourceTree = "<group>";
+		};
+		1F2F1FBB2B8F276800A9615D /* SwipeCardView */ = {
+			isa = PBXGroup;
+			children = (
+				1F2F1FBE2B8F532F00A9615D /* SwipeCardView.swift */,
+				1F2F1FBC2B8F298900A9615D /* SingleCardView.swift */,
+			);
+			path = SwipeCardView;
+			sourceTree = "<group>";
+		};
 		1FF59C582B84CEEB0031C580 = {
 			isa = PBXGroup;
 			children = (
@@ -149,9 +173,10 @@
 			isa = PBXGroup;
 			children = (
 				1FF59C662B84CEEB0031C580 /* ContentView.swift */,
+				1FF59C8F2B84FCD80031C580 /* FirebaseAuthUIView.swift */,
 				1FF59CB82B890E490031C580 /* RegistrationView.swift */,
 				1FF59CBA2B89B1860031C580 /* HomeView.swift */,
-				1FF59C8F2B84FCD80031C580 /* FirebaseAuthUIView.swift */,
+				1F2F1FBB2B8F276800A9615D /* SwipeCardView */,
 				1FF59CB22B866D8D0031C580 /* TalkView */,
 			);
 			path = View;
@@ -160,10 +185,7 @@
 		1FF59CAC2B86602E0031C580 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				1FF59C8D2B84FC800031C580 /* AuthenticationManager.swift */,
-				1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */,
-				1FF59CBE2B89BE600031C580 /* RegistrationViewModel.swift */,
-				1FF59CB02B8667860031C580 /* MessageViewModel.swift */,
+				1F2F1FBA2B8F264A00A9615D /* TalkViewModel */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -297,6 +319,7 @@
 				1FF59C8E2B84FC800031C580 /* AuthenticationManager.swift in Sources */,
 				1FF59CBF2B89BE600031C580 /* RegistrationViewModel.swift in Sources */,
 				1FF59CAF2B86667F0031C580 /* MessageElement.swift in Sources */,
+				1F2F1FBD2B8F298900A9615D /* SingleCardView.swift in Sources */,
 				1F9C2DDA2B8DFE7A00994981 /* FriendListRowView.swift in Sources */,
 				1F9C2DD62B8DE54400994981 /* MessageCountElement.swift in Sources */,
 				1F9C2DD42B8DD3D500994981 /* FriendListViewModel.swift in Sources */,
@@ -310,6 +333,7 @@
 				1FF59CB72B89077E0031C580 /* MessageView.swift in Sources */,
 				1FF59CBD2B89BB9A0031C580 /* ProfileElement.swift in Sources */,
 				1FF59CB12B8667860031C580 /* MessageViewModel.swift in Sources */,
+				1F2F1FBF2B8F532F00A9615D /* SwipeCardView.swift in Sources */,
 				1FF59CB42B8670570031C580 /* MessageRowView.swift in Sources */,
 				1FEF28452B8A149900EAFB3E /* UserDataModel.swift in Sources */,
 				1FF59C902B84FCD80031C580 /* FirebaseAuthUIView.swift in Sources */,

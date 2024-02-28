@@ -11,7 +11,7 @@ struct FriendListRowView: View {
     let chatPartnerProfile: ProfileElement
     @ObservedObject var friendListViewModel = FriendListViewModel()
     @ObservedObject var messageVM = MessageViewModel()
-    @State var newMessageCount: Int = 5
+    @State var newMessageCount: Int = 3
     @State var lastMessage: String = "最長文字数に挑戦最長文字数に挑戦最長文ahdjjkdf"
     let mostLongStringNumber: Int = 16
     var body: some View {

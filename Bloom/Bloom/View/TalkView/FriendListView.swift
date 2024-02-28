@@ -26,7 +26,9 @@ struct FriendListView: View {
                     ) {}
                     .opacity(0)
                     
-                    FriendListRowView(chatPartnerProfile: profile)
+                    FriendListRowView(
+                        chatPartnerProfile: profile
+                    )
                 }
             }
             .listStyle(PlainListStyle())
