@@ -7,12 +7,12 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 class MessageViewModel: ObservableObject {
     let userDataModel = UserDataModel()
     let chatDataModel = ChatDataModel()
     @Published var messages: [MessageElement] = []
-    @Published var isChangeMessages: Bool = false
     
     private var lister: ListenerRegistration?
     let db = Firestore.firestore()
@@ -24,7 +24,31 @@ class MessageViewModel: ObservableObject {
         return chatDataModel.fetchRoomID(chatPartnerProfile: chatPartnerProfile)
     }
     
-    // TODO: - リファクタ（Dispatchが３つある）
+    /// 全てのメッセージを既読に更新
+    func changeMessage(chatPartnerProfile: ProfileElement) async {
+        guard let partnerUid = chatPartnerProfile.id else { return }
+        
+        guard let roomID = fetchRoomID(chatPartnerProfile: chatPartnerProfile) else { return }
+        
+        // 対象のメッセージをクエリで取得
+            let querySnapshot = try? await db.collection(collectionName).document(roomID)
+                                                .collection("messages")
+                                                .whereField("uid", isEqualTo: partnerUid)
+                                                .whereField("isNewMessage", isEqualTo: true)
+                                                .getDocuments()
+        
+        // 各メッセージを既読に更新
+            guard let documents = querySnapshot?.documents else { return }
+            for document in documents {
+                let docRef = db.collection(collectionName).document(roomID).collection("messages").document(document.documentID)
+                do {
+                    try await docRef.updateData(["isNewMessage": false])
+                } catch {
+                    print("Error updating document: \(error)")
+                }
+            }
+    }
+    
     /// 最初に全てのmessagesを取得
     func fetchMessages(chatPartnerProfile: ProfileElement) async {
         DispatchQueue.main.async {
@@ -48,7 +72,6 @@ class MessageViewModel: ObservableObject {
     
     /// roomIDを指定してmessagesをリアルタイムで更新
     func fetchRoomIDMessages(chatPartnerProfile: ProfileElement) {
-        print("メッセージ更新をリアルタイムで取得！")
         guard let roomID = fetchRoomID(chatPartnerProfile: chatPartnerProfile) else { return }
         // 以前のリスナーを削除
         lister?.remove()
@@ -84,17 +107,8 @@ class MessageViewModel: ObservableObject {
                         }
                     }
                 }
-                
-                print("-------------------uuid-------------------")
-                for message in messages {
-                    print(message.uuid)
-                }
-                
-                // メッセージの変更をViewに通知
-                self.isChangeMessages.toggle()
             }
     }
-
     
     deinit {
         lister?.remove()
@@ -105,8 +119,6 @@ class MessageViewModel: ObservableObject {
             chatPartnerProfile: chatPartnerProfile,
             message: message
         )
-        
-        print("メッセーじ, VM: \(message)")
     }
     
     func fetchProfile() async throws -> ProfileElement? {

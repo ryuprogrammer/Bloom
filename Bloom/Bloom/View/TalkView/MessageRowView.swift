@@ -8,41 +8,25 @@
 import SwiftUI
 
 struct MessageRowView: View {
-    let message: String
+    let message: MessageElement
     let isMyMessage: Bool
-    let user: String
-    let date: Date
     
     var body: some View {
         HStack {
-            if isMyMessage {
+            if isMyMessage { // 自分
                 Spacer()
                 
-                VStack {
-                    Text(message)
-                        .padding(10)
-                        .background(Color.red)
-                        .cornerRadius(15)
-                        .foregroundColor(Color.white)
-                    Text(date.description)
-                        .font(.callout)
-                }
-            } else {
-                VStack(alignment: .leading) {
-                    Text(message)
-                        .padding(10)
-                        .background(Color.green)
-                        .cornerRadius(15)
-                        .foregroundColor(Color.white)
-                    
-                    HStack {
-                        Text(user)
-                        
-                        Text(date.description)
-                            .font(.callout)
-                    }
-                }
-                .padding(.horizontal)
+                Text(message.message)
+                    .padding(10)
+                    .background(Color.cyan)
+                    .cornerRadius(20)
+                    .foregroundColor(Color.white)
+            } else { // 相手
+                Text(message.message)
+                    .padding(10)
+                    .background(Color.pink.opacity(0.7))
+                    .cornerRadius(20)
+                    .foregroundColor(Color.white)
                 
                 Spacer()
             }
@@ -51,10 +35,27 @@ struct MessageRowView: View {
 }
 
 #Preview {
-    MessageRowView(
-        message: "メッセージ",
-        isMyMessage: false,
-        user: "もも",
-        date: Date()
-    )
+    VStack {
+        MessageRowView(
+            message: MessageElement(
+                uid: "sss",
+                roomID: "roomID",
+                isNewMessage: true, name: "userName",
+                message: "メッセージ",
+                createAt: Date()
+            ),
+            isMyMessage: true
+        )
+        
+        MessageRowView(
+            message: MessageElement(
+                uid: "sss",
+                roomID: "roomID",
+                isNewMessage: true, name: "userName",
+                message: "メッセージ",
+                createAt: Date()
+            ),
+            isMyMessage: true
+        )
+    }
 }

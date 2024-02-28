@@ -41,7 +41,7 @@ import FirebaseAuth
         
         // profileが存在するか判定
         do {
-            if let profile = try await userDataModel.fetchProfile() {
+            if let _ = try await userDataModel.fetchProfile() {
                 accountStatus = .existProfile
             }
         } catch {

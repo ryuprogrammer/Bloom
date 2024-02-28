@@ -24,7 +24,7 @@ struct HomeView: View {
                 }
                 .tag(2)
             
-            TalkView()
+            FriendListView()
                 .tabItem {
                     Image(systemName: "message")
                 }
