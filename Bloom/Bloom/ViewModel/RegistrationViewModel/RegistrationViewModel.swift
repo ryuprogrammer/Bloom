@@ -13,6 +13,7 @@ class RegistrationViewModel: ObservableObject {
     @Published private(set) var friendProfiles: [ProfileElement] = []
     private var lister: ListenerRegistration?
     private var userDataModel = UserDataModel()
+    let explanationText = ExplanationText()
     
     // 初期化
     init() {
