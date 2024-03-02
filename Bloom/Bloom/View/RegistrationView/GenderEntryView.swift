@@ -48,7 +48,7 @@ struct GenderEntryView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button(action: {
-                            registrationState = .name
+                            registrationState = .birth
                         }, label: {
                             Image(systemName: "arrow.left")
                                 .foregroundStyle(Color.black)

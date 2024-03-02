@@ -76,11 +76,12 @@ struct BirthEntryView: View {
                             .background(Color.cyan)
                             .opacity(0)
                             .onChange(of: birth) {
-                                if birth.count == 8 {
-                                    isBirthValid = true
-                                } else if birth.count > maxBirthLength {
-                                    isBirthValid = false
+                                if birth.count > maxBirthLength {
                                     birth = String(birth.prefix(maxBirthLength))
+                                }
+                                
+                                if let _ = birth.toDate() {
+                                    isBirthValid = true
                                 } else {
                                     isBirthValid = false
                                 }
@@ -102,7 +103,7 @@ struct BirthEntryView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button(action: {
-                            registrationState = .noting
+                            registrationState = .name
                         }, label: {
                             Image(systemName: "arrow.left")
                                 .foregroundStyle(Color.black)
@@ -116,7 +117,7 @@ struct BirthEntryView: View {
                 
                 Button(action: {
                     withAnimation {
-                        registrationState = .birth
+                        registrationState = .gender
                     }
                 }, label: {
                     Text("次へ")
@@ -132,8 +133,14 @@ struct BirthEntryView: View {
             }
         }
         .onAppear {
-            if birth.count == 8 {
+            if birth.count > maxBirthLength {
+                birth = String(birth.prefix(maxBirthLength))
+            }
+            
+            if let _ = birth.toDate() {
                 isBirthValid = true
+            } else {
+                isBirthValid = false
             }
         }
     }
@@ -144,7 +151,10 @@ struct BirthEntryView: View {
         @State var registrationState: RegistrationState = .noting
         @State var birth: String = ""
         var body: some View {
-            BirthEntryView(birth: $birth, registrationState: $registrationState)
+            BirthEntryView(
+                birth: $birth,
+                registrationState: $registrationState
+            )
         }
     }
     

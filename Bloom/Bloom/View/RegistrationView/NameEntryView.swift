@@ -60,7 +60,7 @@ struct NameEntryView: View {
                 
                 Button(action: {
                     withAnimation {
-                        registrationState = .name
+                        registrationState = .birth
                     }
                 }, label: {
                     Text("次へ")

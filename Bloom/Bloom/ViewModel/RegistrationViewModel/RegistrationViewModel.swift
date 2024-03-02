@@ -41,7 +41,21 @@ class RegistrationViewModel: ObservableObject {
     }
     
     /// Profile追加メソッド
-    func addProfile(userName: String, age: Int, gender: Gender) {
-        userDataModel.addProfile(userName: userName, age: age, gender: gender)
+    func addProfile(
+        userName: String,
+        birth: String,
+        gender: Gender,
+        address: String,
+        profileImages: [Data],
+        homeImage: Data
+    ) {
+        userDataModel.addProfile(
+            userName: userName,
+            birth: birth,
+            gender: gender,
+            address: address,
+            profileImages: profileImages,
+            homeImage: homeImage
+        )
     }
 }

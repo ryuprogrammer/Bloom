@@ -11,7 +11,8 @@ import PhotosUI
 struct ProfileImageEntryView: View {
     let explanationText = ExplanationText()
     @State var selectedItems: [PhotosPickerItem] = []
-    @Binding var profileImages: [UIImage]
+    @State var uiImages: [UIImage] = []
+    @Binding var profileImages: [Data]
     @Binding var registrationState: RegistrationState
     @State var isPhotoValid: Bool = false
     let maxSelectionCount: Int = 6
@@ -30,7 +31,7 @@ struct ProfileImageEntryView: View {
                     
                     HStack {
                         ForEach(0..<3) { number in
-                            if number == profileImages.count { // 写真が0枚の時
+                            if number == uiImages.count { // 写真が0枚の時
                                 PhotosPicker(
                                     selection: $selectedItems,
                                     maxSelectionCount: maxSelectionCount,
@@ -49,9 +50,9 @@ struct ProfileImageEntryView: View {
                                             .foregroundStyle(Color.white)
                                     }
                                 }
-                            } else if profileImages.count > number { // 写真がある時
+                            } else if uiImages.count > number { // 写真がある時
                                 ZStack {
-                                    Image(uiImage: profileImages[number])
+                                    Image(uiImage: uiImages[number])
                                         .resizable()
                                         .frame(width: imageWidth, height: imageHeight)
                                         .aspectRatio(contentMode: .fit)
@@ -80,7 +81,7 @@ struct ProfileImageEntryView: View {
                     
                     HStack {
                         ForEach(3..<6) { number in
-                            if number == profileImages.count { // 写真が0枚の時
+                            if number == uiImages.count { // 写真が0枚の時
                                 PhotosPicker(
                                     selection: $selectedItems,
                                     maxSelectionCount: maxSelectionCount,
@@ -99,9 +100,9 @@ struct ProfileImageEntryView: View {
                                             .foregroundStyle(Color.white)
                                     }
                                 }
-                            } else if profileImages.count > number { // 写真がある時
+                            } else if uiImages.count > number { // 写真がある時
                                 ZStack {
-                                    Image(uiImage: profileImages[number])
+                                    Image(uiImage: uiImages[number])
                                         .resizable()
                                         .frame(width: imageWidth, height: imageHeight)
                                         .aspectRatio(contentMode: .fit)
@@ -130,7 +131,7 @@ struct ProfileImageEntryView: View {
                     HStack {
                         Spacer()
                         
-                        if profileImages.count == maxSelectionCount {
+                        if uiImages.count == maxSelectionCount {
                             PhotosPicker(
                                 selection: $selectedItems,
                                 maxSelectionCount: maxSelectionCount,
@@ -160,7 +161,7 @@ struct ProfileImageEntryView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button(action: {
-                            registrationState = .gender
+                            registrationState = .address
                         }, label: {
                             Image(systemName: "arrow.left")
                                 .foregroundStyle(Color.black)
@@ -169,14 +170,18 @@ struct ProfileImageEntryView: View {
                 }
                 .onChange(of: selectedItems) {
                     Task {
-                        profileImages.removeAll()
+                        uiImages.removeAll()
                         for item in selectedItems {
                             guard let data = try await item.loadTransferable(type: Data.self) else { continue }
                             guard let uiImage = UIImage(data: data) else { continue }
-                            profileImages.append(uiImage)
+                            uiImages.append(uiImage)
+                            
+                            if let imageData = uiImage.jpegData(compressionQuality: 0.1) {
+                                profileImages.append(imageData)
+                            }
                         }
                         
-                        if profileImages.count >= minSelectionCount {
+                        if uiImages.count >= minSelectionCount {
                             isPhotoValid = true
                         } else {
                             isPhotoValid = false
@@ -190,7 +195,7 @@ struct ProfileImageEntryView: View {
                 
                 Button(action: {
                     withAnimation {
-                        registrationState = .address
+                        registrationState = .homeImage
                     }
                 }, label: {
                     Text("次へ")
@@ -206,7 +211,7 @@ struct ProfileImageEntryView: View {
             }
         }
         .onAppear {
-            if profileImages.count >= minSelectionCount {
+            if uiImages.count >= minSelectionCount {
                 isPhotoValid = true
             }
         }
@@ -215,7 +220,7 @@ struct ProfileImageEntryView: View {
 
 #Preview {
     struct PreviewView: View {
-        @State var images: [UIImage] = []
+        @State var images: [Data] = []
         @State var registrationState: RegistrationState = .noting
         var body: some View {
             ProfileImageEntryView(profileImages: $images, registrationState: $registrationState)

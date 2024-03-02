@@ -65,12 +65,23 @@ struct FriendListRowView: View {
     VStack {
         FriendListRowView(
             chatPartnerProfile: ProfileElement(
-                userName: "もも", age: 23, gender: .wemen
+                userName: "もも",
+                birth: "",
+                gender: .men,
+                address: "栃木県",
+                profileImages: [],
+                homeImage: Data()
             )
         )
+        
         FriendListRowView(
             chatPartnerProfile: ProfileElement(
-                userName: "もも", age: 23, gender: .wemen
+                userName: "もも",
+                birth: "",
+                gender: .men,
+                address: "栃木県",
+                profileImages: [],
+                homeImage: Data()
             )
         )
     }

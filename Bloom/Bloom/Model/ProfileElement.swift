@@ -11,8 +11,11 @@ import FirebaseFirestore
 struct ProfileElement: Codable {
     @DocumentID var id: String?
     var userName: String
-    var age: Int
+    var birth: String
     var gender: Gender
+    var address: String
+    var profileImages: [Data]
+    var homeImage: Data
 }
 
 enum Gender: String, Codable, CaseIterable {

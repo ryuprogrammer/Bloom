@@ -51,7 +51,7 @@ struct AddressEntryView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button(action: {
-                            registrationState = .birth
+                            registrationState = .gender
                         }, label: {
                             Image(systemName: "arrow.left")
                                 .foregroundStyle(Color.black)
@@ -65,7 +65,7 @@ struct AddressEntryView: View {
                 
                 Button(action: {
                     withAnimation {
-                        registrationState = .address
+                        registrationState = .profileImage
                     }
                 }, label: {
                     Text("次へ")

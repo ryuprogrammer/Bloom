@@ -138,7 +138,6 @@
 		1F2F1FBA2B8F264A00A9615D /* TalkViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				1FF59C8D2B84FC800031C580 /* AuthenticationManager.swift */,
 				1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */,
 				1FF59CB02B8667860031C580 /* MessageViewModel.swift */,
 			);
@@ -243,6 +242,7 @@
 		1FF59CAD2B86603D0031C580 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1FF59C8D2B84FC800031C580 /* AuthenticationManager.swift */,
 				1FEF284A2B8B0DCD00EAFB3E /* AccountStatus.swift */,
 				1FF59CAE2B86667F0031C580 /* MessageElement.swift */,
 				1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */,

@@ -17,4 +17,5 @@ struct ExplanationText {
     let birthEntryError: String = "生年月日の入力が正しくありません。"
     let photoEntryDescription: String = "写真を２枚以上追加してください。\n顔が写っているとマッチしやすいです。"
     let photoEntryError: String = "２枚以上追加してください。"
+    let homeImageEntryDescription: String = "ホーム写真を追加してください。\nトークのアイコンなどに使用します。"
 }

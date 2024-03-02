@@ -30,8 +30,9 @@ import FirebaseAuth
     func checkAccountStatus() async {
         // ここで認証状態の変化を監視する（リスナー）
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-            if let _ = user {
+            if let user = user {
                 print("Sign-in")
+                print("user: \(user.uid)")
                 self.accountStatus = .signIn
             } else {
                 print("Sign-out")
@@ -41,11 +42,15 @@ import FirebaseAuth
         
         // profileが存在するか判定
         do {
-            if let _ = try await userDataModel.fetchProfile() {
+            if let profile = try await userDataModel.fetchProfile() {
+                print("profile: \(profile)")
                 accountStatus = .existProfile
+            } else {
+                print("プロフィール取得失敗1")
+                accountStatus = .signOut
             }
         } catch {
-            print("プロフィール取得失敗")
+            print("プロフィール取得失敗2")
         }
     }
 }

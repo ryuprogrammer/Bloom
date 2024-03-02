@@ -18,7 +18,7 @@ struct RegistrationView: View {
     // 名前の入力の完了を監視
     @State var isDoneName: Bool = false
     // プロフィール入力の進行度
-    @State var registrationState: RegistrationState = .noting
+    @State var registrationState: RegistrationState = .name
     // ニックネーム
     @State var name: String = ""
     // 誕生日
@@ -27,35 +27,74 @@ struct RegistrationView: View {
     @State var gender: Gender = .men
     // 居住地
     @State var address: String = ""
-    // 写真
-    @State var profileImages: [UIImage] = []
+    // プロフィール写真
+    @State var profileImages: [Data] = []
+    // ホーム写真
+    @State var homeImage: Data = Data()
     
     var body: some View {
-        if registrationState == .noting {
+        if registrationState == .name {
             NameEntryView(
                 name: $name,
                 registrationState: $registrationState
             )
-        } else if registrationState == .name {
+        } else if registrationState == .birth {
             BirthEntryView(
                 birth: $birth,
                 registrationState: $registrationState
             )
-        } else if registrationState == .birth {
+        } else if registrationState == .gender {
             GenderEntryView(
                 selectedGender: $gender,
                 registrationState: $registrationState
             )
-        } else if registrationState == .gender {
+        } else if registrationState == .address {
             AddressEntryView(
                 address: $address,
                 registrationState: $registrationState
             )
-        } else if registrationState == .address {
+        } else if registrationState == .profileImage {
             ProfileImageEntryView(
                 profileImages: $profileImages,
                 registrationState: $registrationState
             )
+        } else if registrationState == .homeImage {
+            HomeImageEntryView(
+                homeImage: $homeImage,
+                registrationState: $registrationState
+            )
+        } else if registrationState == .doneAll {
+            VStack {
+                Text("Bloomをはじめよう")
+                
+                Spacer()
+                
+                Button(action: {
+                    withAnimation {
+                        registrationVM.addProfile(
+                            userName: name,
+                            birth: birth,
+                            gender: gender,
+                            address: address,
+                            profileImages: profileImages,
+                            homeImage: homeImage
+                        )
+                        
+                        registrationState = .toHome
+                    }
+                }, label: {
+                    Text("アプリをはじめる")
+                        .font(.title2)
+                        .foregroundStyle(Color.white)
+                        .frame(height: 55)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.pink.opacity(0.8))
+                        .clipShape(Capsule())
+                        .padding()
+                })
+            }
+        } else if registrationState == .toHome {
+            HomeView()
         }
         
 //        if isShowHomeView {
@@ -112,8 +151,10 @@ enum RegistrationState: Int {
     case birth = 2
     case gender = 3
     case address = 4
-    case photo = 5
-    case doneAll = 6
+    case profileImage = 5
+    case homeImage = 6
+    case doneAll = 7
+    case toHome = 8
 }
 
 #Preview {

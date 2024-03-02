@@ -103,8 +103,11 @@ struct MessageView: View {
     MessageView(
         chatPartnerProfile: ProfileElement(
             userName: "もも",
-            age: 23,
-            gender: .wemen
+            birth: "",
+            gender: .men,
+            address: "栃木県",
+            profileImages: [],
+            homeImage: Data()
         )
     )
 }

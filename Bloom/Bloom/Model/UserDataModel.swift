@@ -54,12 +54,26 @@ class UserDataModel {
     }
     
     /// Profile追加メソッド
-    func addProfile(userName: String, age: Int, gender: Gender) {
+    func addProfile(
+        userName: String,
+        birth: String,
+        gender: Gender,
+        address: String,
+        profileImages: [Data],
+        homeImage: Data
+    ) {
         // uid取得→これをdocmentidに使用
         let uid = fetchUid()
         
         do {
-            let profile = ProfileElement(userName: userName, age: age, gender: gender)
+            let profile = ProfileElement(
+                userName: userName,
+                birth: birth,
+                gender: gender,
+                address: address,
+                profileImages: profileImages,
+                homeImage: homeImage
+            )
             try db.collection(collectionName).document(uid).setData(from: profile)
         } catch {
             print(error.localizedDescription)
@@ -72,10 +86,10 @@ class UserDataModel {
         let uid = fetchUid()
         
         // UIDが空であるか確認
-            guard !uid.isEmpty else {
-                print("UID is empty")
-                throw NSError(domain: "UserDataModel", code: 1, userInfo: [NSLocalizedDescriptionKey: "Document path cannot be empty."])
-            }
+        guard !uid.isEmpty else {
+            print("UID is empty")
+            throw NSError(domain: "UserDataModel", code: 1, userInfo: [NSLocalizedDescriptionKey: "Document path cannot be empty."])
+        }
         
         var profile: ProfileElement? = nil
         
@@ -85,20 +99,86 @@ class UserDataModel {
             let docment = try await docRef.getDocument()
             print("document: \(docment)")
             if docment.exists {
-                if let profileData = docment.data(),
-                   let userName = profileData["userName"],
-                   let age = profileData["age"],
-                   let gender = profileData["gender"],
-                   let StringGender = gender as? String,
-                   let newGender = Gender(rawValue: StringGender),
-                   let StringUserName = userName as? String,
-                   let IntAge = age as? Int {
-                    profile = ProfileElement(
-                        userName: StringUserName,
-                        age: IntAge,
-                        gender: newGender
-                    )
+                // profileData
+                guard let profileData = docment.data() else { 
+                    print("error: profileData")
+                    return nil
                 }
+                
+                // userName
+                guard let userName = profileData["userName"] else {
+                    print("error: userName")
+                    return nil
+                }
+                guard let nameResult = userName as? String else {
+                    print("error: nameResult")
+                    return nil
+                }
+                
+                // birth
+                guard let birth = profileData["birth"] else {
+                    print("error: birth")
+                    return nil
+                }
+                guard let birthResult = birth as? String else {
+                    print("error: birthResult")
+                    print("birth: \(birth)")
+                    return nil
+                }
+                
+                print("birthResult: \(birthResult)")
+                
+                // gender
+                guard let gender = profileData["gender"] else {
+                    print("error: gender")
+                    return nil
+                }
+                guard let genderResult = gender as? Gender else {
+                    print("error: genderResult")
+                    return nil
+                }
+                
+                // address
+                guard let address = profileData["address"] else { 
+                    print("error: address")
+                    return nil
+                }
+                        guard let addressResult = address as? String else { 
+                            print("error: addressResult")
+                            return nil
+                        }
+                
+                // profileImages
+                guard let profileImages = profileData["profileImages"] else { 
+                    print("error: profileImages")
+                    return nil
+                }
+                guard let profileImagesResult = profileImages as? [Data] else {
+                    print("error: profileImagesResult")
+                    return nil
+                }
+                
+                // homeImage
+                guard let homeImage = profileData["homeImage"] else {
+                    print("error: homeImage")
+                    return nil
+                }
+                guard let homeImageResult = homeImage as? Data else {
+                    print("error: homeImageResult")
+                    return nil
+                }
+                
+                // データを入れる
+                profile = ProfileElement(
+                    userName: nameResult,
+                    birth: birthResult,
+                    gender: genderResult,
+                    address: addressResult,
+                    profileImages: profileImagesResult,
+                    homeImage: homeImageResult
+                )
+                print("profile.userName: \(profile?.userName ?? "")")
+                print("profile.profileImages: \(profile?.profileImages ?? [])")
             } else {
                 print("Docment does not exist")
             }
