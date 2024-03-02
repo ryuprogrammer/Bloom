@@ -22,7 +22,13 @@ struct RegistrationView: View {
     // ニックネーム
     @State var name: String = ""
     // 誕生日
-    @State var birth: String = "20000421"
+    @State var birth: String = ""
+    // 性別
+    @State var gender: Gender = .men
+    // 居住地
+    @State var address: String = ""
+    // 写真
+    @State var profileImages: [UIImage] = []
     
     var body: some View {
         if registrationState == .noting {
@@ -35,7 +41,23 @@ struct RegistrationView: View {
                 birth: $birth,
                 registrationState: $registrationState
             )
+        } else if registrationState == .birth {
+            GenderEntryView(
+                selectedGender: $gender,
+                registrationState: $registrationState
+            )
+        } else if registrationState == .gender {
+            AddressEntryView(
+                address: $address,
+                registrationState: $registrationState
+            )
+        } else if registrationState == .address {
+            ProfileImageEntryView(
+                profileImages: $profileImages,
+                registrationState: $registrationState
+            )
         }
+        
 //        if isShowHomeView {
 //            HomeView()
 //        } else {
@@ -90,7 +112,8 @@ enum RegistrationState: Int {
     case birth = 2
     case gender = 3
     case address = 4
-    case doneAll = 5
+    case photo = 5
+    case doneAll = 6
 }
 
 #Preview {

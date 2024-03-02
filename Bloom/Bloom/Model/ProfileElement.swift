@@ -15,7 +15,9 @@ struct ProfileElement: Codable {
     var gender: Gender
 }
 
-enum Gender: String, Codable {
+enum Gender: String, Codable, CaseIterable {
     case men = "男性"
     case wemen = "女性"
+    
+    var id: String { rawValue }
 }

@@ -14,6 +14,7 @@ class RegistrationViewModel: ObservableObject {
     private var lister: ListenerRegistration?
     private var userDataModel = UserDataModel()
     let explanationText = ExplanationText()
+    let prefectures = Prefectures()
     
     // 初期化
     init() {

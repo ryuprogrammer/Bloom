@@ -13,6 +13,7 @@ struct BirthEntryView: View {
     @Binding var registrationState: RegistrationState
     @State var isBirthValid: Bool = false
     @FocusState var keybordFocus: Bool
+    let maxBirthLength: Int = 8
     var body: some View {
         ZStack {
             NavigationStack {
@@ -21,66 +22,73 @@ struct BirthEntryView: View {
                         .font(.title3)
                         .padding()
                     
-                    HStack {
-                        // 年
-                        ForEach(1..<5) { num in
-                            if let birthNumber = birth.forthText(forthNumber: num) {
-                                Text(birthNumber)
-                                    .font(.largeTitle)
-                            } else {
-                                Text("0")
-                                    .foregroundStyle(Color(UIColor.lightGray))
-                                    .font(.largeTitle)
+                    ZStack {
+                        // 生年月日を表示
+                        HStack {
+                            // 年
+                            ForEach(1..<5) { num in
+                                if let birthNumber = birth.forthText(forthNumber: num) {
+                                    Text(birthNumber)
+                                        .font(.largeTitle)
+                                } else {
+                                    Text("0")
+                                        .foregroundStyle(Color(UIColor.lightGray))
+                                        .font(.largeTitle)
+                                }
+                            }
+                            
+                            Text("/")
+                            
+                            // 月
+                            ForEach(5..<7) { num in
+                                if let birthNumber = birth.forthText(forthNumber: num) {
+                                    Text(birthNumber)
+                                        .font(.largeTitle)
+                                } else {
+                                    Text("0")
+                                        .foregroundStyle(Color(UIColor.lightGray))
+                                        .font(.largeTitle)
+                                }
+                            }
+                            
+                            Text("/")
+                            
+                            // 日
+                            ForEach(7..<9) { num in
+                                if let birthNumber = birth.forthText(forthNumber: num) {
+                                    Text(birthNumber)
+                                        .font(.largeTitle)
+                                } else {
+                                    Text("0")
+                                        .foregroundStyle(Color(UIColor.lightGray))
+                                        .font(.largeTitle)
+                                }
                             }
                         }
-                        
-                        Text("/")
-                        
-                        // 月
-                        ForEach(5..<7) { num in
-                            if let birthNumber = birth.forthText(forthNumber: num) {
-                                Text(birthNumber)
-                                    .font(.largeTitle)
-                            } else {
-                                Text("0")
-                                    .foregroundStyle(Color(UIColor.lightGray))
-                                    .font(.largeTitle)
-                            }
+                        .onTapGesture {
+                            self.keybordFocus.toggle()
                         }
                         
-                        Text("/")
-                        
-                        // 日
-                        ForEach(7..<9) { num in
-                            if let birthNumber = birth.forthText(forthNumber: num) {
-                                Text(birthNumber)
-                                    .font(.largeTitle)
-                            } else {
-                                Text("0")
-                                    .foregroundStyle(Color(UIColor.lightGray))
-                                    .font(.largeTitle)
+                        TextField("", text: $birth)
+                            .focused(self.$keybordFocus)
+                            .padding()
+                            .font(.largeTitle)
+                            .background(Color.cyan)
+                            .opacity(0)
+                            .onChange(of: birth) {
+                                if birth.count == 8 {
+                                    isBirthValid = true
+                                } else if birth.count > maxBirthLength {
+                                    isBirthValid = false
+                                    birth = String(birth.prefix(maxBirthLength))
+                                } else {
+                                    isBirthValid = false
+                                }
                             }
-                        }
-                    }
-                    .onTapGesture {
-                        self.keybordFocus.toggle()
                     }
                     
-                    TextField("", text: $birth)
-                        .focused(self.$keybordFocus)
-                        .padding()
-                        .font(.largeTitle)
-                        .background(Color.cyan)
-                        .onChange(of: birth) {
-                            if birth.count == 8 {
-                                isBirthValid = true
-                            } else {
-                                isBirthValid = false
-                            }
-                        }
-                    
-                    if isBirthValid {
-                        Text(explanationText.nameEntryError)
+                    if !isBirthValid {
+                        Text(explanationText.birthEntryError)
                             .foregroundStyle(Color.red)
                             .font(.title3)
                             .frame(maxWidth: .infinity)
@@ -91,13 +99,25 @@ struct BirthEntryView: View {
                 }
                 .keyboardType(.decimalPad)
                 .navigationTitle("生年月日")
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button(action: {
+                            registrationState = .noting
+                        }, label: {
+                            Image(systemName: "arrow.left")
+                                .foregroundStyle(Color.black)
+                        })
+                    }
+                }
             }
             
             VStack {
                 Spacer()
                 
                 Button(action: {
-                    registrationState = .birth
+                    withAnimation {
+                        registrationState = .birth
+                    }
                 }, label: {
                     Text("次へ")
                         .font(.title2)
@@ -109,6 +129,11 @@ struct BirthEntryView: View {
                         .padding()
                 })
                 .disabled(!isBirthValid)
+            }
+        }
+        .onAppear {
+            if birth.count == 8 {
+                isBirthValid = true
             }
         }
     }

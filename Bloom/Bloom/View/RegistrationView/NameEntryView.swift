@@ -12,7 +12,8 @@ struct NameEntryView: View {
     @Binding var name: String
     @Binding var registrationState: RegistrationState
     @State var isNameValid: Bool = false
-    let minNameCount: Int = 10
+    let maxNameCount: Int = 10
+    let minNameCount: Int = 2
     var body: some View {
         ZStack {
             NavigationStack {
@@ -26,15 +27,23 @@ struct NameEntryView: View {
                         .font(.title)
                         .padding(.horizontal, 40)
                         .onChange(of: name) {
-                            if name.count <= minNameCount {
+                            if name.count >= minNameCount && name.count <= maxNameCount {
                                 isNameValid = true
                             } else {
                                 isNameValid = false
                             }
                         }
                     
-                    if isNameValid {
-                        Text(explanationText.nameEntryError)
+                    if name.count > maxNameCount {
+                        Text(explanationText.nameEntryMaxError)
+                            .foregroundStyle(Color.red)
+                            .font(.title3)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                    }
+                    
+                    if name.count < minNameCount {
+                        Text(explanationText.nameEntryMinError)
                             .foregroundStyle(Color.red)
                             .font(.title3)
                             .frame(maxWidth: .infinity)
@@ -50,7 +59,9 @@ struct NameEntryView: View {
                 Spacer()
                 
                 Button(action: {
-                    registrationState = .name
+                    withAnimation {
+                        registrationState = .name
+                    }
                 }, label: {
                     Text("次へ")
                         .font(.title2)
@@ -62,6 +73,11 @@ struct NameEntryView: View {
                         .padding()
                 })
                 .disabled(!isNameValid)
+            }
+        }
+        .onAppear {
+            if name.count >= minNameCount && name.count <= maxNameCount {
+                isNameValid = true
             }
         }
     }
