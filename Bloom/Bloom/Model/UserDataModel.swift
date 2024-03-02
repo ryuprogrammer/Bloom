@@ -97,7 +97,7 @@ class UserDataModel {
         
         do {
             let docment = try await docRef.getDocument()
-            print("document: \(docment)")
+            
             if docment.exists {
                 // profileData
                 guard let profileData = docment.data() else { 
@@ -122,18 +122,15 @@ class UserDataModel {
                 }
                 guard let birthResult = birth as? String else {
                     print("error: birthResult")
-                    print("birth: \(birth)")
                     return nil
                 }
                 
-                print("birthResult: \(birthResult)")
-                
                 // gender
-                guard let gender = profileData["gender"] else {
+                guard let genderString = profileData["gender"] as? String else {
                     print("error: gender")
                     return nil
                 }
-                guard let genderResult = gender as? Gender else {
+                guard let genderResult = Gender(rawValue: genderString) else {
                     print("error: genderResult")
                     return nil
                 }
@@ -177,8 +174,6 @@ class UserDataModel {
                     profileImages: profileImagesResult,
                     homeImage: homeImageResult
                 )
-                print("profile.userName: \(profile?.userName ?? "")")
-                print("profile.profileImages: \(profile?.profileImages ?? [])")
             } else {
                 print("Docment does not exist")
             }

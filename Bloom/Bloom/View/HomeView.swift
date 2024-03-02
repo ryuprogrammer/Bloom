@@ -12,7 +12,7 @@ struct HomeView: View {
     @State var selection = 3
     var body: some View {
         TabView(selection: $selection) {
-            Text("Tab Content 1")
+            SwipeCardView()
                 .tabItem {
                     Image(systemName: "cloud.rainbow.half.fill")
                 }

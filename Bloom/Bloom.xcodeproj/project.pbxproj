@@ -12,6 +12,7 @@
 		1F1FEB342B92DAE200F8AEA3 /* GenderEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FEB332B92DAE200F8AEA3 /* GenderEntryView.swift */; };
 		1F1FEB362B92E31B00F8AEA3 /* ProfileImageEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FEB352B92E31B00F8AEA3 /* ProfileImageEntryView.swift */; };
 		1F1FEB382B9322DD00F8AEA3 /* HomeImageEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FEB372B9322DD00F8AEA3 /* HomeImageEntryView.swift */; };
+		1F1FEB3B2B93716E00F8AEA3 /* SwipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FEB3A2B93716E00F8AEA3 /* SwipeViewModel.swift */; };
 		1F2F1FC32B90AE1200A9615D /* SingleCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F1FC22B90AE1200A9615D /* SingleCardView.swift */; };
 		1F2F1FC52B90AE2800A9615D /* SwipeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F1FC42B90AE2800A9615D /* SwipeCardView.swift */; };
 		1F2F1FC92B90BC5300A9615D /* NameEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F1FC82B90BC5300A9615D /* NameEntryView.swift */; };
@@ -65,6 +66,7 @@
 		1F1FEB332B92DAE200F8AEA3 /* GenderEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderEntryView.swift; sourceTree = "<group>"; };
 		1F1FEB352B92E31B00F8AEA3 /* ProfileImageEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageEntryView.swift; sourceTree = "<group>"; };
 		1F1FEB372B9322DD00F8AEA3 /* HomeImageEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeImageEntryView.swift; sourceTree = "<group>"; };
+		1F1FEB3A2B93716E00F8AEA3 /* SwipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeViewModel.swift; sourceTree = "<group>"; };
 		1F2F1FC22B90AE1200A9615D /* SingleCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SingleCardView.swift; path = Bloom/View/SingleCardView.swift; sourceTree = SOURCE_ROOT; };
 		1F2F1FC42B90AE2800A9615D /* SwipeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwipeCardView.swift; path = Bloom/View/SwipeCardView.swift; sourceTree = SOURCE_ROOT; };
 		1F2F1FC82B90BC5300A9615D /* NameEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameEntryView.swift; sourceTree = "<group>"; };
@@ -133,6 +135,21 @@
 				1F1FEB312B92C2DA00F8AEA3 /* Prefectures.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		1F1FEB392B93710C00F8AEA3 /* SwipeViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				1F1FEB3A2B93716E00F8AEA3 /* SwipeViewModel.swift */,
+			);
+			path = SwipeViewModel;
+			sourceTree = "<group>";
+		};
+		1F1FEB3C2B93732600F8AEA3 /* ProfileView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ProfileView;
 			sourceTree = "<group>";
 		};
 		1F2F1FBA2B8F264A00A9615D /* TalkViewModel */ = {
@@ -226,6 +243,7 @@
 				1F2F1FC72B90BB0500A9615D /* RegistrationView */,
 				1F2F1FBB2B8F276800A9615D /* SwipeView */,
 				1FF59CB22B866D8D0031C580 /* TalkView */,
+				1F1FEB3C2B93732600F8AEA3 /* ProfileView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -234,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				1F2F1FCC2B90C72700A9615D /* RegistrationViewModel */,
+				1F1FEB392B93710C00F8AEA3 /* SwipeViewModel */,
 				1F2F1FBA2B8F264A00A9615D /* TalkViewModel */,
 			);
 			path = ViewModel;
@@ -389,6 +408,7 @@
 				1F9C2DD02B8DB7DE00994981 /* Date+.swift in Sources */,
 				1FF59C652B84CEEB0031C580 /* BloomApp.swift in Sources */,
 				1FF59CB72B89077E0031C580 /* MessageView.swift in Sources */,
+				1F1FEB3B2B93716E00F8AEA3 /* SwipeViewModel.swift in Sources */,
 				1F2F1FC32B90AE1200A9615D /* SingleCardView.swift in Sources */,
 				1FF59CBD2B89BB9A0031C580 /* ProfileElement.swift in Sources */,
 				1FF59CB12B8667860031C580 /* MessageViewModel.swift in Sources */,

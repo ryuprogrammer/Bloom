@@ -8,25 +8,28 @@
 import SwiftUI
 
 struct SwipeCardView: View {
+    @ObservedObject var swipeViewModel = SwipeViewModel()
+    
     @State private var cardModels = [
-        CardModel(id: 1, name: "Name1", image: "image1"),
-        CardModel(id: 2, name: "Name2", image: "image2"),
-        CardModel(id: 3, name: "Name1", image: "image1"),
-        CardModel(id: 4, name: "Name2", image: "image2"),
-        CardModel(id: 5, name: "Name1", image: "image1"),
-        CardModel(id: 6, name: "Name2", image: "image2"),
-        CardModel(id: 7, name: "Name1", image: "image1"),
-        CardModel(id: 8, name: "Name2", image: "image2")
+        CardModel2(id: 1, name: "Name1", image: "image1"),
+        CardModel2(id: 2, name: "Name2", image: "image2"),
+        CardModel2(id: 3, name: "Name1", image: "image1"),
+        CardModel2(id: 4, name: "Name2", image: "image2"),
+        CardModel2(id: 5, name: "Name1", image: "image1"),
+        CardModel2(id: 6, name: "Name2", image: "image2"),
+        CardModel2(id: 7, name: "Name1", image: "image1"),
+        CardModel2(id: 8, name: "Name2", image: "image2")
     ]
+    @State var profiles: [CardModel] = []
     @State var isLike: Bool? = nil
 
     var body: some View {
         ZStack {
-            ForEach($cardModels) { $card in // $を使用してバインディングを渡します
+            ForEach($profiles) { $card in // $を使用してバインディングを渡します
                 SingleCardView(card: card, isLike: $isLike)
                     .offset(
-                        x: card.id == cardModels.last?.id ? card.offset.width : 0,
-                        y: card.id == cardModels.last?.id ? card.offset.height : 0
+                        x: card.id == profiles.last?.id ? card.offset.width : 0,
+                            y: card.id == profiles.last?.id ? card.offset.height : 0
                     )
                     .rotationEffect(.degrees(Double(card.offset.width) / 20), anchor: .bottom)
                     .gesture(
@@ -65,7 +68,35 @@ struct SwipeCardView: View {
                     )
             }
         }
+        .onAppear {
+            Task {
+                // SignInUserのプロフィール取得
+                await swipeViewModel.fetchSignInUser()
+            }
+            
+            var cardId = 1
+            for profile in swipeViewModel.friendProfiles {
+                profiles.append(
+                    CardModel(id: cardId, profile: profile)
+                )
+                cardId += 1
+            }
+        }
     }
+}
+
+struct CardModel: Identifiable {
+    var id: Int
+    let profile: ProfileElement
+    var offset: CGSize = .zero // 各カードのオフセットを追加
+    var color: Color = .white // 各カードのカラーを追加
+}
+
+struct CardModel2: Identifiable {
+    var id: Int
+    let name: String
+    let image: String
+    var offset: CGSize = .zero // 各カードのオフセットを追加
 }
 
 #Preview {
