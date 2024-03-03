@@ -50,12 +50,15 @@ class RegistrationViewModel: ObservableObject {
         homeImage: Data
     ) {
         userDataModel.addProfile(
-            userName: userName,
-            birth: birth,
-            gender: gender,
-            address: address,
-            profileImages: profileImages,
-            homeImage: homeImage
-        )
+            profile: ProfileElement(
+                userName: userName,
+                birth: birth,
+                gender: gender,
+                address: address,
+                profileImages: profileImages,
+                homeImage: homeImage
+            )) { error in
+                print("error: error")
+            }
     }
 }

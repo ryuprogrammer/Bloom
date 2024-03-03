@@ -120,14 +120,4 @@ class MessageViewModel: ObservableObject {
             message: message
         )
     }
-    
-    func fetchProfile() async throws -> ProfileElement? {
-        do {
-            return try await userDataModel.fetchProfile()
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        return nil
-    }
 }

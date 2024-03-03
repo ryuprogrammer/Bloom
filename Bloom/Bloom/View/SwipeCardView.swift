@@ -9,19 +9,9 @@ import SwiftUI
 
 struct SwipeCardView: View {
     @ObservedObject var swipeViewModel = SwipeViewModel()
-    
-    @State private var cardModels = [
-        CardModel2(id: 1, name: "Name1", image: "image1"),
-        CardModel2(id: 2, name: "Name2", image: "image2"),
-        CardModel2(id: 3, name: "Name1", image: "image1"),
-        CardModel2(id: 4, name: "Name2", image: "image2"),
-        CardModel2(id: 5, name: "Name1", image: "image1"),
-        CardModel2(id: 6, name: "Name2", image: "image2"),
-        CardModel2(id: 7, name: "Name1", image: "image1"),
-        CardModel2(id: 8, name: "Name2", image: "image2")
-    ]
     @State var profiles: [CardModel] = []
     @State var isLike: Bool? = nil
+    @State var offset: CGFloat? = .zero
 
     var body: some View {
         ZStack {
@@ -29,17 +19,17 @@ struct SwipeCardView: View {
                 SingleCardView(card: card, isLike: $isLike)
                     .offset(
                         x: card.id == profiles.last?.id ? card.offset.width : 0,
-                            y: card.id == profiles.last?.id ? card.offset.height : 0
+                        y: card.id == profiles.last?.id ? card.offset.height : 0
                     )
                     .rotationEffect(.degrees(Double(card.offset.width) / 20), anchor: .bottom)
                     .gesture(
                         DragGesture()
                             .onChanged { gesture in
-                                if card.id == cardModels.last?.id {
+                                if card.id == profiles.last?.id {
                                     card.offset = gesture.translation
                                 }
                                 withAnimation {
-                                    if abs(gesture.translation.width) > 150 {
+                                    if abs(gesture.translation.width) > 120 {
                                         if gesture.startLocation.x < gesture.location.x {
                                             isLike = true
                                         } else if gesture.startLocation.x > gesture.location.x {
@@ -52,10 +42,23 @@ struct SwipeCardView: View {
                             }
                             .onEnded { gesture in
                                 withAnimation {
-                                    if card.id == cardModels.last?.id {
+                                    if card.id == profiles.last?.id {
                                         if abs(gesture.translation.width) > 150 {
+                                            if gesture.startLocation.x < gesture.location.x {
+                                                // データ追加
+                                                swipeViewModel.addFriendsToList(
+                                                    state: .likeByMe,
+                                                    friendProfile: card.profile
+                                                )
+                                            } else if gesture.startLocation.x > gesture.location.x {
+                                                // データ追加
+                                                swipeViewModel.addFriendsToList(
+                                                    state: .unLikeByMe,
+                                                    friendProfile: card.profile
+                                                )
+                                            }
                                             // スワイプ距離が100を超えた場合、カードを削除
-                                            cardModels.removeAll { $0.id == card.id }
+                                            profiles.removeAll { $0.id == card.id }
                                             isLike = nil
                                         } else {
                                             // スワイプが終了したらオフセットをリセット
@@ -68,14 +71,12 @@ struct SwipeCardView: View {
                     )
             }
         }
-        .onAppear {
-            Task {
-                // SignInUserのプロフィール取得
-                await swipeViewModel.fetchSignInUser()
-            }
+        .onChange(of: swipeViewModel.friendProfiles.count) {
+            profiles.removeAll()
             
             var cardId = 1
             for profile in swipeViewModel.friendProfiles {
+                print("onChangeで取得")
                 profiles.append(
                     CardModel(id: cardId, profile: profile)
                 )

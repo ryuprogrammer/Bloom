@@ -1,59 +1,60 @@
-//
-//  SwipeViewModel.swift
-//  Bloom
-//
-//  Created by トム・クルーズ on 2024/03/02.
-//
-
 import Foundation
 import FirebaseFirestore
 
 class SwipeViewModel: ObservableObject {
     private var userDataModel = UserDataModel()
-    
     @Published private(set) var friendProfiles: [ProfileElement] = []
     let db = Firestore.firestore()
     private let collectionName = "profiles"
+    private let fetchProfilesLimit: Int = 10
+    
+    init() {
+        fetchSignInUser()
+    }
+    
+    /// friendsをListtに追加
+    func addFriendsToList(
+        state: FriendEditState,
+        friendProfile: ProfileElement
+    ) {
+        userDataModel.addFriendsToList(state: state, friendProfile: friendProfile) { error in
+            if let error = error {
+                print("error addFriendsToList: \(error.localizedDescription)")
+            }
+        }
+    }
     
     /// SignInUser取得メソッド
-    func fetchSignInUser() async {
-        DispatchQueue.main.async {
-            self.friendProfiles.removeAll()
-        }
+    func fetchSignInUser() {
+        friendProfiles.removeAll()
         
-        do {
-            let querySnapshot = try await db.collection(collectionName).getDocuments()
+        userDataModel.fetchProfileUids(limit: fetchProfilesLimit) { uids, error in
+            guard let uids = uids, error == nil else {
+                print("Error fetching document IDs: \(error?.localizedDescription ?? "")")
+                return
+            }
             
-            let profiles = querySnapshot.documents.compactMap { document -> ProfileElement? in
-                let data = document.data()
-                guard let userName = data["userName"] as? String,
-                      let birth = data["birth"] as? String,
-                      let genderString = data["gender"] as? String,
-                      let gender = Gender(rawValue: genderString),
-                      let address = data["address"] as? String,
-                      let profileImages = data["profileImages"] as? [Data], // 仮定: Base64文字列の配列またはURLの配列
-                      let homeImage = data["homeImage"] as? Data else { // 仮定: Base64文字列またはURL
-                    print("error: fetchSignInUserでエラー")
-                    return nil
-                }
+            for uid in uids {
+                print("uids: \(uid)")
                 
-                return ProfileElement(
-                    userName: userName,
-                    birth: birth,
-                    gender: gender,
-                    address: address,
-                    profileImages: profileImages,
-                    homeImage: homeImage
-                )
+                self.userDataModel.fetchProfile(uid: uid) { profile, error in
+                    if let profile = profile {
+                        print("proile: \(profile)")
+                        self.friendProfiles.append(profile)
+                    } else if let error = error {
+                        print("Error fetching profiles: \(error.localizedDescription)")
+                    } else {
+                        print("fetchProfile error")
+                    }
+                }
             }
             
-            DispatchQueue.main.async {
-                self.friendProfiles = profiles
+            if !self.friendProfiles.isEmpty {
+                print("フェッチが終わったよ！！！！！！！！！！！！！！！！！")
+                for profile in self.friendProfiles {
+                    print("profile: \(profile)")
+                }
             }
-            
-            print("SignInUser Profiles: \(String(describing: self.friendProfiles))")
-        } catch {
-            print("fetchSignInUsers error: \(error.localizedDescription)")
         }
     }
 }

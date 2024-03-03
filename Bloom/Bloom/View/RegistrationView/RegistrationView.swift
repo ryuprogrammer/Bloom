@@ -65,7 +65,10 @@ struct RegistrationView: View {
             )
         } else if registrationState == .doneAll {
             VStack {
+                Spacer()
+                
                 Text("Bloomをはじめよう")
+                    .font(.largeTitle)
                 
                 Spacer()
                 

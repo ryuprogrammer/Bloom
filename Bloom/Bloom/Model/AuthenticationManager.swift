@@ -1,21 +1,20 @@
-//
-//  AuthenticationManager.swift
-//  Bloom
-//
-//  Created by トム・クルーズ on 2024/02/21.
-//
-
 import Foundation
 import FirebaseAuth
 
-@Observable class AuthenticationManager {
-    private var handle: AuthStateDidChangeListenerHandle!
+class AuthenticationManager: ObservableObject {
+    private var handle: AuthStateDidChangeListenerHandle?
     let userDataModel = UserDataModel()
-    var accountStatus: AccountStatus = .signOut
+    @Published var accountStatus: AccountStatus = .signOut
+    
+    init() {
+        checkAccountStatus()
+    }
     
     deinit {
         // ここで認証状態の変化の監視を解除する
-        Auth.auth().removeStateDidChangeListener(handle)
+        if let handle = handle {
+            Auth.auth().removeStateDidChangeListener(handle)
+        }
     }
     
     func signOut() {
@@ -27,30 +26,35 @@ import FirebaseAuth
         }
     }
     
-    func checkAccountStatus() async {
+    func checkAccountStatus() {
+        // 既存のリスナーがあれば削除
+        if let handle = handle {
+            Auth.auth().removeStateDidChangeListener(handle)
+        }
+        
         // ここで認証状態の変化を監視する（リスナー）
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+            print("auth: \(auth)")
+            
             if let user = user {
                 print("Sign-in")
                 print("user: \(user.uid)")
                 self.accountStatus = .signIn
+                
+                // profileが存在するか判定
+                self.userDataModel.fetchProfileWithoutImages(uid: user.uid, completion: { profile, error in
+                    if let _ = profile, error == nil {
+                        // profileが存在する
+                        self.accountStatus = .existProfile
+                    } else if let error = error {
+                        self.accountStatus = .signIn
+                        print("Error fetching profiles: \(error.localizedDescription)")
+                    }
+                })
             } else {
                 print("Sign-out")
                 self.accountStatus = .signOut
             }
-        }
-        
-        // profileが存在するか判定
-        do {
-            if let profile = try await userDataModel.fetchProfile() {
-                print("profile: \(profile)")
-                accountStatus = .existProfile
-            } else {
-                print("プロフィール取得失敗1")
-                accountStatus = .signOut
-            }
-        } catch {
-            print("プロフィール取得失敗2")
         }
     }
 }

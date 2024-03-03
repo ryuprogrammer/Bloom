@@ -8,17 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
-    private var authenticationManager = AuthenticationManager()
+    @ObservedObject var authenticationManager = AuthenticationManager()
     @State private var isShowSheet = false
     
     var body: some View {
             VStack {
                 if authenticationManager.accountStatus == .signOut {
+                    Spacer()
                     // Sign-Out状態なのでSign-Inボタンを表示する
                     Button {
                         self.isShowSheet.toggle()
                     } label: {
-                        Text("Sign-In")
+                        Text("サインインする")
+                            .font(.title2)
+                            .foregroundStyle(Color.white)
+                            .frame(height: 55)
+                            .frame(maxWidth: .infinity)
+                            .background(Color.pink.opacity(0.8))
+                            .clipShape(Capsule())
+                            .padding()
                     }
                 } else if authenticationManager.accountStatus == .signIn {
                     // Profileは存在してないのでProfile作成
@@ -30,11 +38,6 @@ struct ContentView: View {
             }
             .sheet(isPresented: $isShowSheet) {
                 FirebaseAuthUIView()
-            }
-            .onAppear {
-                Task {
-                    await authenticationManager.checkAccountStatus()
-                }
             }
         }
 }
