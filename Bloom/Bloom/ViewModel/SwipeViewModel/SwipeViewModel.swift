@@ -14,7 +14,7 @@ class SwipeViewModel: ObservableObject {
     
     /// friendsをListtに追加
     func addFriendsToList(
-        state: FriendEditState,
+        state: FriendStatus,
         friendProfile: ProfileElement
     ) {
         userDataModel.addFriendsToList(state: state, friendProfile: friendProfile) { error in

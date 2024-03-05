@@ -10,21 +10,23 @@ import FirebaseFirestore
 
 struct FriendsElement: Codable {
     @DocumentID var id: String?
-    var friedUid: String
-    var status: FriendEditState
+    var friendUid: String
+    var status: FriendStatus
 }
 
-enum FriendEditState: Codable {
+enum FriendStatus: String, Codable {
     /// マッチした人: トーク画面などで使用→ 両方
-    case matchd
+    case matchd = "マッチした人"
     /// ライクされた人: 相手からのライク確認画面で使用→ 相手
-    case likeByFriend
+    case likeByFriend = "ライクされた人"
     /// ライクした人: SwipeViewに再表示しないために使用→ 自分
-    case likeByMe
+    case likeByMe = "ライクした人"
     /// アンライクした人: 二度と表示しないために使用→ 自分
-    case unLikeByMe
+    case unLikeByMe = "アンライクした人"
     /// ブロックされた人→ 相手
-    case blockByFriend
+    case blockByFriend = "ブロックされた人"
     /// ブロックした人→ 自分
-    case blockByMy
+    case blockByMy = "ブロックした人"
+    
+    var id: String { rawValue }
 }

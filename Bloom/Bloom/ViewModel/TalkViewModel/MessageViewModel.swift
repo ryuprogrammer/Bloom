@@ -114,8 +114,8 @@ class MessageViewModel: ObservableObject {
         lister?.remove()
     }
     
-    func addMessage(chatPartnerProfile: ProfileElement, message: String) async {
-        await chatDataModel.addMessage(
+    func addMessage(chatPartnerProfile: ProfileElement, message: String) {
+        chatDataModel.addMessage(
             chatPartnerProfile: chatPartnerProfile,
             message: message
         )

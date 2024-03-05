@@ -18,4 +18,7 @@ struct ExplanationText {
     let photoEntryDescription: String = "写真を２枚以上追加してください。\n顔が写っているとマッチしやすいです。"
     let photoEntryError: String = "２枚以上追加してください。"
     let homeImageEntryDescription: String = "ホーム写真を追加してください。\nトークのアイコンなどに使用します。"
+    
+    // MARK: - TestData
+    let testIntroduction: String = "プロフィールを見ていただいてありがとうございます！\n週末は家で演奏会を開いています！よかったら見に来てください！"
 }

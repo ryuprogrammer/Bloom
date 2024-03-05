@@ -11,11 +11,12 @@ struct SingleCardView: View {
     var card: CardModel
     @Binding var isLike: Bool?
     @State var imageNumber: Int = 0
+    @State var isShowProfile: Bool = true
     let minImageNumber = 1
     
     // 画面横幅取得→写真の横幅と縦幅に利用
-    let imageWidth = UIScreen.main.bounds.width - 10
-    let imageHeight = (UIScreen.main.bounds.height * 5) / 7
+    let imageWidth = UIScreen.main.bounds.width - 35
+    let imageHeight = (UIScreen.main.bounds.height * 5) / 8
     
     var body: some View {
         ZStack {
@@ -23,7 +24,7 @@ struct SingleCardView: View {
             
             DataImage(dataImage: card.profile.profileImages[imageNumber])
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 360, height: 550)
+                .frame(width: imageWidth, height: imageHeight)
             
             if card.profile.profileImages.count > minImageNumber {
                 HStack {
@@ -37,7 +38,7 @@ struct SingleCardView: View {
                             imageNumber -= 1
                         }
                     } label: {
-                        Color.red.opacity(0.1)
+                        Color.red.opacity(0)
                     }
                     
                     // 次の写真を表示
@@ -48,25 +49,72 @@ struct SingleCardView: View {
                             imageNumber += 1
                         }
                     } label: {
-                        Color.red.opacity(0.1)
+                        Color.red.opacity(0)
                     }
                 }
             }
             
+            // カード上の文字情報
             VStack {
+                if card.profile.profileImages.count > 1 {
+                    HStack {
+                        ForEach(0..<card.profile.profileImages.count) { number in
+                            Circle()
+                                .fill(number == imageNumber ? Color.white : Color.white.opacity(0.4))
+                                .frame(width: 10, height: 10)
+                        }
+                    }
+                    .padding(10)
+                }
+                
                 Spacer()
                 
-                HStack {
-                    Text(card.profile.userName)
-                    
-                    Text(card.profile.address)
+                // プロフィール情報
+                VStack {
+                    HStack(alignment: .bottom) {
+                        VStack(alignment: .leading) {
+                            Text(card.profile.userName)
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .foregroundStyle(Color.black)
+                            
+                            Text(card.profile.birth.toAge() + card.profile.address)
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundStyle(Color.black)
+                        }
                         
+                        Spacer()
+                        
+                        Button(action: {
+                            withAnimation {
+                                isShowProfile.toggle()
+                            }
+                        }, label: {
+                            Image(systemName: isShowProfile ? "arrowshape.down.circle.fill":"arrowshape.up.circle.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 40, height: 40)
+                                .foregroundStyle(Color.pink.opacity(0.8))
+                        })
+                    }
+                    .padding(5)
+                    
+                    if isShowProfile {
+                        Text("プロフィール文章がないよ！プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章")
+                            .fixedSize(horizontal: false, vertical: true)
+                            .fontWeight(.bold)
+                            .foregroundStyle(Color.black)
+                    }
                 }
-                .background(Color.white.opacity(0.5))
+                .padding()
+                .frame(width: imageWidth)
+                .background(Color.white)
+                .shadow(radius: 20)
             }
         }
-        .frame(width: 360, height: 550)
-        .cornerRadius(15)
+        .frame(width: imageWidth, height: imageHeight)
+        .cornerRadius(25)
         .padding()
         .shadow(radius: 20)
     }
@@ -82,10 +130,11 @@ struct SingleCardView: View {
                     id: 1,
                     profile: ProfileElement(
                         userName: "もも",
+                        introduction: "プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章",
                         birth: "",
                         gender: .men,
-                        address: "栃木県",
-                        profileImages: [Data(), Data(), Data()],
+                        address: "栃木県🍓",
+                        profileImages: [Data(), Data(), Data(), Data()],
                         homeImage: Data()
                     )
                 ),

@@ -8,5 +8,27 @@
 import Foundation
 
 struct MockData {
-    let mockUserProfiles: [ProfileElement] = []
+    let explanation = ExplanationText()
+    
+    var profile = ProfileElement(
+        userName: "もも",
+        introduction: "",
+        birth: "",
+        gender: .men,
+        address: "栃木県",
+        profileImages: [],
+        homeImage: Data()
+    )
+    
+    init() {
+        profile = ProfileElement(
+            userName: "もも",
+            introduction: explanation.testIntroduction,
+            birth: "",
+            gender: .men,
+            address: "栃木県",
+            profileImages: [],
+            homeImage: Data()
+        )
+    }
 }

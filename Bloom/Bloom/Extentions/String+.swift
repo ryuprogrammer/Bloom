@@ -45,4 +45,25 @@ extension String {
             
             return birthday
         }
+    
+    /// 8桁の数値のString型を年齢に変換
+    func toAge() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        
+        guard let birthDate = dateFormatter.date(from: self) else {
+            print("Invalid date format")
+            return "年齢不詳"
+        }
+        
+        let calendar = Calendar.current
+        let now = Date()
+        let ageComponents = calendar.dateComponents([.year], from: birthDate, to: now)
+        
+        guard let IntAge = ageComponents.year else { return "年齢不詳" }
+        let StringAge = String(IntAge)
+        
+        return StringAge
+    }
+
 }

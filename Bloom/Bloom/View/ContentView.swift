@@ -13,25 +13,12 @@ struct ContentView: View {
     
     var body: some View {
             VStack {
-                if authenticationManager.accountStatus == .signOut {
-                    Spacer()
-                    // Sign-Out状態なのでSign-Inボタンを表示する
-                    Button {
-                        self.isShowSheet.toggle()
-                    } label: {
-                        Text("サインインする")
-                            .font(.title2)
-                            .foregroundStyle(Color.white)
-                            .frame(height: 55)
-                            .frame(maxWidth: .infinity)
-                            .background(Color.pink.opacity(0.8))
-                            .clipShape(Capsule())
-                            .padding()
-                    }
-                } else if authenticationManager.accountStatus == .signIn {
+                if authenticationManager.accountStatus == .none {
+                    SignInView(isShowSheet: $isShowSheet)
+                } else if authenticationManager.accountStatus == .existsNoProfile || authenticationManager.accountStatus == .mismatchID {
                     // Profileは存在してないのでProfile作成
                     RegistrationView()
-                } else if authenticationManager.accountStatus == .existProfile {
+                } else if authenticationManager.accountStatus == .valid {
                     // 正常にアカウントがある
                     HomeView()
                 }

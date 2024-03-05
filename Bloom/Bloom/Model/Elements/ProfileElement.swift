@@ -11,6 +11,7 @@ import FirebaseFirestore
 struct ProfileElement: Codable {
     @DocumentID var id: String?
     var userName: String
+    var introduction: String
     var birth: String
     var gender: Gender
     var address: String

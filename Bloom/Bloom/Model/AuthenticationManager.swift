@@ -4,9 +4,11 @@ import FirebaseAuth
 class AuthenticationManager: ObservableObject {
     private var handle: AuthStateDidChangeListenerHandle?
     let userDataModel = UserDataModel()
-    @Published var accountStatus: AccountStatus = .signOut
+    @Published var accountStatus: AccountStatus = .none
     
     init() {
+        // TODO: - あとで色々いじるよー
+        signOut()
         checkAccountStatus()
     }
     
@@ -20,7 +22,7 @@ class AuthenticationManager: ObservableObject {
     func signOut() {
         do {
             try Auth.auth().signOut()
-            accountStatus = .signOut
+            accountStatus = .none
         } catch {
             print("Error")
         }
@@ -39,21 +41,21 @@ class AuthenticationManager: ObservableObject {
             if let user = user {
                 print("Sign-in")
                 print("user: \(user.uid)")
-                self.accountStatus = .signIn
+                self.accountStatus = .existsNoProfile
                 
                 // profileが存在するか判定
                 self.userDataModel.fetchProfileWithoutImages(uid: user.uid, completion: { profile, error in
                     if let _ = profile, error == nil {
-                        // profileが存在する
-                        self.accountStatus = .existProfile
+                        // アカウントが正常に存在する
+                        self.accountStatus = .valid
                     } else if let error = error {
-                        self.accountStatus = .signIn
+                        self.accountStatus = .existsNoProfile
                         print("Error fetching profiles: \(error.localizedDescription)")
                     }
                 })
             } else {
                 print("Sign-out")
-                self.accountStatus = .signOut
+                self.accountStatus = .none
             }
         }
     }

@@ -63,17 +63,15 @@ struct MessageView: View {
                 
                 Button(action: {
                     if isSendMessage {
-                        Task {
-                            sendButtonAnimate.toggle()
-                            
-                            // メッセージ追加
-                            await messageVM.addMessage(
-                                chatPartnerProfile: chatPartnerProfile,
-                                message: typeMessage
-                            )
-                            typeMessage = ""
-                            keybordFocus = false
-                        }
+                        sendButtonAnimate.toggle()
+                        
+                        // メッセージ追加
+                        messageVM.addMessage(
+                            chatPartnerProfile: chatPartnerProfile,
+                            message: typeMessage
+                        )
+                        typeMessage = ""
+                        keybordFocus = false
                     }
                 }, label: {
                     Image(systemName: "paperplane.circle.fill")
@@ -101,13 +99,15 @@ struct MessageView: View {
 
 #Preview {
     MessageView(
-        chatPartnerProfile: ProfileElement(
-            userName: "もも",
-            birth: "",
-            gender: .men,
-            address: "栃木県",
-            profileImages: [],
-            homeImage: Data()
-        )
+        chatPartnerProfile:
+            ProfileElement(
+                userName: "もも",
+                introduction: "",
+                birth: "",
+                gender: .men,
+                address: "栃木県",
+                profileImages: [],
+                homeImage: Data()
+            )
     )
 }

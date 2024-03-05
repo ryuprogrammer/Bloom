@@ -41,22 +41,16 @@ class RegistrationViewModel: ObservableObject {
     }
     
     /// Profile追加メソッド
-    func addProfile(
-        userName: String,
-        birth: String,
-        gender: Gender,
-        address: String,
-        profileImages: [Data],
-        homeImage: Data
-    ) {
+    func addProfile(profile: ProfileElement) {
         userDataModel.addProfile(
             profile: ProfileElement(
-                userName: userName,
-                birth: birth,
-                gender: gender,
-                address: address,
-                profileImages: profileImages,
-                homeImage: homeImage
+                userName: profile.userName,
+                introduction: profile.introduction,
+                birth: profile.birth,
+                gender: profile.gender,
+                address: profile.address,
+                profileImages: profile.profileImages,
+                homeImage: profile.homeImage
             )) { error in
                 print("error: error")
             }

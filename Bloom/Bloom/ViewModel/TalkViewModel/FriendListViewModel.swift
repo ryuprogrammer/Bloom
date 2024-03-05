@@ -12,14 +12,44 @@ class FriendListViewModel: ObservableObject {
     let chatDataModel = ChatDataModel()
     let userDataModel = UserDataModel()
     @Published var newMessageCount: Int = 3
+    @Published var matchedFriendList: [ProfileElement] = []
     private var listener: ListenerRegistration?
     let db = Firestore.firestore()
     /// コレクションの名称
     private let collectionName = "chatRoom"
     let mostLongStringNumber: Int = 16
     
+    init() {
+        fetchMatchedFriendList()
+    }
+    
     deinit {
         listener?.remove()
+    }
+    
+    /// マッチした友達を取得
+    func fetchMatchedFriendList() {
+        matchedFriendList.removeAll()
+        
+        // マッチした友達のUidを取得
+        userDataModel.fetchProfileWithFriendStatus(friendStatus: .likeByMe) { matchedFriendUids, error in
+            guard let uids = matchedFriendUids, error == nil else {
+                print("Error fetching matchedFriendUids: \(error?.localizedDescription ?? "")")
+                return
+            }
+            
+            // マッチした友達の数だけプロフィール取得
+            for uid in uids {
+                print("マッチした友達のUid: \(uid)")
+                self.userDataModel.fetchProfile(uid: uid) { profile, error in
+                    guard let profile = profile else { return }
+                    self.matchedFriendList.append(profile)
+                    print("マッチした友達の名前: \(profile.userName)")
+                }
+            }
+        }
+        
+        print("matchedFriendList.count: \(matchedFriendList.count)")
     }
     
     /// 全ての未読メッセージ数の取得
@@ -50,48 +80,6 @@ class FriendListViewModel: ObservableObject {
         }
     }
     
-    /// roomIDを指定して未読メッセージ数をリアルタイムで更新
-//    func fetchNewMessageCount(chatPartnerProfile: ProfileElement) {
-//        self.newMessageCount = 0
-//        guard let roomID = fetchRoomID(chatPartnerProfile: chatPartnerProfile) else { return }
-//        // 以前のリスナーを削除
-//        listener?.remove()
-//        
-//        guard let partnerUid = chatPartnerProfile.id else { return }
-//        
-//        // 新しいクエリとリスナーの設定
-//        listener = db.collection(collectionName).document(roomID).collection("messages")
-//            .addSnapshotListener { [weak self] (querySnapshot, error) in
-//                guard let self = self else { return }
-//                
-//                if let error = error {
-//                    print(error.localizedDescription)
-//                    return
-//                }
-//                
-//                guard let querySnapshot = querySnapshot else {
-//                    print("Error fetching documents: Query snapshot is nil")
-//                    return
-//                }
-//                
-//                // 取得したドキュメントの変更を処理
-//                let newMessages = querySnapshot.documentChanges.filter { change in
-//                    change.type == .added || change.type == .modified
-//                }.compactMap { change -> MessageElement? in
-//                    try? change.document.data(as: MessageElement.self)
-//                }.filter { message in
-//                    message.isNewMessage == true && message.uid == partnerUid
-//                }
-//                
-//                // 新規メッセージをカウント
-//                DispatchQueue.main.async {
-//                    self.newMessageCount = newMessages.count
-//                    print("相手（り）\(chatPartnerProfile.userName)")
-//                    print("newMessageCount（り）: \(self.newMessageCount)")
-//                }
-//            }
-//    }
-    
     /// Listに表示する文字の長さを調整
     func adjustStringLengths(message: String) -> String {
         var adjustMessage: String = ""
@@ -103,7 +91,6 @@ class FriendListViewModel: ObservableObject {
         
         return adjustMessage
     }
-
     
     /// roomID取得メソッド
     func fetchRoomID(chatPartnerProfile: ProfileElement) -> String? {

@@ -66,6 +66,7 @@ struct FriendListRowView: View {
         FriendListRowView(
             chatPartnerProfile: ProfileElement(
                 userName: "もも",
+                introduction: "",
                 birth: "",
                 gender: .men,
                 address: "栃木県",
@@ -77,6 +78,7 @@ struct FriendListRowView: View {
         FriendListRowView(
             chatPartnerProfile: ProfileElement(
                 userName: "もも",
+                introduction: "",
                 birth: "",
                 gender: .men,
                 address: "栃木県",

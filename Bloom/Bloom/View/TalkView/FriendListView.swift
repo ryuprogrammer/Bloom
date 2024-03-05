@@ -16,7 +16,7 @@ struct FriendListView: View {
     
     var body: some View {
         NavigationStack {
-            List(friendsListData.friendProfiles, id: \.id) { profile in
+            List(friendListViewModel.matchedFriendList, id: \.id) { profile in
                 ZStack {
                     NavigationLink(
                         destination: MessageView(

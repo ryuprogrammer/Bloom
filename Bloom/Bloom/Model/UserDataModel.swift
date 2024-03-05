@@ -59,7 +59,7 @@ class UserDataModel {
     
     /// friends追加メソッド
     func addFriendsToList(
-        state: FriendEditState,
+        state: FriendStatus,
         friendProfile: ProfileElement,
         completion: @escaping (Error?) -> Void
     ) {
@@ -74,7 +74,7 @@ class UserDataModel {
         
         // 相手のデータ
         let friendUidAndState: FriendsElement = FriendsElement(
-            friedUid: friendUid,
+            friendUid: friendUid,
             status: state
         )
         
@@ -119,6 +119,7 @@ class UserDataModel {
         // Firestoreに保存するデータを辞書形式で用意
         let firestoreData: [String: Any] = [
             "userName": profile.userName,
+            "introduction": profile.introduction,
             "birth": profile.birth,
             "gender": profile.gender.rawValue,
             "address": profile.address
@@ -159,6 +160,68 @@ class UserDataModel {
         }
     }
     
+    /// FriendStatus（Userの関係値）を指定してUidを取得
+    func fetchProfileWithFriendStatus(friendStatus: FriendStatus, completion: @escaping ([String]?, Error?) -> Void) {
+        // UIDを取得
+        let uid = fetchUid()
+        
+        let db = Firestore.firestore()
+        
+        db.collection("friends").document(uid).collection("friendList").getDocuments { (querySnapshot, error) in
+            print("ここは実行されている")
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+            
+            var documentIDs: [String] = []
+            
+            if let querySnapshot = querySnapshot {
+                print("documents.count: \(querySnapshot.documents.count)")
+                for docment in querySnapshot.documents {
+                    let data = docment.data()
+                    print("data: \(data)")
+                    
+                    guard let friendUid = data["friendUid"] as? String else {
+                        print("エラー: friendUid")
+                        continue
+                    }
+                    
+                    guard let statusString = data["status"] as? String else {
+                        print("エラー: statusString")
+                        continue
+                    }
+                    
+                    guard let status = FriendStatus(rawValue: statusString) else {
+                        print("エラー: status")
+                        continue
+                    }
+                    
+                    if status == friendStatus {
+                        documentIDs.append(friendUid)
+                    }
+                }
+            }
+            
+            completion(documentIDs, nil)
+        }
+    }
+    
+    /// SignInUserのUidを全て取得
+    func fetchProfileAllUids(completion: @escaping ([String]?, Error?) -> Void) {
+        let db = Firestore.firestore()
+        
+        db.collection("profiles").getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+            
+            let documentIDs = querySnapshot?.documents.map { $0.documentID }
+            completion(documentIDs, nil)
+        }
+    }
+    
     /// SignInUserのuidを数を指定して取得
     func fetchProfileUids(limit: Int, completion: @escaping ([String]?, Error?) -> Void) {
         let db = Firestore.firestore()
@@ -190,6 +253,7 @@ class UserDataModel {
             }
             
             guard let userName = data["userName"] as? String,
+                  let introduction = data["introduction"] as? String,
                   let birth = data["birth"] as? String,
                   let genderRaw = data["gender"] as? String,
                   let gender = Gender(rawValue: genderRaw),
@@ -199,7 +263,7 @@ class UserDataModel {
             }
             
             // 画像データは含まれません
-            let profile = ProfileElement(userName: userName, birth: birth, gender: gender, address: address, profileImages: [], homeImage: Data())
+            let profile = ProfileElement(userName: userName, introduction: introduction, birth: birth, gender: gender, address: address, profileImages: [], homeImage: Data())
             completion(profile, nil)
         }
     }
@@ -218,6 +282,7 @@ class UserDataModel {
             }
             
             guard let userName = data["userName"] as? String,
+                  let introduction = data["introduction"] as? String,
                   let birth = data["birth"] as? String,
                   let genderRaw = data["gender"] as? String,
                   let gender = Gender(rawValue: genderRaw),
@@ -264,7 +329,7 @@ class UserDataModel {
                     
                     group.notify(queue: .main) {
                         // すべてのプロファイル画像がダウンロードされた後に実行
-                        let profile = ProfileElement(id: uid, userName: userName, birth: birth, gender: gender, address: address, profileImages: profileImagesData, homeImage: homeImageData)
+                        let profile = ProfileElement(id: uid, userName: userName, introduction: introduction, birth: birth, gender: gender, address: address, profileImages: profileImagesData, homeImage: homeImageData)
                         completion(profile, nil)
                     }
                 }

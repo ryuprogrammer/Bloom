@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RegistrationView: View {
+    let explanation = ExplanationText()
     fileprivate var registrationVM = RegistrationViewModel()
     /// 画面遷移
     @State var isShowHomeView: Bool = false
@@ -64,87 +65,56 @@ struct RegistrationView: View {
                 registrationState: $registrationState
             )
         } else if registrationState == .doneAll {
-            VStack {
-                Spacer()
-                
-                Text("Bloomをはじめよう")
-                    .font(.largeTitle)
-                
-                Spacer()
-                
-                Button(action: {
-                    withAnimation {
-                        registrationVM.addProfile(
-                            userName: name,
-                            birth: birth,
-                            gender: gender,
-                            address: address,
-                            profileImages: profileImages,
-                            homeImage: homeImage
-                        )
-                        
-                        registrationState = .toHome
-                    }
-                }, label: {
-                    Text("アプリをはじめる")
-                        .font(.title2)
+            ZStack {
+                Color.pink.opacity(0.8)
+                    .ignoresSafeArea(.all)
+                VStack {
+                    Spacer()
+                    
+                    Image("logoWhite")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 100, height: 100)
+                    
+                    Text("Bloomをはじめよう")
+                        .font(.largeTitle)
+                        .fontWeight(.semibold)
                         .foregroundStyle(Color.white)
-                        .frame(height: 55)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.pink.opacity(0.8))
-                        .clipShape(Capsule())
-                        .padding()
-                })
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        withAnimation {
+                            registrationVM.addProfile(
+                                profile: ProfileElement(
+                                    userName: name,
+                                    // TODO: - あとでここを空にする
+                                    introduction: explanation.testIntroduction,
+                                    birth: birth,
+                                    gender: gender,
+                                    address: address,
+                                    profileImages: profileImages,
+                                    homeImage: homeImage
+                                )
+                            )
+                            
+                            registrationState = .toHome
+                        }
+                    }, label: {
+                        Text("アプリをはじめる")
+                            .font(.title2)
+                            .foregroundStyle(Color.pink.opacity(0.8))
+                            .frame(height: 55)
+                            .frame(maxWidth: .infinity)
+                            .background(Color.white)
+                            .clipShape(Capsule())
+                            .padding()
+                    })
+                }
             }
         } else if registrationState == .toHome {
             HomeView()
         }
-        
-//        if isShowHomeView {
-//            HomeView()
-//        } else {
-//            
-//            NavigationStack {
-//                ZStack {
-//                    VStack {
-//                        Text("名前")
-//                        TextField("名前を入力", text: $userName)
-//                            .frame(width: 200)
-//                            .textFieldStyle(RoundedBorderTextFieldStyle())
-//                            .onSubmit {
-//                                withAnimation {
-//                                    isDoneType = true
-//                                }
-//                            }
-//                    }
-//                    
-//                    VStack {
-//                        Spacer()
-//                        
-//                        if isDoneType {
-//                            Button(action: {
-//                                // プロフィール登録
-//                                registrationVM.addProfile(
-//                                    userName: userName,
-//                                    age: 23,
-//                                    gender: .men
-//                                )
-//                                isShowHomeView = true
-//                            }, label: {
-//                                Text("アプリスタート")
-//                                    .font(.title2)
-//                                    .foregroundStyle(Color.white)
-//                                    .padding(12)
-//                                    .background(Color.cyan)
-//                                    .clipShape(Capsule())
-//                            })
-//                            .padding(.vertical, 50)
-//                        }
-//                    }
-//                }
-//                .navigationTitle("プロフィール")
-//            }
-//        }
     }
 }
 
