@@ -8,11 +8,8 @@
 import SwiftUI
 
 struct FriendListView: View {
-    var messageVM = MessageViewModel()
     @ObservedObject var friendsListData = RegistrationViewModel()
     @ObservedObject var friendListViewModel = FriendListViewModel()
-    /// Mockデータ
-    let mockData = MockData()
     
     var body: some View {
         NavigationStack {
@@ -35,7 +32,6 @@ struct FriendListView: View {
             .navigationTitle("トーク")
         }
     }
-
 }
 
 #Preview {

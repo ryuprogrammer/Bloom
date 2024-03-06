@@ -50,7 +50,6 @@ struct FriendListRowView: View {
             Task {
                 await friendListViewModel.fetchNewMessageCountAll(chatPartnerProfile: chatPartnerProfile)
             }
-//            friendListViewModel.fetchNewMessageCount(chatPartnerProfile: chatPartnerProfile)
             messageVM.fetchRoomIDMessages(chatPartnerProfile: chatPartnerProfile)
             newMessageCount = friendListViewModel.newMessageCount
             
