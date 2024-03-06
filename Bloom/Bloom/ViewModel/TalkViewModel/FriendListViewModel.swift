@@ -9,22 +9,16 @@ import Foundation
 import FirebaseFirestore
 
 class FriendListViewModel: ObservableObject {
-    let chatDataModel = ChatDataModel()
-    let userDataModel = UserDataModel()
+    private var chatDataModel = ChatDataModel()
+    private var userDataModel = UserDataModel()
     @Published var newMessageCount: Int = 3
-    @Published var matchedFriendList: [ProfileElement] = []
-    private var listener: ListenerRegistration?
-    let db = Firestore.firestore()
+    @Published private(set) var matchedFriendList: [ProfileElement] = []
     /// コレクションの名称
     private let collectionName = "chatRoom"
     let mostLongStringNumber: Int = 16
     
     init() {
         fetchMatchedFriendList()
-    }
-    
-    deinit {
-        listener?.remove()
     }
     
     /// マッチした友達を取得
@@ -54,6 +48,8 @@ class FriendListViewModel: ObservableObject {
     
     /// 全ての未読メッセージ数の取得
     func fetchNewMessageCountAll(chatPartnerProfile: ProfileElement) async {
+        let db = Firestore.firestore()
+        
         guard let roomID = fetchRoomID(chatPartnerProfile: chatPartnerProfile) else { return }
 
         do {
@@ -71,25 +67,10 @@ class FriendListViewModel: ObservableObject {
                 self.newMessageCount = messages.filter { message in
                     message.isNewMessage == true && message.name == chatPartnerProfile.userName
                 }.count
-
-                print("相手（全）\(chatPartnerProfile.userName)")
-                print("newMessageCount（全）: \(self.newMessageCount)")
             }
         } catch {
             print("fetchMessages error: \(error.localizedDescription)")
         }
-    }
-    
-    /// Listに表示する文字の長さを調整
-    func adjustStringLengths(message: String) -> String {
-        var adjustMessage: String = ""
-        if message.count >= mostLongStringNumber {
-            adjustMessage = message.suffix(mostLongStringNumber) + "..."
-        } else {
-            adjustMessage = message
-        }
-        
-        return adjustMessage
     }
     
     /// roomID取得メソッド

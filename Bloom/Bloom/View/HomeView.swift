@@ -10,30 +10,48 @@ import SwiftUI
 struct HomeView: View {
     /// タブの選択項目を保持する
     @State var selection = 3
+    
+    init() {
+          // 背景色
+          UITabBar.appearance().backgroundColor = .white
+    }
+    
     var body: some View {
         TabView(selection: $selection) {
-            SwipeCardView()
+            SwipeView()
                 .tabItem {
-                    Image(systemName: "cloud.rainbow.half.fill")
+                    VStack {
+                        Image(systemName: "person.crop.rectangle.stack")
+                        Text("スワイプ")
+                    }
                 }
                 .tag(1)
             
-            Text("Tab Content 2")
+            LikedView()
                 .tabItem {
-                    Image(systemName: "lightbulb.max.fill")
+                    VStack {
+                        Image(systemName: "heart")
+                        Text("いいね")
+                    }
                 }
                 .tag(2)
             
             FriendListView()
                 .tabItem {
-                    Image(systemName: "message")
+                    VStack {
+                        Image(systemName: "message")
+                        Text("トーク")
+                    }
                 }
                 .tag(3)
                 .badge(5)
             
             Text("Tab Content 2")
                 .tabItem {
-                    Image(systemName: "person.fill")
+                    VStack {
+                        Image(systemName: "person.fill")
+                        Text("ホーム")
+                    }
                 }
                 .tag(4)
         }

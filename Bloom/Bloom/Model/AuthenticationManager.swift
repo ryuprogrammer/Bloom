@@ -7,8 +7,6 @@ class AuthenticationManager: ObservableObject {
     @Published var accountStatus: AccountStatus = .none
     
     init() {
-        // TODO: - あとで色々いじるよー
-        signOut()
         checkAccountStatus()
     }
     
@@ -25,6 +23,19 @@ class AuthenticationManager: ObservableObject {
             accountStatus = .none
         } catch {
             print("Error")
+        }
+    }
+    
+    func deleteUser() {
+        if let user = Auth.auth().currentUser {
+            user.delete { error in
+                if let error = error {
+                    print("error: \(error.localizedDescription)")
+                } else {
+                    print("Account deleted")
+                    self.accountStatus = .none
+                }
+            }
         }
     }
     

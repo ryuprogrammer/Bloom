@@ -35,6 +35,19 @@ struct MessageView: View {
                 }
                 .listStyle(PlainListStyle())
                 .navigationBarTitle(chatPartnerProfile.userName, displayMode: .inline)
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        VStack {
+                            DataImage(dataImage: chatPartnerProfile.homeImage)
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 40, height: 40)
+                                .clipShape(Circle())
+                            
+                            Text(chatPartnerProfile.userName)
+                                .foregroundStyle(Color.white)
+                        }
+                    }
+                }
                 .onChange(of: messageVM.messages) {
                     withAnimation {
                         if let lastMessage = messageVM.messages.last {
