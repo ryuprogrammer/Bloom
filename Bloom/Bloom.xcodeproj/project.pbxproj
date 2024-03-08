@@ -24,13 +24,13 @@
 		1F4822FF2B98C63300098AAE /* LikedCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4822FE2B98C63300098AAE /* LikedCardView.swift */; };
 		1F4823012B98C7E300098AAE /* LikedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4823002B98C7E300098AAE /* LikedView.swift */; };
 		1F4823032B99803D00098AAE /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4823022B99803D00098AAE /* MyPageView.swift */; };
-		1F4823052B9A214500098AAE /* MyPageEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4823042B9A214500098AAE /* MyPageEditView.swift */; };
 		1F4823082B9A27D500098AAE /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4823072B9A27D500098AAE /* MyPageViewModel.swift */; };
 		1F48230A2B9AE38000098AAE /* ProfileImageEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4823092B9AE38000098AAE /* ProfileImageEditView.swift */; };
 		1F48230C2B9B09C500098AAE /* IntroductionEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48230B2B9B09C500098AAE /* IntroductionEditView.swift */; };
 		1F48230E2B9B250E00098AAE /* AddressEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48230D2B9B250E00098AAE /* AddressEditView.swift */; };
 		1F4823102B9B278E00098AAE /* BirthEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48230F2B9B278E00098AAE /* BirthEditView.swift */; };
 		1F54CFE02B95DD610084D766 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54CFDF2B95DD610084D766 /* SignInView.swift */; };
+		1F78BDA12B9B7B8C00E2FE66 /* FriendPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78BDA02B9B7B8C00E2FE66 /* FriendPreviewView.swift */; };
 		1F9C2DD42B8DD3D500994981 /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */; };
 		1F9C2DD62B8DE54400994981 /* MessageCountElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */; };
 		1F9C2DDA2B8DFE7A00994981 /* FriendListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */; };
@@ -89,13 +89,13 @@
 		1F4822FE2B98C63300098AAE /* LikedCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedCardView.swift; sourceTree = "<group>"; };
 		1F4823002B98C7E300098AAE /* LikedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedView.swift; sourceTree = "<group>"; };
 		1F4823022B99803D00098AAE /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
-		1F4823042B9A214500098AAE /* MyPageEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditView.swift; sourceTree = "<group>"; };
 		1F4823072B9A27D500098AAE /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		1F4823092B9AE38000098AAE /* ProfileImageEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageEditView.swift; sourceTree = "<group>"; };
 		1F48230B2B9B09C500098AAE /* IntroductionEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionEditView.swift; sourceTree = "<group>"; };
 		1F48230D2B9B250E00098AAE /* AddressEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEditView.swift; sourceTree = "<group>"; };
 		1F48230F2B9B278E00098AAE /* BirthEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthEditView.swift; sourceTree = "<group>"; };
 		1F54CFDF2B95DD610084D766 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		1F78BDA02B9B7B8C00E2FE66 /* FriendPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendPreviewView.swift; sourceTree = "<group>"; };
 		1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountElement.swift; sourceTree = "<group>"; };
 		1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListRowView.swift; sourceTree = "<group>"; };
@@ -171,7 +171,6 @@
 			isa = PBXGroup;
 			children = (
 				1F4823022B99803D00098AAE /* MyPageView.swift */,
-				1F4823042B9A214500098AAE /* MyPageEditView.swift */,
 				1F48230D2B9B250E00098AAE /* AddressEditView.swift */,
 				1F48230F2B9B278E00098AAE /* BirthEditView.swift */,
 				1F48230B2B9B09C500098AAE /* IntroductionEditView.swift */,
@@ -343,6 +342,7 @@
 			isa = PBXGroup;
 			children = (
 				1FEF28462B8A217100EAFB3E /* FriendListView.swift */,
+				1F78BDA02B9B7B8C00E2FE66 /* FriendPreviewView.swift */,
 				1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */,
 				1FF59CB62B89077E0031C580 /* MessageView.swift */,
 				1FF59CB32B8670570031C580 /* MessageRowView.swift */,
@@ -481,6 +481,7 @@
 				1F4822FF2B98C63300098AAE /* LikedCardView.swift in Sources */,
 				1F1FEB3F2B9481C100F8AEA3 /* DataImage.swift in Sources */,
 				1F48230E2B9B250E00098AAE /* AddressEditView.swift in Sources */,
+				1F78BDA12B9B7B8C00E2FE66 /* FriendPreviewView.swift in Sources */,
 				1FF59C652B84CEEB0031C580 /* BloomApp.swift in Sources */,
 				1FF59CB72B89077E0031C580 /* MessageView.swift in Sources */,
 				1F1FEB3B2B93716E00F8AEA3 /* SwipeViewModel.swift in Sources */,
@@ -489,7 +490,6 @@
 				1FF59CB12B8667860031C580 /* MessageViewModel.swift in Sources */,
 				1FF59CB42B8670570031C580 /* MessageRowView.swift in Sources */,
 				1FEF28452B8A149900EAFB3E /* UserDataModel.swift in Sources */,
-				1F4823052B9A214500098AAE /* MyPageEditView.swift in Sources */,
 				1FF59C902B84FCD80031C580 /* FirebaseAuthUIView.swift in Sources */,
 				1F1FEB322B92C2DA00F8AEA3 /* Prefectures.swift in Sources */,
 				1F1FEB342B92DAE200F8AEA3 /* GenderEntryView.swift in Sources */,

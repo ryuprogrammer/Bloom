@@ -12,6 +12,8 @@ struct FriendListView: View {
     @State var talkFriendProfiles: [ProfileElement] = []
     @State var matchFriendProfiles: [ProfileElement] = []
     
+    let iconSize = UIScreen.main.bounds.width / 6
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -22,7 +24,7 @@ struct FriendListView: View {
                                 ForEach(talkFriendProfiles, id: \.id) { profile in
                                     DataImage(dataImage: profile.homeImage)
                                         .aspectRatio(contentMode: .fill)
-                                        .frame(width: 50, height: 50)
+                                        .frame(width: iconSize, height: iconSize)
                                         .clipShape(Circle())
                                 }
                             }
@@ -40,7 +42,6 @@ struct FriendListView: View {
                         Spacer()
                     }
                     .frame(height: 30)
-                    .background(Color.blue)
                 }
                 
                 Section {
@@ -67,7 +68,6 @@ struct FriendListView: View {
                         Spacer()
                     }
                     .frame(height: 30)
-                    .background(Color.blue)
                 }
                 
                 Spacer()
