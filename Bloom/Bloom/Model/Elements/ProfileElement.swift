@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct ProfileElement: Codable {
+struct ProfileElement: Codable, Equatable {
     @DocumentID var id: String?
     var userName: String
     var introduction: String

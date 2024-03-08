@@ -11,7 +11,7 @@ struct LikedCardView: View {
     var card: LikedCardModel
     
     // 画面横幅取得→写真の横幅と縦幅に利用
-    let imageWidth = (UIScreen.main.bounds.width / 2) - 12
+    let imageWidth = (UIScreen.main.bounds.width / 2) - 20
     let imageHeight = (UIScreen.main.bounds.height / 4)
     
     var body: some View {

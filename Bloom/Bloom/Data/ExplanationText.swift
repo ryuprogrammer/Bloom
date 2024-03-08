@@ -21,4 +21,8 @@ struct ExplanationText {
     
     // MARK: - TestData
     let testIntroduction: String = "プロフィールを見ていただいてありがとうございます！\n週末は家で演奏会を開いています！よかったら見に来てください！"
+    
+    // MARK: - MyPageEditView
+    let introductionEditDescription: String = "自己紹介文を120字以内で入力してください。"
+    let introductionEditError: String = "120文字以内で入力してください。"
 }

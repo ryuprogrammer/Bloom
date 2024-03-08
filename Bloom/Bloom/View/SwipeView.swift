@@ -66,7 +66,7 @@ struct SwipeView: View {
                         )
                 }
             }
-            .navigationBarTitle("Bloom", displayMode: .inline)
+            .navigationBarTitle("スワイプしよう！", displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Image(systemName: "questionmark.circle")

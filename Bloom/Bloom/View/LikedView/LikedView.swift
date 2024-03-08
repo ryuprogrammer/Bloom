@@ -10,16 +10,14 @@ import SwiftUI
 struct LikedView: View {
     @ObservedObject var swipeViewModel = SwipeViewModel()
     @State var profiles: [LikedCardModel] = []
-    @State var isLike: Bool? = nil
-    @State var offset: CGFloat? = .zero
     
     let iconSize = UIScreen.main.bounds.width / 14
-    private var columns: [GridItem] = Array(repeating: .init(.flexible(), spacing: 20), count: 2)
+    private var columns: [GridItem] = Array(repeating: .init(.flexible(), spacing: 10), count: 2)
     
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVGrid(columns: columns, spacing: 20) {
+                LazyVGrid(columns: columns) {
                     ForEach($profiles) { $card in
                         LikedCardView(card: card)
                             .offset(x: card.offset.width, y: card.offset.height)
@@ -33,9 +31,9 @@ struct LikedView: View {
                                         withAnimation {
                                             if abs(gesture.translation.width) > 120 {
                                                 if gesture.startLocation.x < gesture.location.x {
-                                                    isLike = true
+                                                    card.isLike = true
                                                 } else if gesture.startLocation.x > gesture.location.x {
-                                                    isLike = false
+                                                    card.isLike = false
                                                 }
                                             }
                                         }
@@ -49,13 +47,12 @@ struct LikedView: View {
                                                     swipeViewModel.addFriendsToList(state: .unLikeByMe, friendProfile: card.profile)
                                                 }
                                                 profiles.removeAll { $0.id == card.id }
-                                                isLike = nil
                                             } else {
                                                 card.offset = .zero
-                                                isLike = nil
                                             }
+                                            card.isLike = nil
+                                            card.isDragging = false
                                         }
-                                        card.isDragging = false
                                     }
                             )
                     }
@@ -96,6 +93,7 @@ struct LikedCardModel: Identifiable {
     var id: Int
     var profile: ProfileElement
     var offset: CGSize = .zero
+    var isLike: Bool? = nil
     var isDragging: Bool = false
 }
 

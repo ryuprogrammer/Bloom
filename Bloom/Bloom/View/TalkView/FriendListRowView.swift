@@ -32,10 +32,12 @@ struct FriendListRowView: View {
                 
                 HStack(alignment: .bottom) {
                     Text(chatPartnerProfile.userName)
+                        .foregroundStyle(Color.black)
                         .font(.title)
-                        .fontWeight(.heavy)
+                        .fontWeight(.semibold)
                     
                     Text(chatPartnerProfile.birth.toAge() + "・" + chatPartnerProfile.address)
+                        .foregroundStyle(Color.black)
                         .font(.title3)
                 }
                 
@@ -51,6 +53,7 @@ struct FriendListRowView: View {
             
             Spacer()
             
+            // 新規メッセージの数
             if newMessageCount != 0 {
                 Text(String(newMessageCount))
                     .font(.title3)

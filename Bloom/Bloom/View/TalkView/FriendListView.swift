@@ -39,6 +39,8 @@ struct FriendListView: View {
                         
                         Spacer()
                     }
+                    .frame(height: 30)
+                    .background(Color.blue)
                 }
                 
                 Section {
@@ -64,6 +66,8 @@ struct FriendListView: View {
                         
                         Spacer()
                     }
+                    .frame(height: 30)
+                    .background(Color.blue)
                 }
                 
                 Spacer()

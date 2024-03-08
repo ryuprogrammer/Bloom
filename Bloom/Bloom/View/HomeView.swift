@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     /// タブの選択項目を保持する
-    @State var selection = 3
+    @State var selection = 1
     
     init() {
           // 背景色
@@ -46,7 +46,7 @@ struct HomeView: View {
                 .tag(3)
                 .badge(5)
             
-            Text("Tab Content 2")
+            MyPageView()
                 .tabItem {
                     VStack {
                         Image(systemName: "person.fill")
