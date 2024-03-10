@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct FriendListView: View {
+    @Environment(\.modelContext) private var context
+    @Query private var talkFriendElement: [TalkFriendElement]
+    
     @ObservedObject var friendListViewModel = FriendListViewModel()
     @State var talkFriendProfiles: [ProfileElement] = []
     @State var matchFriendProfiles: [ProfileElement] = []
@@ -78,6 +82,25 @@ struct FriendListView: View {
         .onChange(of: friendListViewModel.matchedFriendList.count) {
             talkFriendProfiles.removeAll()
             talkFriendProfiles.append(contentsOf: friendListViewModel.matchedFriendList)
+        }
+        .onAppear {
+            // 最初はSwiftDataのデータを描画
+            if talkFriendProfiles.isEmpty && !talkFriendElement.isEmpty {
+                print("最初に描画する条件に合致")
+                for friend in talkFriendElement {
+                    let profile = ProfileElement(
+                        id: friend.profile.id,
+                        userName: friend.profile.userName,
+                        introduction: friend.profile.introduction,
+                        birth: friend.profile.birth,
+                        gender: friend.profile.gender,
+                        address: friend.profile.address,
+                        profileImages: friend.profile.profileImages,
+                        homeImage: friend.profile.homeImage
+                    )
+                    talkFriendProfiles.append(profile)
+                }
+            }
         }
     }
 }

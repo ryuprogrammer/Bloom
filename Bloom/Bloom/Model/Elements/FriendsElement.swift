@@ -15,6 +15,8 @@ struct FriendsElement: Codable {
 }
 
 enum FriendStatus: String, Codable {
+    /// トークしている人
+    case talking = "トークしている人"
     /// マッチした人: トーク画面などで使用→ 両方
     case matchd = "マッチした人"
     /// ライクされた人: 相手からのライク確認画面で使用→ 相手

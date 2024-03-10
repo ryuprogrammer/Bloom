@@ -1,7 +1,11 @@
 import SwiftUI
 import PhotosUI
+import SwiftData
 
 struct MyPageView: View {
+    // TODO: - あとで消す
+    let authenticationManager = AuthenticationManager()
+    let userDefaultsDataModel = UserDefaultsDataModel()
     
     let iconSize = UIScreen.main.bounds.width / 14
     
@@ -20,8 +24,6 @@ struct MyPageView: View {
     // Home写真に関するプロパティ
     @State var selectedItem: PhotosPickerItem?
     @State var uiImage: UIImage = UIImage()
-    @State var homeImage: Data = Data()
-    @State var isImageValid: Bool = false
     // 画面横幅取得→写真の横幅と縦幅に利用
     let homeImageSize = UIScreen.main.bounds.width / 3
     let imageWidth = UIScreen.main.bounds.width / 3 - 13
@@ -108,6 +110,16 @@ struct MyPageView: View {
             .listStyle(PlainListStyle())
             .navigationBarTitle("マイページ", displayMode: .inline)
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        authenticationManager.deleteUser()
+                        userDefaultsDataModel.deleteMyProfile()
+                    } label: {
+                        Text("アカウント削除")
+                    }
+
+                }
+                
                 ToolbarItem(placement: .topBarTrailing) {
                     Image(systemName: "gearshape")
                         .resizable()
@@ -132,12 +144,10 @@ struct MyPageView: View {
         }
         .onChange(of: profile) {
             if profile != myPageVM.myProfile {
-                print("myPageVM.upDateMyProfile()")
                 myPageVM.upDateMyProfile(profile: profile)
             }
         }
         .onChange(of: myPageVM.myProfile) {
-            print("profile = myPageVM.myProfile")
             if let profile = myPageVM.myProfile {
                 self.profile = profile
                 self.editName = profile.userName
@@ -187,10 +197,9 @@ struct MyPageView: View {
                     self.uiImage = uiImage
                     
                     if let imageData = uiImage.jpegData(compressionQuality: 0.1) {
-                        homeImage = imageData
+                        profile.homeImage = imageData
                     }
                 }
-                isImageValid = true
             }
         }
     }

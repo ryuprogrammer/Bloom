@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct FriendListRowView: View {
+    @Environment(\.modelContext) private var context
+    @Query private var talkFriendElement: [TalkFriendElement]
+    
     let chatPartnerProfile: ProfileElement
     @ObservedObject var friendListViewModel = FriendListViewModel()
     @ObservedObject var messageVM = MessageViewModel()
@@ -69,10 +73,19 @@ struct FriendListRowView: View {
             Task {
                 await friendListViewModel.fetchNewMessageCountAll(chatPartnerProfile: chatPartnerProfile)
             }
+            newMessageCount = friendListViewModel.newMessageCount
             if let message = messageVM.messages.last {
                 lastMessage = message.message
+                
+                print("onChangeで更新")
+                friendListViewModel.addTalkFriend(
+                    context: context,
+                    profile: chatPartnerProfile,
+                    lastMessage: message.message,
+                    newMessageCount: newMessageCount,
+                    createAt: message.createAt
+                )
             }
-            newMessageCount = friendListViewModel.newMessageCount
         }
         .onAppear {
             Task {
@@ -85,6 +98,15 @@ struct FriendListRowView: View {
             // 最新のメッセージをListに表示
             if let message = messageVM.messages.last {
                 lastMessage = message.message
+                
+                print("onApperで更新")
+                friendListViewModel.addTalkFriend(
+                    context: context,
+                    profile: chatPartnerProfile,
+                    lastMessage: message.message,
+                    newMessageCount: newMessageCount,
+                    createAt: message.createAt
+                )
             }
         }
     }

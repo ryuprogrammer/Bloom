@@ -15,6 +15,7 @@ class RegistrationViewModel: ObservableObject {
     private var userDataModel = UserDataModel()
     let explanationText = ExplanationText()
     let prefectures = Prefectures()
+    let userDefaultsDataModel = UserDefaultsDataModel()
     
     // 初期化
     init() {
@@ -42,6 +43,7 @@ class RegistrationViewModel: ObservableObject {
     
     /// Profile追加メソッド
     func addProfile(profile: ProfileElement) {
+        // firestrageに追加
         userDataModel.addProfile(
             profile: ProfileElement(
                 userName: profile.userName,
@@ -54,5 +56,8 @@ class RegistrationViewModel: ObservableObject {
             )) { error in
                 print("error: error")
             }
+        
+        // UserDefaultsにも追加する
+        userDefaultsDataModel.addMyProfile(myProfile: profile)
     }
 }

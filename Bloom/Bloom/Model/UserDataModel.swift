@@ -18,6 +18,36 @@ class UserDataModel {
     private var db = Firestore.firestore()
     private let storage = Storage.storage()
     
+    /// 友達関係を指定して、リアルタイム監視
+    func listenFriends(friendStatus: FriendStatus, completion: @escaping ([FriendsElement]?, Error?) -> Void) -> ListenerRegistration {
+        let uid = fetchUid()
+        let listener = db.collection(friendCollectionName).document(uid).collection(friendListCollectionName).addSnapshotListener { (querySnapshot, error) in
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+            
+            var friendsElements: [FriendsElement] = []
+            
+            if let querySnapshot = querySnapshot {
+                for documentChange in querySnapshot.documentChanges {
+                    if documentChange.type == .added {
+                        do {
+                            let friendsElement = try documentChange.document.data(as: FriendsElement.self)
+                            if friendsElement.status == friendStatus {
+                                friendsElements.append(friendsElement)
+                            }
+                        } catch {
+                            completion(nil, error)
+                        }
+                    }
+                }
+            }
+            completion(friendsElements, nil)
+        }
+        return listener
+    }
+    
     /// リアルタイム監視
     func listenProfiles(completion: @escaping ([ProfileElement]?, Error?) -> Void) -> ListenerRegistration {
         let listener = db.collection(collectionName).addSnapshotListener { (querySnapshot, error) in
@@ -57,7 +87,7 @@ class UserDataModel {
         return uid
     }
     
-    /// friends追加メソッド
+    /// friends追加メソッド: ライクとかした時のメソッド
     func addFriendsToList(
         state: FriendStatus,
         friendProfile: ProfileElement,
@@ -75,6 +105,11 @@ class UserDataModel {
         // 相手のデータ
         let friendUidAndState: FriendsElement = FriendsElement(
             friendUid: friendUid,
+            status: state
+        )
+        
+        let myUidAndStatus: FriendsElement = FriendsElement(
+            friendUid: uid,
             status: state
         )
         
@@ -96,7 +131,7 @@ class UserDataModel {
         if state != .unLikeByMe { // この時だけ相手のRefにはデータを追加しない.
             // Firestoreに保存するために、Codableオブジェクトを辞書に変換
             do {
-                try friendDocmentRef.setData(from: friendUidAndState) { error in
+                try friendDocmentRef.setData(from: myUidAndStatus) { error in
                     if let error = error {
                         // エラー処理
                         completion(error)

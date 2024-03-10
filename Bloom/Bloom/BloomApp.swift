@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseCore
 import FirebaseAuthUI
+import SwiftData
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
@@ -47,5 +48,6 @@ struct BloomApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: TalkFriendElement.self)
     }
 }

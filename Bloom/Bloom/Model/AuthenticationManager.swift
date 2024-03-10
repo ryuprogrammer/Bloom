@@ -1,4 +1,6 @@
 import Foundation
+import GoogleSignIn
+import FirebaseCore
 import FirebaseAuth
 
 class AuthenticationManager: ObservableObject {
@@ -27,7 +29,9 @@ class AuthenticationManager: ObservableObject {
     }
     
     func deleteUser() {
-        if let user = Auth.auth().currentUser {
+        let user = Auth.auth().currentUser
+        
+        if let user {
             user.delete { error in
                 if let error = error {
                     print("error: \(error.localizedDescription)")

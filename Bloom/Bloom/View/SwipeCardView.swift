@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SwipeCardView: View {
     var card: CardModel
-    @Binding var isLike: Bool?
     @State var imageNumber: Int = 0
     @State var isShowProfile: Bool = true
     let minImageNumber = 1
@@ -145,8 +144,7 @@ struct SwipeCardView: View {
                         profileImages: [Data(), Data(), Data(), Data()],
                         homeImage: Data()
                     )
-                ),
-                isLike: $isLike
+                )
             )
         }
     }

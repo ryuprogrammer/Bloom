@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BirthEditView: View {
     let explanationText = ExplanationText()
+    @State var showBirth: String = ""
     @Binding var birth: String
     @Binding var path: [MyPagePath]
     @State var isBirthValid: Bool = false
@@ -27,7 +28,7 @@ struct BirthEditView: View {
                     HStack {
                         // 年
                         ForEach(1..<5) { num in
-                            if let birthNumber = birth.forthText(forthNumber: num) {
+                            if let birthNumber = showBirth.forthText(forthNumber: num) {
                                 Text(birthNumber)
                                     .font(.largeTitle)
                             } else {
@@ -41,7 +42,7 @@ struct BirthEditView: View {
                         
                         // 月
                         ForEach(5..<7) { num in
-                            if let birthNumber = birth.forthText(forthNumber: num) {
+                            if let birthNumber = showBirth.forthText(forthNumber: num) {
                                 Text(birthNumber)
                                     .font(.largeTitle)
                             } else {
@@ -55,7 +56,7 @@ struct BirthEditView: View {
                         
                         // 日
                         ForEach(7..<9) { num in
-                            if let birthNumber = birth.forthText(forthNumber: num) {
+                            if let birthNumber = showBirth.forthText(forthNumber: num) {
                                 Text(birthNumber)
                                     .font(.largeTitle)
                             } else {
@@ -69,18 +70,18 @@ struct BirthEditView: View {
                         self.keybordFocus.toggle()
                     }
                     
-                    TextField("", text: $birth)
+                    TextField("", text: $showBirth)
                         .focused(self.$keybordFocus)
                         .padding()
                         .font(.largeTitle)
                         .background(Color.cyan)
                         .opacity(0)
-                        .onChange(of: birth) {
-                            if birth.count > maxBirthLength {
-                                birth = String(birth.prefix(maxBirthLength))
+                        .onChange(of: showBirth) {
+                            if showBirth.count > maxBirthLength {
+                                showBirth = String(showBirth.prefix(maxBirthLength))
                             }
                             
-                            if let _ = birth.toDate() {
+                            if let _ = showBirth.toDate() {
                                 isBirthValid = true
                             } else {
                                 isBirthValid = false
@@ -104,9 +105,8 @@ struct BirthEditView: View {
                 Spacer()
                 
                 Button(action: {
-                    withAnimation {
-                        
-                    }
+                    birth = showBirth
+                    path.removeAll()
                 }, label: {
                     Text("次へ")
                         .font(.title2)
@@ -121,11 +121,12 @@ struct BirthEditView: View {
             }
         }
         .onAppear {
-            if birth.count > maxBirthLength {
-                birth = String(birth.prefix(maxBirthLength))
+            showBirth = birth
+            if showBirth.count > maxBirthLength {
+                showBirth = String(showBirth.prefix(maxBirthLength))
             }
             
-            if let _ = birth.toDate() {
+            if let _ = showBirth.toDate() {
                 isBirthValid = true
             } else {
                 isBirthValid = false

@@ -10,7 +10,6 @@ import SwiftUI
 struct SwipeView: View {
     @ObservedObject var swipeViewModel = SwipeViewModel()
     @State var profiles: [CardModel] = []
-    @State var isLike: Bool? = nil
     @State var offset: CGFloat? = .zero
     
     let iconSize = UIScreen.main.bounds.width / 14
@@ -19,7 +18,7 @@ struct SwipeView: View {
         NavigationStack {
             ZStack {
                 ForEach(Array($profiles.enumerated()), id: \.element.id) { index, $card in
-                    SwipeCardView(card: card, isLike: $isLike)
+                    SwipeCardView(card: card)
                         .offset(x: card.id == profiles.first?.id ? card.offset.width : 0,
                                 y: card.id == profiles.first?.id ? card.offset.height : -CGFloat(index) * 30)
                         .scaleEffect(card.id == profiles.first?.id ? 1 : 1 - CGFloat(index) * 0.05)
@@ -34,10 +33,8 @@ struct SwipeView: View {
                                     withAnimation {
                                         if abs(gesture.translation.width) > 120 {
                                             if gesture.startLocation.x < gesture.location.x {
-                                                isLike = true
                                                 card.isLike = true
                                             } else if gesture.startLocation.x > gesture.location.x {
-                                                isLike = false
                                                 card.isLike = false
                                             }
                                         }
@@ -53,12 +50,9 @@ struct SwipeView: View {
                                                     swipeViewModel.addFriendsToList(state: .unLikeByMe, friendProfile: card.profile)
                                                 }
                                                 profiles.removeAll { $0.id == profiles.first?.id }
-                                                isLike = nil
-                                                card.isLike = nil
                                             } else {
-                                                card.offset = .zero
-                                                isLike = nil
                                                 card.isLike = nil
+                                                card.offset = .zero
                                             }
                                         }
                                     }
@@ -102,7 +96,6 @@ struct CardModel: Identifiable {
     let profile: ProfileElement
     var isLike: Bool? = nil
     var offset: CGSize = .zero // 各カードのオフセットを追加
-    var color: Color = .white // 各カードのカラーを追加
 }
 
 #Preview {

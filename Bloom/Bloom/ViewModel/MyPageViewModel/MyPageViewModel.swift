@@ -11,26 +11,34 @@ import FirebaseAuth
 
 class MyPageViewModel: ObservableObject {
     let userDataModel = UserDataModel()
+    let userDefaultsDataModel = UserDefaultsDataModel()
     @Published var myProfile: ProfileElement? = nil
     
-    /// プロフィール取得
+    /// プロフィール取得：UserDefaults
     func fetchMyProfile() {
-        let uid = userDataModel.fetchUid()
-        
-        userDataModel.fetchProfile(uid: uid, completion: { profile, error in
-            if let profile = profile, error == nil {
-                self.myProfile = profile
-            }
-        })
+        if let profile = userDefaultsDataModel.fetchMyProfile() {
+            myProfile = ProfileElement(
+                userName: profile.userName,
+                introduction: profile.introduction,
+                birth: profile.birth,
+                gender: profile.gender,
+                address: profile.address,
+                profileImages: profile.profileImages,
+                homeImage: profile.homeImage
+            )
+        } else {
+            print("error: fetchMyProfile")
+        }
     }
     
-    /// profile更新
+    /// profile更新：UserDefaultsとfirestrage
     func upDateMyProfile(profile: ProfileElement) {
-        print("更新するプロフィール: \(profile)")
         userDataModel.addProfile(profile: profile) { error in
             if let error = error {
                 print(error.localizedDescription)
             }
         }
+        
+        userDefaultsDataModel.addMyProfile(myProfile: profile)
     }
 }

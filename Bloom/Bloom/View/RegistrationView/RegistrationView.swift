@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct RegistrationView: View {
     let explanation = ExplanationText()
@@ -89,7 +90,7 @@ struct RegistrationView: View {
                                 profile: ProfileElement(
                                     userName: name,
                                     // TODO: - あとでここを空にする
-                                    introduction: explanation.testIntroduction,
+                                    introduction: "",
                                     birth: birth,
                                     gender: gender,
                                     address: address,
