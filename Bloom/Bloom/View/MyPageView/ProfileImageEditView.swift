@@ -14,10 +14,12 @@ struct ProfileImageEditView: View {
     @State var uiImages: [UIImage] = []
     @Binding var profileImages: [Data]
     @State var isPhotoValid: Bool = false
+    // 追加できる残りの枚数
+    @State var restMaxCount = 6
     let maxSelectionCount: Int = 6
     let minSelectionCount: Int = 2
     // 画面横幅取得→写真の横幅と縦幅に利用
-    let imageWidth = UIScreen.main.bounds.width / 3 - 13
+    let imageWidth = UIScreen.main.bounds.width / 3 - 20
     let imageHeight = UIScreen.main.bounds.height / 5
     
     // 画面遷移用
@@ -36,7 +38,7 @@ struct ProfileImageEditView: View {
                         if number == uiImages.count { // 写真が0枚の時
                             PhotosPicker(
                                 selection: $selectedItems,
-                                maxSelectionCount: maxSelectionCount,
+                                maxSelectionCount: restMaxCount,
                                 selectionBehavior: .ordered,
                                 matching: .images
                             ) {
@@ -56,8 +58,8 @@ struct ProfileImageEditView: View {
                             ZStack {
                                 Image(uiImage: uiImages[number])
                                     .resizable()
+                                    .aspectRatio(contentMode: .fill)
                                     .frame(width: imageWidth, height: imageHeight)
-                                    .aspectRatio(contentMode: .fit)
                                     .clipShape(RoundedRectangle(cornerRadius: 20))
                                 
                                 // 削除ボタン
@@ -69,7 +71,7 @@ struct ProfileImageEditView: View {
                                     .clipShape(Circle())
                                     .offset(x: imageWidth/2-8, y: -imageHeight/2+5)
                                     .onTapGesture {
-                                        selectedItems.remove(at: number)
+                                        uiImages.remove(at: number)
                                     }
                             }
                         } else { // 写真がないフレーム
@@ -77,25 +79,6 @@ struct ProfileImageEditView: View {
                                 .strokeBorder(Color.black, lineWidth: 2)
                                 .frame(width: imageWidth, height: imageHeight)
                         }
-                    }
-                }
-                
-                HStack {
-                    Spacer()
-                    
-                    if uiImages.count == maxSelectionCount {
-                        PhotosPicker(
-                            selection: $selectedItems,
-                            maxSelectionCount: maxSelectionCount,
-                            selectionBehavior: .ordered,
-                            matching: .images
-                        ) {
-                            HStack {
-                                Image(systemName: "arrow.clockwise")
-                                Text("写真を選び直す")
-                            }
-                        }
-                        .padding()
                     }
                 }
                 
@@ -109,20 +92,26 @@ struct ProfileImageEditView: View {
                 
                 Spacer()
             }
+            .onChange(of: uiImages) {
+                // 選択できる写真の数を更新
+                restMaxCount = maxSelectionCount - uiImages.count
+                
+                if uiImages.count >= minSelectionCount {
+                    isPhotoValid = true
+                } else {
+                    isPhotoValid = false
+                }
+            }
             .onChange(of: selectedItems) {
+                // 選択できる写真の数を更新
+                restMaxCount = maxSelectionCount - uiImages.count
                 Task {
-                    uiImages.removeAll()
                     for item in selectedItems {
                         guard let data = try await item.loadTransferable(type: Data.self) else { continue }
                         guard let uiImage = UIImage(data: data) else { continue }
                         uiImages.append(uiImage)
                     }
-                    
-                    if uiImages.count >= minSelectionCount {
-                        isPhotoValid = true
-                    } else {
-                        isPhotoValid = false
-                    }
+                    selectedItems.removeAll()
                 }
             }
             
@@ -130,6 +119,7 @@ struct ProfileImageEditView: View {
                 Spacer()
                 
                 Button(action: {
+                    profileImages.removeAll()
                     for uiImage in uiImages {
                         if let imageData = uiImage.jpegData(compressionQuality: 0.1) {
                             profileImages.append(imageData)
@@ -150,13 +140,17 @@ struct ProfileImageEditView: View {
             }
         }
         .onAppear {
-            if uiImages.count >= minSelectionCount {
-                isPhotoValid = true
-            }
+            // 選択できる写真の数を更新
+            restMaxCount = maxSelectionCount - uiImages.count
+            
             for data in profileImages {
                 if let uiImage = UIImage(data: data) {
                     uiImages.append(uiImage)
                 }
+            }
+            
+            if uiImages.count >= minSelectionCount {
+                isPhotoValid = true
             }
         }
     }

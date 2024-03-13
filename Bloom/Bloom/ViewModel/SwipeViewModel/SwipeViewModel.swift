@@ -1,7 +1,9 @@
 import Foundation
+import SwiftData
 import FirebaseFirestore
 
 class SwipeViewModel: ObservableObject {
+    let swiftDataModel = SwiftDataModel()
     private var userDataModel = UserDataModel()
     @Published private(set) var friendProfiles: [ProfileElement] = []
     let db = Firestore.firestore()
@@ -56,5 +58,36 @@ class SwipeViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    ///  SwipeFriendElementの追加（１つ）
+    func addSwipeFriendElement(
+        context: ModelContext,
+        swipeFriendElement: SwipeFriendElement
+    ) {
+        swiftDataModel.addSwipeFriendElement(
+            context: context,
+            swipeFriendElement: swipeFriendElement
+        )
+    }
+    
+    /// SwipeFriendElementの削除（１つ）
+    func deleteSwipeFriendElement(
+        context: ModelContext,
+        swipeFriendElement: SwipeFriendElement
+    ) {
+        swiftDataModel.deleteSwipeFriendElement(
+            context: context,
+            swipeFriendElement: swipeFriendElement
+        )
+    }
+    
+    /// SwipeFriendElementの削除（全て）
+    func deleteAllSwipeFriendElement(
+        context: ModelContext
+    ) {
+        swiftDataModel.deleteAllSwipeFriendElement(
+            context: context
+        )
     }
 }

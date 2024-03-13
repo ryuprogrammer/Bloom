@@ -29,13 +29,78 @@ class FriendListViewModel: ObservableObject {
                     self?.userDataModel.fetchProfile(uid: friendStatus.friendUid) { profile, error in
                         guard let profile = profile else { return }
                         self?.matchedFriendList.append(profile)
-                        print("マッチした友達の名前: \(profile.userName)")
+                        print("プロフィール取得: userName: \(profile.userName)")
                     }
                 }
             } else if let error = error {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    /// FriendListRowElementを取得(一人分)
+    func fetchFriendListRowElement(talkFriend: ProfileElement) async -> FriendListRowElement? {
+        
+        let allMessages = await chatDataModel.fetchAllMessages(chatPartnerProfile: talkFriend)
+        let lastMessage = chatDataModel.fetchLastMessages(allMessages: allMessages)
+        let newMessageCount = chatDataModel.countNewMessage(allMessages: allMessages, friend: talkFriend)
+        
+        guard let id = talkFriend.id else { return nil }
+        
+        let profileElement = MyProfileElement(
+            id: id,
+            userName: talkFriend.userName,
+            introduction: talkFriend.introduction,
+            birth: talkFriend.birth,
+            gender: talkFriend.gender,
+            address: talkFriend.address,
+            profileImages: talkFriend.profileImages,
+            homeImage: talkFriend.homeImage
+        )
+        
+        let friendListRowElement = FriendListRowElement(
+            profile: profileElement,
+            lastMessage: lastMessage?.message,
+            newMessageCount: newMessageCount,
+            createAt: lastMessage?.createAt
+        )
+        
+        return friendListRowElement
+    }
+    
+    /// トークしてる友達の分、FriendListRowElementを取得
+    func fetchFriendListRowElement(talkFriends: [ProfileElement]) async -> [FriendListRowElement] {
+        var friendListRowElements: [FriendListRowElement] = []
+        
+        for friend in talkFriends {
+            let allMessages = await chatDataModel.fetchAllMessages(chatPartnerProfile: friend)
+            let lastMessage = chatDataModel.fetchLastMessages(allMessages: allMessages)
+            let newMessageCount = chatDataModel.countNewMessage(allMessages: allMessages, friend: friend)
+            
+            guard let id = friend.id else { return friendListRowElements }
+            
+            let profileElement = MyProfileElement(
+                id: id,
+                userName: friend.userName,
+                introduction: friend.introduction,
+                birth: friend.birth,
+                gender: friend.gender,
+                address: friend.address,
+                profileImages: friend.profileImages,
+                homeImage: friend.homeImage
+            )
+            
+            let friendListRowElement = FriendListRowElement(
+                profile: profileElement,
+                lastMessage: lastMessage?.message,
+                newMessageCount: newMessageCount,
+                createAt: lastMessage?.createAt
+            )
+            
+            friendListRowElements.append(friendListRowElement)
+        }
+        
+        return friendListRowElements
     }
     
     /// マッチした友達を取得
@@ -95,20 +160,21 @@ class FriendListViewModel: ObservableObject {
         return chatDataModel.fetchRoomID(chatPartnerProfile: chatPartnerProfile)
     }
     
-    // TalkFriendElementの追加
-    func addTalkFriend(
+    /// TalkFriendElementの追加（１つ）
+    func addFriendListRowElement(
         context: ModelContext,
-        profile: ProfileElement,
-        lastMessage: String,
-        newMessageCount: Int,
-        createAt: Date
+        friendListRowElement: FriendListRowElement
     ) {
-        swiftDataModel.addTalkFriend(
+        swiftDataModel.addFriendListRowElement(
             context: context,
-            profile: profile,
-            lastMessage: lastMessage,
-            newMessageCount: newMessageCount,
-            createAt: createAt
+            friendListRowElement: friendListRowElement
         )
+    }
+    
+    /// TalkFriendElementの全削除
+    func deleteTalkFriendElement(
+        context: ModelContext
+    ) {
+        swiftDataModel.deleteTalkFriendElement(context: context)
     }
 }

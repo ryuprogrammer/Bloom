@@ -3,39 +3,37 @@ import PhotosUI
 import SwiftData
 
 struct MyPageView: View {
-    // TODO: - あとで消す
+    // MARK: - インスタンス
+    @ObservedObject var myPageVM = MyPageViewModel()
     let authenticationManager = AuthenticationManager()
     let userDefaultsDataModel = UserDefaultsDataModel()
     
+    // MARK: - UI用サイズ指定
     let iconSize = UIScreen.main.bounds.width / 14
+    /// 画面横幅取得→写真の横幅と縦幅に利用
+    let homeImageSize = UIScreen.main.bounds.width / 3
+    let imageWidth = UIScreen.main.bounds.width / 3 - 20
+    let imageHeight = UIScreen.main.bounds.height / 5
     
-    @ObservedObject var myPageVM = MyPageViewModel()
-    @State var profile = ProfileElement(
+    // MARK: - 画面遷移
+    @State private var navigationPath: [MyPagePath] = []
+    
+    // MARK: - その他
+    @State var showingProfile = ProfileElement(
         userName: "もも",
         introduction: "自己紹介文自己紹介文自己紹介",
         birth: "20000421",
         gender: .men,
         address: "栃木県🍓",
-        profileImages: [Data(), Data(), Data(), Data()],
+        profileImages: [],
         homeImage: Data()
     )
+    // ニックネームの入力値
     @State var editName: String = ""
-    
     // Home写真に関するプロパティ
     @State var selectedItem: PhotosPickerItem?
-    @State var uiImage: UIImage = UIImage()
-    // 画面横幅取得→写真の横幅と縦幅に利用
-    let homeImageSize = UIScreen.main.bounds.width / 3
-    let imageWidth = UIScreen.main.bounds.width / 3 - 13
-    let imageHeight = UIScreen.main.bounds.height / 5
-    // 画面遷移に関するプロパティ
-    @State var isShowProfileImageEditView: Bool = false
-    @State var isSHowIntroductionEditView: Bool = false
-    
+    // LazyVGridのcolumns
     var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
-    
-    @State var t: RegistrationState = .noting
-    @State private var navigationPath: [MyPagePath] = []
     
     var body: some View {
         NavigationStack(path: $navigationPath) {
@@ -44,10 +42,10 @@ struct MyPageView: View {
                 VStack(alignment: .center) {
                     homeImageView()
                     
-                    Text(profile.userName)
+                    Text(showingProfile.userName)
                         .font(.largeTitle)
                     
-                    Text(profile.birth.toAge())
+                    Text(showingProfile.birth.toAge() + "・" + showingProfile.address)
                 }
                 .frame(maxWidth: .infinity)
                 .listRowSeparator(.hidden)
@@ -63,16 +61,16 @@ struct MyPageView: View {
                         // TextFieldを右寄せにする
                         .multilineTextAlignment(TextAlignment.trailing)
                         .onSubmit {
-                            profile.userName = editName
+                            showingProfile.userName = editName
                         }
                     }
                     
                     NavigationLink(value: MyPagePath.pathAddress) {
-                        ProfileRow(title: "居住地", detail: profile.address)
+                        ProfileRow(title: "居住地", detail: showingProfile.address)
                     }
                     
                     NavigationLink(value: MyPagePath.pathBirth) {
-                        ProfileRow(title: "生年月日", detail: profile.birth)
+                        ProfileRow(title: "生年月日", detail: showingProfile.birth)
                     }
                 } header: {
                     Text("プロフィール情報")
@@ -80,7 +78,7 @@ struct MyPageView: View {
                 
                 Section {
                     NavigationLink(value: MyPagePath.pathIntroduction) {
-                        Text(profile.introduction)
+                        Text(showingProfile.introduction)
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 } header: {
@@ -89,20 +87,17 @@ struct MyPageView: View {
                 
                 Section {
                     NavigationLink(value: MyPagePath.pathImage) {
-                        VStack {
-                            LazyVGrid(columns: columns) {
-                                ForEach(profile.profileImages, id: \.self) { image in
-                                        DataImage(dataImage: image)
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: imageWidth, height: imageHeight)
-                                        .background(Color.blue)
-                                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                                }
+                        LazyVGrid(columns: columns) {
+                            ForEach(showingProfile.profileImages, id: \.self) { image in
+                                    DataImage(dataImage: image)
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: imageWidth, height: imageHeight)
+                                    .background(Color.blue)
+                                    .clipShape(RoundedRectangle(cornerRadius: 20))
                             }
-                            .padding(.horizontal)
                         }
+                        .frame(maxWidth: .infinity)
                     }
-                    .padding(.horizontal)
                 } header: {
                     Text("プロフィール写真")
                 }
@@ -117,7 +112,6 @@ struct MyPageView: View {
                     } label: {
                         Text("アカウント削除")
                     }
-
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
@@ -132,30 +126,38 @@ struct MyPageView: View {
             .navigationDestination(for: MyPagePath.self) { value in
                 switch value {
                 case .pathImage:
-                    ProfileImageEditView(profileImages: $profile.profileImages, path: $navigationPath)
+                    ProfileImageEditView(profileImages: $showingProfile.profileImages, path: $navigationPath).toolbar(.hidden, for: .tabBar)
                 case .pathIntroduction:
-                    IntroductionEditView(introduction: $profile.introduction, path: $navigationPath)
+                    IntroductionEditView(introduction: $showingProfile.introduction, path: $navigationPath).toolbar(.hidden, for: .tabBar)
                 case .pathAddress:
-                    AddressEditView(address: $profile.address, path: $navigationPath)
+                    AddressEditView(address: $showingProfile.address, path: $navigationPath).toolbar(.hidden, for: .tabBar)
                 case .pathBirth:
-                    BirthEditView(birth: $profile.birth, path: $navigationPath)
+                    BirthEditView(birth: $showingProfile.birth, path: $navigationPath).toolbar(.hidden, for: .tabBar)
                 }
             }
+        }.onAppear { // profile取得
+            myPageVM.fetchMyProfile()
         }
-        .onChange(of: profile) {
-            if profile != myPageVM.myProfile {
-                myPageVM.upDateMyProfile(profile: profile)
-            }
-        }
-        .onChange(of: myPageVM.myProfile) {
+        .accentColor(Color.white)
+        .onChange(of: myPageVM.myProfile) { // UserDefaultsのprofileを描画
             if let profile = myPageVM.myProfile {
-                self.profile = profile
+                self.showingProfile = profile
                 self.editName = profile.userName
             }
         }
-        .onAppear {
-            // profile取得
-            myPageVM.fetchMyProfile()
+        .onChange(of: showingProfile) { // profileの更新
+            guard let dataBaseProfile = myPageVM.myProfile else { return }
+            if showingProfile != dataBaseProfile {
+                Task {
+                    // profileImagesを更新する場合は、一旦firebaseの写真を削除する
+                    // firebaseの写真は更新できないため。
+                    if showingProfile.profileImages != dataBaseProfile.profileImages {
+                        let deleteImageCount = dataBaseProfile.profileImages.count
+                        await myPageVM.deleteProfileImages(deleteImageCount: deleteImageCount)
+                    }
+                    myPageVM.upDateMyProfile(profile: showingProfile)
+                }
+            }
         }
     }
     
@@ -174,7 +176,7 @@ struct MyPageView: View {
                 .frame(width: homeImageSize/2, height: homeImageSize/2)
                 .foregroundStyle(Color.white)
             
-            DataImage(dataImage: profile.homeImage)
+            DataImage(dataImage: showingProfile.homeImage)
                 .aspectRatio(contentMode: .fill)
                 .frame(width: homeImageSize, height: homeImageSize)
                 .clipShape(Circle())
@@ -194,10 +196,9 @@ struct MyPageView: View {
                 Task {
                     guard let data = try? await selectedItem?.loadTransferable(type: Data.self) else { return }
                     guard let uiImage = UIImage(data: data) else { return }
-                    self.uiImage = uiImage
                     
                     if let imageData = uiImage.jpegData(compressionQuality: 0.1) {
-                        profile.homeImage = imageData
+                        showingProfile.homeImage = imageData
                     }
                 }
             }

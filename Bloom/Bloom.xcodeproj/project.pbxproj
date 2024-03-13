@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F1252772B9F35FE0040E32F /* MyProfileElement+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1252762B9F35FE0040E32F /* MyProfileElement+.swift */; };
+		1F12527B2BA08B6F0040E32F /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F12527A2BA08B6F0040E32F /* Date+.swift */; };
+		1F12527D2BA097860040E32F /* SwipeFriendElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F12527C2BA097860040E32F /* SwipeFriendElement.swift */; };
+		1F12527F2BA0CD280040E32F /* ProfileElement+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F12527E2BA0CD280040E32F /* ProfileElement+.swift */; };
 		1F1B3CA92B9C2997001F356E /* SwiftDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3CA82B9C2997001F356E /* SwiftDataModel.swift */; };
 		1F1B3CAB2B9C4A12001F356E /* UserDefaultsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3CAA2B9C4A12001F356E /* UserDefaultsDataModel.swift */; };
 		1F1B3CAD2B9CB8BD001F356E /* FriendTalkElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B3CAC2B9CB8BD001F356E /* FriendTalkElement.swift */; };
@@ -75,6 +79,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F1252762B9F35FE0040E32F /* MyProfileElement+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyProfileElement+.swift"; sourceTree = "<group>"; };
+		1F12527A2BA08B6F0040E32F /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		1F12527C2BA097860040E32F /* SwipeFriendElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeFriendElement.swift; sourceTree = "<group>"; };
+		1F12527E2BA0CD280040E32F /* ProfileElement+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileElement+.swift"; sourceTree = "<group>"; };
 		1F1B3CA82B9C2997001F356E /* SwiftDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataModel.swift; sourceTree = "<group>"; };
 		1F1B3CAA2B9C4A12001F356E /* UserDefaultsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsDataModel.swift; sourceTree = "<group>"; };
 		1F1B3CAC2B9CB8BD001F356E /* FriendTalkElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTalkElement.swift; sourceTree = "<group>"; };
@@ -202,6 +210,7 @@
 				1F1FEB412B94929900F8AEA3 /* FriendsElement.swift */,
 				1FEF284A2B8B0DCD00EAFB3E /* AccountStatus.swift */,
 				1F1B3CAC2B9CB8BD001F356E /* FriendTalkElement.swift */,
+				1F12527C2BA097860040E32F /* SwipeFriendElement.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -363,6 +372,9 @@
 			isa = PBXGroup;
 			children = (
 				1F2F1FD22B90F1FA00A9615D /* String+.swift */,
+				1F12527A2BA08B6F0040E32F /* Date+.swift */,
+				1F1252762B9F35FE0040E32F /* MyProfileElement+.swift */,
+				1F12527E2BA0CD280040E32F /* ProfileElement+.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -459,10 +471,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F12527B2BA08B6F0040E32F /* Date+.swift in Sources */,
 				1FEF28472B8A217100EAFB3E /* FriendListView.swift in Sources */,
 				1F4823032B99803D00098AAE /* MyPageView.swift in Sources */,
 				1FF59C8E2B84FC800031C580 /* AuthenticationManager.swift in Sources */,
 				1FF59CBF2B89BE600031C580 /* RegistrationViewModel.swift in Sources */,
+				1F12527F2BA0CD280040E32F /* ProfileElement+.swift in Sources */,
 				1FF59CAF2B86667F0031C580 /* MessageElement.swift in Sources */,
 				1F2F1FC92B90BC5300A9615D /* NameEntryView.swift in Sources */,
 				1F9C2DDA2B8DFE7A00994981 /* FriendListRowView.swift in Sources */,
@@ -473,11 +487,13 @@
 				1F1B3CA92B9C2997001F356E /* SwiftDataModel.swift in Sources */,
 				1F4823012B98C7E300098AAE /* LikedView.swift in Sources */,
 				1F1FEB362B92E31B00F8AEA3 /* ProfileImageEntryView.swift in Sources */,
+				1F1252772B9F35FE0040E32F /* MyProfileElement+.swift in Sources */,
 				1FF59C672B84CEEB0031C580 /* ContentView.swift in Sources */,
 				1F1FEB2F2B92BF5600F8AEA3 /* AddressEntryView.swift in Sources */,
 				1F1FEB382B9322DD00F8AEA3 /* HomeImageEntryView.swift in Sources */,
 				1F48230A2B9AE38000098AAE /* ProfileImageEditView.swift in Sources */,
 				1F2F1FD32B90F1FA00A9615D /* String+.swift in Sources */,
+				1F12527D2BA097860040E32F /* SwipeFriendElement.swift in Sources */,
 				1FF59CBB2B89B1860031C580 /* HomeView.swift in Sources */,
 				1F2F1FD12B90DB7900A9615D /* BirthEntryView.swift in Sources */,
 				1F2F1FC52B90AE2800A9615D /* SwipeView.swift in Sources */,

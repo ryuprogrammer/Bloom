@@ -19,16 +19,18 @@ struct MessageView: View {
         VStack {
             ScrollViewReader { proxy in
                 List(messageVM.messages, id: \.id) { message in
-                    if message.name == chatPartnerProfile.userName {
+                    if message.name == chatPartnerProfile.userName { // 相手のメッセージ
                         MessageRowView(
                             message: message,
-                            isMyMessage: false
+                            isMyMessage: false,
+                            friendProfile: chatPartnerProfile
                         )
                         .listRowSeparator(.hidden)
-                    } else {
+                    } else { // 自分のメッセージ
                         MessageRowView(
                             message: message,
-                            isMyMessage: true
+                            isMyMessage: true,
+                            friendProfile: nil
                         )
                         .listRowSeparator(.hidden)
                     }
@@ -37,15 +39,8 @@ struct MessageView: View {
                 .navigationBarTitle(chatPartnerProfile.userName, displayMode: .inline)
                 .toolbar {
                     ToolbarItem(placement: .principal) {
-                        VStack {
-                            DataImage(dataImage: chatPartnerProfile.homeImage)
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 40, height: 40)
-                                .clipShape(Circle())
-                            
-                            Text(chatPartnerProfile.userName)
-                                .foregroundStyle(Color.white)
-                        }
+                        Text(chatPartnerProfile.userName)
+                            .foregroundStyle(Color.white)
                     }
                 }
                 .onChange(of: messageVM.messages) {
@@ -105,7 +100,6 @@ struct MessageView: View {
             
             // chatPartnerProfileからmessagesを取得
             messageVM.fetchRoomIDMessages(chatPartnerProfile: chatPartnerProfile)
-            print("messages: \(messageVM.messages)")
         }
     }
 }

@@ -13,6 +13,9 @@ class ChatDataModel: ObservableObject {
     var userDataModel = UserDataModel()
     private var db = Firestore.firestore()
     let countCollectionName = "newMessageCount"
+    /// コレクションの名称
+    private let collectionName = "chatRoom"
+    
     /// チャットを追加
     func addMessage(chatPartnerProfile: ProfileElement, message: String) {
         // 自分のUid取得
@@ -50,6 +53,44 @@ class ChatDataModel: ObservableObject {
                     print(error.localizedDescription)
                 }
             })
+    }
+    
+    /// 全てのメッセージ取得
+    func fetchAllMessages(chatPartnerProfile: ProfileElement) async -> [MessageElement] {
+        var allMessages: [MessageElement] = []
+        guard let roomID = fetchRoomID(chatPartnerProfile: chatPartnerProfile) else { return allMessages }
+        
+        do {
+            // `messages`サブコレクションからメッセージを取得
+            let querySnapshot = try await db.collection(collectionName).document(roomID).collection("messages").order(by: "createAt", descending: false).getDocuments()
+            
+            let messages = querySnapshot.documents.compactMap { document in
+                try? document.data(as: MessageElement.self)
+            }
+            
+            allMessages = messages
+        } catch {
+            print("fetchMessages error: \(error.localizedDescription)")
+        }
+        
+        return allMessages
+    }
+    
+    /// lastMessage取得
+    func fetchLastMessages(allMessages: [MessageElement]) -> MessageElement? {
+        if let lastMessage = allMessages.last {
+            return lastMessage
+        }
+        return nil
+    }
+    
+    /// 新規メッセージの数を取得
+    func countNewMessage(allMessages: [MessageElement], friend: ProfileElement) -> Int {
+        let newMessageCount = allMessages.filter { message in
+            message.isNewMessage == true && message.uid == friend.id
+        }.count
+        
+        return newMessageCount
     }
     
     /// roomID取得メソッド

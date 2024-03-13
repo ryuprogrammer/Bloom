@@ -48,6 +48,9 @@ struct BloomApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: TalkFriendElement.self)
+        .modelContainer(for: [
+            FriendListRowElement.self,
+            SwipeFriendElement.self
+        ])
     }
 }

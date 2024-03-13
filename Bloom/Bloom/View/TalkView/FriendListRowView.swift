@@ -10,9 +10,9 @@ import SwiftData
 
 struct FriendListRowView: View {
     @Environment(\.modelContext) private var context
-    @Query private var talkFriendElement: [TalkFriendElement]
+    @Query private var talkFriendElement: [FriendListRowElement]
     
-    let chatPartnerProfile: ProfileElement
+    let friendListRowElement: FriendListRowElement
     @ObservedObject var friendListViewModel = FriendListViewModel()
     @ObservedObject var messageVM = MessageViewModel()
     @State var newMessageCount: Int = 0
@@ -25,7 +25,7 @@ struct FriendListRowView: View {
 
     var body: some View {
         HStack {
-            DataImage(dataImage: chatPartnerProfile.homeImage)
+            DataImage(dataImage: friendListRowElement.profile.homeImage)
                 .aspectRatio(contentMode: .fill)
                 .frame(width: imageSize, height: imageSize)
                 .clipShape(Circle())
@@ -35,19 +35,19 @@ struct FriendListRowView: View {
                 Spacer()
                 
                 HStack(alignment: .bottom) {
-                    Text(chatPartnerProfile.userName)
+                    Text(friendListRowElement.profile.userName)
                         .foregroundStyle(Color.black)
                         .font(.title)
                         .fontWeight(.semibold)
                     
-                    Text(chatPartnerProfile.birth.toAge() + "・" + chatPartnerProfile.address)
+                    Text(friendListRowElement.profile.birth.toAge() + "・" + friendListRowElement.profile.address)
                         .foregroundStyle(Color.black)
                         .font(.title3)
                 }
                 
                 Spacer()
                 
-                Text(lastMessage)
+                Text(friendListRowElement.lastMessage ?? lastMessage)
                     .font(.callout)
                     .foregroundStyle(Color.gray)
                     .lineLimit(1)
@@ -70,44 +70,26 @@ struct FriendListRowView: View {
         }
         .frame(height: viewHeight)
         .onChange(of: messageVM.messages) {
-            Task {
-                await friendListViewModel.fetchNewMessageCountAll(chatPartnerProfile: chatPartnerProfile)
-            }
+            // プロフィールをキャスト
+            let profile = friendListRowElement.profile.toProfileElement()
+            
             newMessageCount = friendListViewModel.newMessageCount
-            if let message = messageVM.messages.last {
-                lastMessage = message.message
-                
-                print("onChangeで更新")
-                friendListViewModel.addTalkFriend(
-                    context: context,
-                    profile: chatPartnerProfile,
-                    lastMessage: message.message,
-                    newMessageCount: newMessageCount,
-                    createAt: message.createAt
-                )
+            if let lastMessage = messageVM.messages.last {
+                // SwiftDataをprofileを指定して更新
+                let upDateIndex = talkFriendElement.firstIndex { $0.profile.id == profile.id }
+                guard let upDateIndex else { return }
+                talkFriendElement[upDateIndex].lastMessage = lastMessage.message
+                try? context.save()
             }
         }
         .onAppear {
-            Task {
-                await friendListViewModel.fetchNewMessageCountAll(chatPartnerProfile: chatPartnerProfile)
-            }
-            // RoomIDを指定して、メッセージを取得
-            messageVM.fetchRoomIDMessages(chatPartnerProfile: chatPartnerProfile)
+            // プロフィールをキャスト
+            let profile = friendListRowElement.profile.toProfileElement()
+            
+            // RoomIDを指定して、メッセージを取得: リアルタイム監視スタート
+            messageVM.fetchRoomIDMessages(chatPartnerProfile: profile)
             // 新規メッセージの数を取得
             newMessageCount = friendListViewModel.newMessageCount
-            // 最新のメッセージをListに表示
-            if let message = messageVM.messages.last {
-                lastMessage = message.message
-                
-                print("onApperで更新")
-                friendListViewModel.addTalkFriend(
-                    context: context,
-                    profile: chatPartnerProfile,
-                    lastMessage: message.message,
-                    newMessageCount: newMessageCount,
-                    createAt: message.createAt
-                )
-            }
         }
     }
 }
@@ -115,26 +97,38 @@ struct FriendListRowView: View {
 #Preview {
     VStack {
         FriendListRowView(
-            chatPartnerProfile: ProfileElement(
-                userName: "もも",
-                introduction: "",
-                birth: "",
-                gender: .men,
-                address: "栃木県",
-                profileImages: [],
-                homeImage: Data()
+            friendListRowElement: FriendListRowElement(
+                profile: MyProfileElement(
+                    id: "12345",
+                    userName: "もも",
+                    introduction: "自己紹介",
+                    birth: "20000421",
+                    gender: .wemen,
+                    address: "栃木県",
+                    profileImages: [Data(), Data()],
+                    homeImage: Data()
+                ),
+                lastMessage: "最新メッセージ",
+                newMessageCount: 5,
+                createAt: Date()
             )
         )
         
         FriendListRowView(
-            chatPartnerProfile: ProfileElement(
-                userName: "もも",
-                introduction: "",
-                birth: "",
-                gender: .men,
-                address: "栃木県",
-                profileImages: [],
-                homeImage: Data()
+            friendListRowElement: FriendListRowElement(
+                profile: MyProfileElement(
+                    id: "12346",
+                    userName: "もも",
+                    introduction: "自己紹介",
+                    birth: "20000421",
+                    gender: .wemen,
+                    address: "栃木県",
+                    profileImages: [Data(), Data()],
+                    homeImage: Data()
+                ),
+                lastMessage: "最新メッセージ",
+                newMessageCount: 5,
+                createAt: Date()
             )
         )
     }

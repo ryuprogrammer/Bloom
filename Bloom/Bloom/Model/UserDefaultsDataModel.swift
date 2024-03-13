@@ -8,13 +8,14 @@
 import Foundation
 
 struct UserDefaultsDataModel {
+    let userDataModel = UserDataModel()
     let myProfileKey: String = "myProfileKey"
     
     /// MyProfileのデータの追加・更新
     func addMyProfile(myProfile: ProfileElement) {
-        guard let id = myProfile.id else { return }
+        let uid = userDataModel.fetchUid()
         let myProfileElement: MyProfileElement = MyProfileElement(
-            id: id,
+            id: myProfile.id ?? uid,
             userName: myProfile.userName,
             introduction: myProfile.introduction,
             birth: myProfile.birth,
@@ -27,6 +28,7 @@ struct UserDefaultsDataModel {
         let jsonEncoder = JSONEncoder()
         jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
         guard let profileStrData = try? jsonEncoder.encode(myProfileElement) else {
+            print("encodeでエラー")
             return
         }
         
@@ -39,6 +41,7 @@ struct UserDefaultsDataModel {
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
         guard let data = UserDefaults.standard.data(forKey: myProfileKey),
               let profile = try? jsonDecoder.decode(MyProfileElement.self, from: data) else {
+            print("error: アカウントがDeviceにないか、decodeエラー")
             return nil
         }
         

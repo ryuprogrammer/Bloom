@@ -10,7 +10,7 @@ import SwiftData
 
 struct FriendListView: View {
     @Environment(\.modelContext) private var context
-    @Query private var talkFriendElement: [TalkFriendElement]
+    @Query private var friendListRowElement: [FriendListRowElement]
     
     @ObservedObject var friendListViewModel = FriendListViewModel()
     @State var talkFriendProfiles: [ProfileElement] = []
@@ -50,22 +50,22 @@ struct FriendListView: View {
                 
                 Section {
                     ScrollView(.vertical, showsIndicators: false) {
-                        ForEach(talkFriendProfiles, id: \.id) { profile in
+                        ForEach(friendListRowElement, id: \.id) { rowElement in
                             NavigationLink(
                                 destination: MessageView(
-                                    chatPartnerProfile: profile
+                                    chatPartnerProfile: rowElement.profile.toProfileElement()
                                 )
                                 .toolbar(.hidden, for: .tabBar)
                             ) {
                                 FriendListRowView(
-                                    chatPartnerProfile: profile
+                                    friendListRowElement: rowElement
                                 )
                             }
                         }
                     }
                 } header: {
                     HStack {
-                        Text("トークしよう")
+                        Text("トーク")
                             .foregroundStyle(Color.gray)
                             .padding()
                         
@@ -76,29 +76,44 @@ struct FriendListView: View {
                 
                 Spacer()
             }
-            .navigationBarTitle("トーク", displayMode: .inline)
+            .navigationBarTitle("話しかけてみよう！", displayMode: .inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        friendListViewModel.deleteTalkFriendElement(context: context)
+                    } label: {
+                        Text("友達全消し")
+                    }
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Image(systemName: "gearshape")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: iconSize)
+                        .foregroundStyle(Color.white)
+                }
+            }
         }
         .accentColor(Color.white)
         .onChange(of: friendListViewModel.matchedFriendList.count) {
-            talkFriendProfiles.removeAll()
-            talkFriendProfiles.append(contentsOf: friendListViewModel.matchedFriendList)
-        }
-        .onAppear {
-            // 最初はSwiftDataのデータを描画
-            if talkFriendProfiles.isEmpty && !talkFriendElement.isEmpty {
-                print("最初に描画する条件に合致")
-                for friend in talkFriendElement {
-                    let profile = ProfileElement(
-                        id: friend.profile.id,
-                        userName: friend.profile.userName,
-                        introduction: friend.profile.introduction,
-                        birth: friend.profile.birth,
-                        gender: friend.profile.gender,
-                        address: friend.profile.address,
-                        profileImages: friend.profile.profileImages,
-                        homeImage: friend.profile.homeImage
-                    )
-                    talkFriendProfiles.append(profile)
+            print("onChange確認")
+            let checkingFriends = friendListViewModel.matchedFriendList
+            
+            // SwiftDataに存在するか確認
+            for checkingFriend in checkingFriends {
+                guard let checkId = checkingFriend.id else { return }
+                // SwiftDataにデータが存在しない
+                if friendListRowElement.filter({ $0.profile.id == checkId }).isEmpty {
+                    Task {
+                        // friendListRowElement取得
+                        guard let friendListRowElement = await friendListViewModel.fetchFriendListRowElement(talkFriend: checkingFriend) else { return }
+                        // swiftDataに追加
+                        friendListViewModel.addFriendListRowElement(
+                            context: context,
+                            friendListRowElement: friendListRowElement
+                        )
+                    }
                 }
             }
         }

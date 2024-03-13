@@ -9,53 +9,64 @@ import Foundation
 import SwiftData
 
 struct SwiftDataModel {
+    
+    // MARK: - TalkFriendElement: トークしてる友達
     // TalkFriendElementの全削除
-    func deleteData(context: ModelContext) {
+    func deleteTalkFriendElement(context: ModelContext) {
         do {
-            try context.delete(model: TalkFriendElement.self, includeSubclasses: true)
+            try context.delete(model: FriendListRowElement.self, includeSubclasses: true)
         } catch {
             print("SwiftDataの削除でエラー: \(error.localizedDescription)")
         }
     }
     
-    // TalkFriendElementの追加
-    func addTalkFriend(
+    /// TalkFriendElementの追加（１つ）
+    func addFriendListRowElement(
         context: ModelContext,
-        profile: ProfileElement,
-        lastMessage: String,
-        newMessageCount: Int,
-        createAt: Date
+        friendListRowElement: FriendListRowElement
     ) {
-        guard let id = profile.id else {
-            print("idがダメだーーーーーーーーーーーーーーー")
-            return
-        }
+        context.insert(friendListRowElement)
         
-        let newProfile = MyProfileElement(
-            id: id,
-            userName: profile.userName,
-            introduction: profile.introduction,
-            birth: profile.birth,
-            gender: profile.gender,
-            address: profile.address,
-            profileImages: profile.profileImages,
-            homeImage: profile.homeImage
-        )
-        
-        print("ここーーーーーーー＝＝ーーーーーーーーーーー＝！")
-        let data = TalkFriendElement(
-            profile: newProfile,
-            lastMessage: lastMessage,
-            newMessageCount: newMessageCount,
-            createAt: createAt
-        )
-        
-        context.insert(data)
         do {
             try context.save()
-            print("追加成功ーーーーーーーーーーーーーーーーーーーーー！")
+            print("追加成功ーーーーーーー！")
         } catch {
             print(error.localizedDescription)
         }
+    }
+    
+    // MARK: - SwipeFriendElement: スワイプに表示する人
+    /// TalkFriendElementの全削除
+    func deleteAllSwipeFriendElement(context: ModelContext) {
+        print("これから削除する")
+        do {
+            try context.delete(model: SwipeFriendElement.self, includeSubclasses: true)
+            print("削除してる")
+        } catch {
+            print("SwiftDataの削除でエラー: \(error.localizedDescription)")
+        }
+    }
+    
+    /// TalkFriendElementの追加（１つ）
+    func addSwipeFriendElement(
+        context: ModelContext,
+        swipeFriendElement: SwipeFriendElement
+    ) {
+        context.insert(swipeFriendElement)
+        
+        do {
+            try context.save()
+            print("追加成功ーーーーーーー！")
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    /// TalkFriendElementの削除（１つ）
+    func deleteSwipeFriendElement(
+        context: ModelContext,
+        swipeFriendElement: SwipeFriendElement
+    ) {
+        context.delete(swipeFriendElement)
     }
 }

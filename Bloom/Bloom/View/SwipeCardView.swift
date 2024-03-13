@@ -21,9 +21,11 @@ struct SwipeCardView: View {
         ZStack {
             Color.blue
             
-            DataImage(dataImage: card.profile.profileImages[imageNumber])
-                .aspectRatio(contentMode: .fill)
-                .frame(width: imageWidth, height: imageHeight)
+            if !card.profile.profileImages.isEmpty {
+                DataImage(dataImage: card.profile.profileImages[imageNumber])
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: imageWidth, height: imageHeight)
+            }
             
             if card.profile.profileImages.count > minImageNumber {
                 HStack {

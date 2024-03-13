@@ -10,11 +10,11 @@ import SwiftData
 
 // FriendListViewで一旦友達を
 @Model
-class TalkFriendElement {
+class FriendListRowElement {
     let profile: MyProfileElement
-    let lastMessage: String?
-    let newMessageCount: Int?
-    let createAt: Date?
+    var lastMessage: String?
+    var newMessageCount: Int?
+    var createAt: Date?
     
     init(profile: MyProfileElement, lastMessage: String?, newMessageCount: Int?, createAt: Date?) {
         self.profile = profile

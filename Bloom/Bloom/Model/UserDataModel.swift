@@ -48,7 +48,7 @@ class UserDataModel {
         return listener
     }
     
-    /// リアルタイム監視
+    /// リアルタイム監視: 全てのUser
     func listenProfiles(completion: @escaping ([ProfileElement]?, Error?) -> Void) -> ListenerRegistration {
         let listener = db.collection(collectionName).addSnapshotListener { (querySnapshot, error) in
             if let error = error {
@@ -192,6 +192,23 @@ class UserDataModel {
     
             // すべてのアップロードが完了したことをコールバック
             completion(nil)
+        }
+    }
+    
+    /// ProfileのprofileImagesを全削除（profileImagesを更新する前に削除する）
+    func deleteProfileImages(deleteImageCount: Int, completion: @escaping (Error?) -> Void) async {
+        // UIDを取得
+        let uid = fetchUid()
+        
+        let storageRef = self.storage.reference()
+        
+        for index in 0..<deleteImageCount {
+            let deleteRef = storageRef.child("profileImages/\(uid)/image\(index).jpg")
+            do {
+                try await deleteRef.delete()
+            } catch {
+                print("error: \(error.localizedDescription)")
+            }
         }
     }
     

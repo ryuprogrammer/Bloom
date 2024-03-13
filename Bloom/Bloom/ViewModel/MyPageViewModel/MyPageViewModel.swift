@@ -14,7 +14,7 @@ class MyPageViewModel: ObservableObject {
     let userDefaultsDataModel = UserDefaultsDataModel()
     @Published var myProfile: ProfileElement? = nil
     
-    /// プロフィール取得：UserDefaults
+    /// プロフィール取得：UserDefaultsから
     func fetchMyProfile() {
         if let profile = userDefaultsDataModel.fetchMyProfile() {
             myProfile = ProfileElement(
@@ -40,5 +40,14 @@ class MyPageViewModel: ObservableObject {
         }
         
         userDefaultsDataModel.addMyProfile(myProfile: profile)
+    }
+    
+    /// ProfileのprofileImagesを全削除（profileImagesを更新する前に削除する）
+    func deleteProfileImages(deleteImageCount: Int) async {
+        await userDataModel.deleteProfileImages(deleteImageCount: deleteImageCount) { error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
     }
 }
