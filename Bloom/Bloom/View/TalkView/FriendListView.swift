@@ -37,16 +37,17 @@ struct FriendListView: View {
                         }
                     } else {
                         Text("まだマッチした友達がいないよ。。")
+                            .padding()
                     }
                 } header: {
                     HStack {
                         Text("マッチした友達")
                             .foregroundStyle(Color.gray)
-                            .padding()
+                            .padding([.leading, .top])
                         
                         Spacer()
                     }
-                    .frame(height: 30)
+                    .frame(height: 20)
                 }
                 
                 Section {
@@ -68,14 +69,12 @@ struct FriendListView: View {
                     HStack {
                         Text("トーク")
                             .foregroundStyle(Color.gray)
-                            .padding()
+                            .padding(.leading)
                         
                         Spacer()
                     }
-                    .frame(height: 30)
+                    .frame(height: 20)
                 }
-                
-                Spacer()
             }
             .navigationBarTitle("話しかけてみよう！", displayMode: .inline)
             .toolbar {
