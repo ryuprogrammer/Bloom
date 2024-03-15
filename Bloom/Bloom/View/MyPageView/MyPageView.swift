@@ -52,6 +52,8 @@ struct MyPageView: View {
                 
                 Section {
                     HStack {
+                        Image(systemName: "person.text.rectangle")
+                            .foregroundStyle(Color.pink)
                         Text("ニックネーム")
                             .foregroundStyle(Color.gray)
                         
@@ -66,11 +68,11 @@ struct MyPageView: View {
                     }
                     
                     NavigationLink(value: MyPagePath.pathAddress) {
-                        ProfileRow(title: "居住地", detail: showingProfile.address)
+                        ProfileRow(image: "mappin.and.ellipse", title: "居住地", detail: showingProfile.address)
                     }
                     
                     NavigationLink(value: MyPagePath.pathBirth) {
-                        ProfileRow(title: "生年月日", detail: showingProfile.birth)
+                        ProfileRow(image: "birthday.cake", title: "生年月日", detail: showingProfile.birth)
                     }
                 } header: {
                     Text("プロフィール情報")
@@ -214,11 +216,14 @@ enum MyPagePath {
 }
 
 struct ProfileRow: View {
+    var image: String
     var title: String
     var detail: String?
 
     var body: some View {
         HStack {
+            Image(systemName: image)
+                .foregroundStyle(Color.pink)
             Text(title)
                 .foregroundColor(.gray)
             Spacer()

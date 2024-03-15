@@ -116,9 +116,27 @@ struct SwipeCardView: View {
             
             if let isLike = card.isLike {
                 if isLike {
-                    Color.red.opacity(0.5)
+                    ZStack {
+                        Color.pink.opacity(0.5)
+                        
+                        Image(systemName: "hand.thumbsup")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 150, height: 150)
+                            .foregroundStyle(Color.white)
+                            .offset(x: -60, y: -130)
+                    }
                 } else {
-                    Color.blue.opacity(0.5)
+                    ZStack {
+                        Color.black.opacity(0.5)
+                        
+                        Image(systemName: "heart.slash")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 150, height: 150)
+                            .foregroundStyle(Color.white)
+                            .offset(x: 60, y: -130)
+                    }
                 }
             }
         }
