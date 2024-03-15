@@ -57,13 +57,17 @@ struct SwipeView: View {
                                             } else if gesture.startLocation.x > gesture.location.x {
                                                 swipeViewModel.addFriendsToList(state: .unLikeByMe, friendProfile: card.profile)
                                             }
-                                            // SwiftDataから削除
+                                            
+                                            // SwiftDataからデータ削除
                                             swipeViewModel.deleteSwipeFriendElement(
                                                 context: context,
-                                                swipeFriendElement: SwipeFriendElement(
-                                                    profile: card.profile.toMyProfileElement()
-                                                )
+                                                swipeFriendElement: SwipeFriendElement(profile: firstCard.profile.toMyProfileElement())
                                             )
+                                            // 20以下になったら追加する
+                                            if showingCard.count <= 5 {
+                                                print("少なくなってきたから追加")
+                                                swipeViewModel.fetchSignInUser()
+                                            }
                                             showingCard.removeAll { $0.id == firstCard.id }
                                         } else {
                                             card.isLike = nil
@@ -97,27 +101,27 @@ struct SwipeView: View {
             }
         }
         .onChange(of: swipeViewModel.friendProfiles.count) {
-            cardId = swipeFriendElement.count
-            
-            for profile in swipeViewModel.friendProfiles {
-                // swiftDataに保存
-                swipeViewModel.addSwipeFriendElement(
-                    context: context,
-                    swipeFriendElement: SwipeFriendElement(
-                        profile: profile.toMyProfileElement()
+            if swipeViewModel.fetchedUidCount == swipeViewModel.friendProfiles.count {
+                
+                print("swipeViewModel.friendProfiles.count: \(swipeViewModel.friendProfiles.count)")
+                cardId = swipeFriendElement.count
+                
+                for profile in swipeViewModel.friendProfiles {
+                    print("データを保存して、Viewにも表示")
+                    // SwiftDataに保存
+                    swipeViewModel.addSwipeFriendElement(
+                        context: context,
+                        swipeFriendElement: SwipeFriendElement(profile: profile.toMyProfileElement())
                     )
-                )
-                showingCard.append(CardModel(id: cardId, profile: profile))
-                cardId += 1
-            }
-        }
-        .onChange(of: swipeFriendElement) {
-            // 20以下になったら追加する
-            if swipeFriendElement.count < 3 {
-                swipeViewModel.fetchSignInUser()
+                    showingCard.append(CardModel(id: cardId, profile: profile))
+                    cardId += 1
+                }
+                print("追加後のSwiftDataの数: \(swipeFriendElement.count)個")
             }
         }
         .onAppear {
+            print("swipeViewModel.friendProfiles.count: \(swipeViewModel.friendProfiles.count)")
+            print("初期データ数: \(swipeFriendElement.count)個")
             if swipeFriendElement.count >= 5 {
                 cardId = swipeFriendElement.count
                 for friendElement in swipeFriendElement {
@@ -127,7 +131,20 @@ struct SwipeView: View {
                     ))
                     cardId += 1
                 }
-            } else {
+            } else if !swipeFriendElement.isEmpty && swipeFriendElement.count < 5 {
+                cardId = swipeFriendElement.count
+                
+                for friendElement in swipeFriendElement {
+                    showingCard.append(CardModel(
+                        id: cardId,
+                        profile: friendElement.profile.toProfileElement()
+                    ))
+                    cardId += 1
+                }
+                
+                // データ取得
+                swipeViewModel.fetchSignInUser()
+            } else { //データ空
                 // データ取得
                 swipeViewModel.fetchSignInUser()
             }

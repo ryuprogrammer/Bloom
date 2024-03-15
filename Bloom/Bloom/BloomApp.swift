@@ -46,7 +46,7 @@ struct BloomApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
         .modelContainer(for: [
             FriendListRowElement.self,

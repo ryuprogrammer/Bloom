@@ -67,6 +67,24 @@ struct SwiftDataModel {
         context: ModelContext,
         swipeFriendElement: SwipeFriendElement
     ) {
-        context.delete(swipeFriendElement)
+        print("削除するよ")
+        print("このデータを削除: \(swipeFriendElement.profile.id)")
+        print("このデータを削除: \(swipeFriendElement.profile.userName)")
+        
+        do {
+            let id = swipeFriendElement.profile.id
+            try context.delete(
+                model: SwipeFriendElement.self,
+                where: #Predicate<SwipeFriendElement> {
+                    $0.profile.id == id
+                }
+            )
+            
+            try context.save()
+            print("削除成功ーーーーーーー！")
+        } catch {
+            // エラーが発生した場合に呼び出し元に通知する
+            fatalError("データの削除中にエラーが発生しました： \(error.localizedDescription)")
+        }
     }
 }

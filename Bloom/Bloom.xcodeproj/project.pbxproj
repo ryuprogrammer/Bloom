@@ -360,9 +360,9 @@
 			isa = PBXGroup;
 			children = (
 				1FEF28462B8A217100EAFB3E /* FriendListView.swift */,
-				1F78BDA02B9B7B8C00E2FE66 /* FriendPreviewView.swift */,
 				1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */,
 				1FF59CB62B89077E0031C580 /* MessageView.swift */,
+				1F78BDA02B9B7B8C00E2FE66 /* FriendPreviewView.swift */,
 				1FF59CB32B8670570031C580 /* MessageRowView.swift */,
 			);
 			path = TalkView;

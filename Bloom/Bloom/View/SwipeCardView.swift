@@ -57,11 +57,11 @@ struct SwipeCardView: View {
             
             // カード上の文字情報
             VStack {
-                if card.profile.profileImages.count > 1 {
+                if card.profile.profileImages.count > minImageNumber {
                     HStack {
-                        ForEach(0..<card.profile.profileImages.count) { number in
+                        ForEach(card.profile.profileImages.indices, id: \.self) { index in
                             Circle()
-                                .fill(number == imageNumber ? Color.white : Color.white.opacity(0.4))
+                                .fill(index == imageNumber ? Color.white : Color.white.opacity(0.4))
                                 .frame(width: 10, height: 10)
                         }
                     }

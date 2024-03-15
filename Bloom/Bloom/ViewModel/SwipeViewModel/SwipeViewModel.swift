@@ -6,13 +6,10 @@ class SwipeViewModel: ObservableObject {
     let swiftDataModel = SwiftDataModel()
     private var userDataModel = UserDataModel()
     @Published private(set) var friendProfiles: [ProfileElement] = []
+    @Published var fetchedUidCount: Int = 0
     let db = Firestore.firestore()
     private let collectionName = "profiles"
-    private let fetchProfilesLimit: Int = 10
-    
-    init() {
-        fetchSignInUser()
-    }
+    private let fetchProfilesLimit: Int = 5
     
     /// friendsをListtに追加
     func addFriendsToList(
@@ -36,25 +33,19 @@ class SwipeViewModel: ObservableObject {
                 return
             }
             
+            self.fetchedUidCount = uids.count
+            
             for uid in uids {
-                print("uids: \(uid)")
-                
+                print("uid: \(uid)")
                 self.userDataModel.fetchProfile(uid: uid) { profile, error in
                     if let profile = profile {
-                        print("proile: \(profile)")
+                        print("追加するプロフィール名前: \(profile.userName)")
                         self.friendProfiles.append(profile)
                     } else if let error = error {
                         print("Error fetching profiles: \(error.localizedDescription)")
                     } else {
                         print("fetchProfile error")
                     }
-                }
-            }
-            
-            if !self.friendProfiles.isEmpty {
-                print("フェッチが終わったよ！！！！！！！！！！！！！！！！！")
-                for profile in self.friendProfiles {
-                    print("profile: \(profile)")
                 }
             }
         }

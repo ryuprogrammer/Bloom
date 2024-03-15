@@ -15,8 +15,9 @@ struct FriendListView: View {
     @ObservedObject var friendListViewModel = FriendListViewModel()
     @State var talkFriendProfiles: [ProfileElement] = []
     @State var matchFriendProfiles: [ProfileElement] = []
-    
-    let iconSize = UIScreen.main.bounds.width / 6
+    // MARK: - UI用サイズ指定
+    let iconSize = UIScreen.main.bounds.width / 14
+    let homeImageSize = UIScreen.main.bounds.width / 6
     
     var body: some View {
         NavigationStack {
@@ -28,7 +29,7 @@ struct FriendListView: View {
                                 ForEach(talkFriendProfiles, id: \.id) { profile in
                                     DataImage(dataImage: profile.homeImage)
                                         .aspectRatio(contentMode: .fill)
-                                        .frame(width: iconSize, height: iconSize)
+                                        .frame(width: homeImageSize, height: homeImageSize)
                                         .clipShape(Circle())
                                 }
                             }

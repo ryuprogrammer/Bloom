@@ -14,6 +14,7 @@ struct MessageView: View {
     @State private var isSendMessage: Bool = false
     @State private var sendButtonAnimate: Bool = false
     @FocusState private var keybordFocus: Bool
+    @State var isShowProfile: Bool = false
     
     var body: some View {
         VStack {
@@ -41,6 +42,14 @@ struct MessageView: View {
                     ToolbarItem(placement: .principal) {
                         Text(chatPartnerProfile.userName)
                             .foregroundStyle(Color.white)
+                            .onTapGesture {
+                                isShowProfile = true
+                            }
+                            .sheet(isPresented: $isShowProfile) {
+                                FriendPreviewView(
+                                    profile: chatPartnerProfile
+                                )
+                            }
                     }
                 }
                 .onChange(of: messageVM.messages) {
