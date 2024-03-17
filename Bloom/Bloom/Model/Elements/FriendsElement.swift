@@ -1,10 +1,3 @@
-//
-//  FriendsElemt.swift
-//  Bloom
-//
-//  Created by トム・クルーズ on 2024/03/03.
-//
-
 import Foundation
 import FirebaseFirestore
 

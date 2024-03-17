@@ -8,7 +8,6 @@
 import Foundation
 
 struct ExplanationText {
-    
     // MARK: - RegistrationView
     let nameEntryReason: String = "２〜10文字で入力してください。\nニックネームはあとから変更できます。"
     let nameEntryMaxError: String = "10文字以内のニックネームを入力してください。"

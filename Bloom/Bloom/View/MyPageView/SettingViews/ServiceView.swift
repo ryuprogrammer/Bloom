@@ -10,7 +10,9 @@ struct ServiceView: View {
         }
         .navigationBarTitle("利用規約", displayMode: .inline)
         .onAppear {
-            explanation = textFileDataModel.readFile(fileCase: .service)
+            Task {
+                explanation = await textFileDataModel.readFile(fileCase: .service)
+            }
         }
     }
 }

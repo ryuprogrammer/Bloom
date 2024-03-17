@@ -87,7 +87,7 @@ class UserDataModel {
         return uid
     }
     
-    /// friends追加メソッド: ライクとかした時のメソッド
+    /// friends追加・更新メソッド: ライクとかした時のメソッド
     func addFriendsToList(
         state: FriendStatus,
         friendProfile: ProfileElement,
@@ -96,12 +96,12 @@ class UserDataModel {
         // UIDを取得
         let uid = fetchUid()
         // 自分のRef
-        let myDocumentRef = db.collection(friendCollectionName).document(uid).collection(friendListCollectionName).document()
-        
+        let myDocumentRef = db.collection(friendCollectionName).document(uid).collection(friendListCollectionName)
+
         guard let friendUid = friendProfile.id else { return }
         // 相手のRef
-        let friendDocmentRef = db.collection(friendCollectionName).document(friendUid).collection(friendListCollectionName).document()
-        
+        let friendDocmentRef = db.collection(friendCollectionName).document(friendUid).collection(friendListCollectionName)
+
         // 相手のデータ
         let friendUidAndState: FriendsElement = FriendsElement(
             friendUid: friendUid,
@@ -115,7 +115,7 @@ class UserDataModel {
         
         // Firestoreに保存するために、Codableオブジェクトを辞書に変換
         do {
-            try myDocumentRef.setData(from: friendUidAndState) { error in
+            try myDocumentRef.document(friendUid).setData(from: friendUidAndState) { error in
                 if let error = error {
                     // エラー処理
                     completion(error)
@@ -131,7 +131,7 @@ class UserDataModel {
         if state != .unLikeByMe { // この時だけ相手のRefにはデータを追加しない.
             // Firestoreに保存するために、Codableオブジェクトを辞書に変換
             do {
-                try friendDocmentRef.setData(from: myUidAndStatus) { error in
+                try friendDocmentRef.document(uid).setData(from: myUidAndStatus) { error in
                     if let error = error {
                         // エラー処理
                         completion(error)
@@ -356,7 +356,6 @@ class UserDataModel {
                 }
                 
                 // プロファイル画像のダウンロード
-                // 注意: この実装では、プロファイル画像の具体的な名前や数を事前には知りません
                 profileImagesRef.listAll { (result, error) in
                     if let error = error {
                         completion(nil, error)

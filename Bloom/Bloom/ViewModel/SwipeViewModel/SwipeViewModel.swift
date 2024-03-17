@@ -11,7 +11,7 @@ class SwipeViewModel: ObservableObject {
     private let collectionName = "profiles"
     private let fetchProfilesLimit: Int = 10
 
-    /// friendsをListtに追加
+    /// friendsをListtに追加: ライクしたりできるお
     func addFriendsToList(
         state: FriendStatus,
         friendProfile: ProfileElement

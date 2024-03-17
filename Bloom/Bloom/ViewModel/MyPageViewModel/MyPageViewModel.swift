@@ -12,6 +12,7 @@ import FirebaseAuth
 class MyPageViewModel: ObservableObject {
     let userDataModel = UserDataModel()
     let userDefaultsDataModel = UserDefaultsDataModel()
+    let authenticationManager = AuthenticationManager()
     @Published var myProfile: ProfileElement? = nil
     
     /// プロフィール取得：UserDefaultsから
@@ -49,5 +50,11 @@ class MyPageViewModel: ObservableObject {
                 print(error.localizedDescription)
             }
         }
+    }
+
+    /// 退会（ユーザーデータ削除）
+    func deleteUser() {
+//        authenticationManager.deleteUser()
+        userDefaultsDataModel.deleteMyProfile()
     }
 }

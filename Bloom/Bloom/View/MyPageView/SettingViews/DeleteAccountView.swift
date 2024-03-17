@@ -2,15 +2,34 @@ import SwiftUI
 
 struct DeleteAccountView: View {
     let textFileDataModel = TextFileDataModel()
+    let myPageViewModel = MyPageViewModel()
     @State var explanation = ""
     var body: some View {
         ScrollView {
-            Text(explanation)
-                .padding()
+            VStack {
+                Text(explanation)
+                    .padding()
+
+                Button {
+                    // ユーザーデータ削除
+                    myPageViewModel.deleteUser()
+                } label: {
+                    Text("退会する")
+                        .font(.title2)
+                        .foregroundStyle(Color.white)
+                        .frame(height: 55)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.pink.opacity(0.8))
+                        .clipShape(Capsule())
+                        .padding()
+                }
+            }
         }
         .navigationBarTitle("退会", displayMode: .inline)
         .onAppear {
-            explanation = textFileDataModel.readFile(fileCase: .delete)
+            Task {
+                explanation = await textFileDataModel.readFile(fileCase: .delete)
+            }
         }
     }
 }

@@ -189,8 +189,8 @@
 			children = (
 				1F1DFD7F2BA5E95C002366DF /* PrivacyView.swift */,
 				1F1DFD812BA5FA0E002366DF /* ServiceView.swift */,
-				1F1DFD8F2BA6CEAD002366DF /* DeleteAccountView.swift */,
 				1F1DFD852BA5FDCB002366DF /* FormView.swift */,
+				1F1DFD8F2BA6CEAD002366DF /* DeleteAccountView.swift */,
 			);
 			path = SettingViews;
 			sourceTree = "<group>";

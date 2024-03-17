@@ -10,7 +10,9 @@ struct PrivacyView: View {
         }
         .navigationBarTitle("プライバシーポリシー", displayMode: .inline)
         .onAppear {
-            explanation = textFileDataModel.readFile(fileCase: .privacy)
+            Task {
+                explanation = await textFileDataModel.readFile(fileCase: .privacy)
+            }
         }
     }
 }

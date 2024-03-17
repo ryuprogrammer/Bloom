@@ -109,7 +109,19 @@ class MessageViewModel: ObservableObject {
                 }
             }
     }
-    
+
+    /// ブロックや通報（友達のステータスを変更）
+    func changeFriendStatus(
+        state: FriendStatus,
+        friendProfile: ProfileElement
+    ) {
+        userDataModel.addFriendsToList(state: state, friendProfile: friendProfile) { error in
+            if let error = error {
+                print("error addFriendsToList: \(error.localizedDescription)")
+            }
+        }
+    }
+
     deinit {
         lister?.remove()
     }

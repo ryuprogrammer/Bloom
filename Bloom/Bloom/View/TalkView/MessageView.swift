@@ -1,10 +1,3 @@
-//
-//  MessageView.swift
-//  Bloom
-//
-//  Created by トム・クルーズ on 2024/02/24.
-//
-
 import SwiftUI
 
 struct MessageView: View {
@@ -15,7 +8,11 @@ struct MessageView: View {
     @State private var sendButtonAnimate: Bool = false
     @FocusState private var keybordFocus: Bool
     @State var isShowProfile: Bool = false
-    
+    let iconSize = UIScreen.main.bounds.width / 14
+    @State var showActionSheet: Bool = false
+    @State var isShowBlock: Bool = false
+    @State var isShowReport: Bool = false
+
     var body: some View {
         VStack {
             ScrollViewReader { proxy in
@@ -51,6 +48,46 @@ struct MessageView: View {
                                 )
                             }
                     }
+
+                    // 友達をブロック、通報
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Image(systemName: "exclamationmark.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: iconSize, height: iconSize)
+                            .foregroundStyle(Color.white)
+                            .onTapGesture {
+                                showActionSheet = true
+                            }
+                            .confirmationDialog("", isPresented: $showActionSheet, titleVisibility: .hidden) {
+                                        Button("友達をブロックする") {
+                                            isShowBlock = true
+                                        }
+                                        Button("友達を通報する") {
+                                            isShowReport = true
+                                        }
+                                    }
+                            .alert("友達をブロック", isPresented: $isShowBlock) {
+                                Button("ブロック", role: .destructive) {
+                                    messageVM.changeFriendStatus(
+                                        state: .blockByMy,
+                                        friendProfile: chatPartnerProfile
+                                    )
+                                }
+                            } message: {
+                                Text("友達とのマッチングが解消されます")
+                            }
+                            .alert("友達を通報", isPresented: $isShowReport) {
+                                Button("通報", role: .destructive) {
+                                    messageVM.changeFriendStatus(
+                                        state: .likeByMe,
+                                        friendProfile: chatPartnerProfile
+                                    )
+                                }
+                            } message: {
+                                Text("悪質なユーザーであれば、\n「マイページ」→「お問い合わせ」\nから報告してください。")
+                            }
+                    }
                 }
                 .onChange(of: messageVM.messages) {
                     withAnimation {
@@ -64,7 +101,7 @@ struct MessageView: View {
             HStack {
                 TextField("メッセージを入力", text: $typeMessage)
                     .padding(.horizontal)
-                    .frame(height: 35)
+                    .frame(height: iconSize)
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(Color.cyan, lineWidth: 1)
@@ -93,7 +130,8 @@ struct MessageView: View {
                 }, label: {
                     Image(systemName: "paperplane.circle.fill")
                         .resizable()
-                        .frame(width: 32, height: 32)
+                        .frame(width: iconSize, height: iconSize)
+                        .foregroundStyle(isSendMessage ? Color.cyan : Color.gray)
                         .symbolEffect(.bounce.down.byLayer, value: sendButtonAnimate)
                 })
                 .disabled(!isSendMessage)
