@@ -16,6 +16,8 @@ enum AccountStatus {
     case valid
     /// アカウントもプロフィールもあるが、idが一致しない
     case mismatchID
+    /// 通報回数が上限を超えて、アカウント停止
+    case stopAccount
 }
 
 // 完全にアカウントがない

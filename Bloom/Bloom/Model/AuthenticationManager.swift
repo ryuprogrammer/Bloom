@@ -2,15 +2,22 @@ import Foundation
 import GoogleSignIn
 import FirebaseCore
 import FirebaseAuth
+import FirebaseFirestore
 
 class AuthenticationManager: ObservableObject {
     private var handle: AuthStateDidChangeListenerHandle?
     let userDataModel = UserDataModel()
     let userDefaultsDataModel = UserDefaultsDataModel()
     @Published var accountStatus: AccountStatus = .none
-    
+    private var db = Firestore.firestore()
+    // アカウントが停止する通報数
+    let accountStopReportLimit = 20
+
     init() {
         checkAccountStatus()
+        Task {
+            await checkReportMyAccount()
+        }
     }
     
     deinit {
@@ -84,7 +91,25 @@ class AuthenticationManager: ObservableObject {
             }
         }
     }
-    
+
+    /// 自分が通報されているかチェック（Limitに達していたらアカウント停止にする）
+    func checkReportMyAccount() async {
+        // UIDを取得
+        let uid = userDataModel.fetchUid()
+
+        do {
+            let reportedCountSnapshot = try await db.collection("friends").document(uid).collection("friendList").whereField("status", isEqualTo: FriendStatus.reportByFriend.rawValue).getDocuments()
+            let reportedCount = reportedCountSnapshot.documents.count
+
+            if reportedCount >= accountStopReportLimit {
+                // アカウントを停止する処理を実行
+                self.accountStatus = .stopAccount
+            }
+        } catch {
+            print("エラーが発生しました: \(error)")
+        }
+    }
+
     // firebaseのプロフィールをuserDefaultsに追加
     func addProfileToDevice() {
         let uid = userDataModel.fetchUid()

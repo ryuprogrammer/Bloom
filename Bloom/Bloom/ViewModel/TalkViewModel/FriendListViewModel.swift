@@ -24,12 +24,17 @@ class FriendListViewModel: ObservableObject {
     init() {
         lister = userDataModel.listenFriends(friendStatus: .likeByMe) { [weak self] (friendStatus, error) in
             if let friendStatus {
-                for friendStatus in friendStatus {
-                    // ここで友達のデータを取得
-                    self?.userDataModel.fetchProfile(uid: friendStatus.friendUid) { profile, error in
-                        guard let profile = profile else { return }
-                        self?.matchedFriendList.append(profile)
-                        print("プロフィール取得: userName: \(profile.userName)")
+                for friendData in friendStatus {
+                    guard let friends = self?.matchedFriendList else { return }
+                    for friend in friends {
+                        if friend.id != friendData.friendUid {
+                            // ここで友達のデータを取得
+                            self?.userDataModel.fetchProfile(uid: friendData.friendUid) { profile, error in
+                                guard let profile = profile else { return }
+                                self?.matchedFriendList.append(profile)
+                                print("プロフィール取得: userName: \(profile.userName)")
+                            }
+                        }
                     }
                 }
             } else if let error = error {

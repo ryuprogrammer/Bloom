@@ -21,6 +21,9 @@ struct ContentView: View {
                 } else if authenticationManager.accountStatus == .valid {
                     // 正常にアカウントがある
                     HomeView()
+                } else if authenticationManager.accountStatus == .stopAccount {
+                    // アカウント停止
+                    
                 }
             }
             .sheet(isPresented: $isShowSheet) {

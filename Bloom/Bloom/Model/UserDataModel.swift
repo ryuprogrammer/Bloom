@@ -18,10 +18,21 @@ class UserDataModel {
     private var db = Firestore.firestore()
     private let storage = Storage.storage()
     // アカウントが停止する通報数
-    let accountStopReportCount = 20
+    let accountStopReportLimit = 20
 
-    /// 自分が通報されているかチェック
-    func checkMyReportLimit
+    /// 自分が通報されているかチェック（Limitに達していたらアカウント停止にする）
+    func checkReportMyAccount() async {
+        // UIDを取得
+        let uid = fetchUid()
+
+        let reportedCount = await db.collection("friends").document(uid).collection("friendList").whereField("status", isEqualTo: FriendStatus.likeByMe).count.accessibilityElementCount()
+
+        print("通報回数！！！！！！: \(reportedCount)")
+
+        if reportedCount >= accountStopReportLimit {
+
+        }
+    }
 
     /// 友達関係を指定して、リアルタイム監視: トークしてる人を取得したり
     func listenFriends(friendStatus: FriendStatus, completion: @escaping ([FriendsElement]?, Error?) -> Void) -> ListenerRegistration {
@@ -226,10 +237,7 @@ class UserDataModel {
         // UIDを取得
         let uid = fetchUid()
         
-        let db = Firestore.firestore()
-        
         db.collection("friends").document(uid).collection("friendList").getDocuments { (querySnapshot, error) in
-            print("ここは実行されている")
             if let error = error {
                 completion(nil, error)
                 return
