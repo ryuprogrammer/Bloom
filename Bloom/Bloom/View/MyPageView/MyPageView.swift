@@ -7,7 +7,7 @@ struct MyPageView: View {
     @ObservedObject var myPageVM = MyPageViewModel()
     let authenticationManager = AuthenticationManager()
     let userDefaultsDataModel = UserDefaultsDataModel()
-    
+
     // MARK: - UI用サイズ指定
     let iconSize = UIScreen.main.bounds.width / 14
     /// 画面横幅取得→写真の横幅と縦幅に利用
@@ -52,10 +52,10 @@ struct MyPageView: View {
                 
                 Section {
                     HStack {
-                        Image(systemName: "person.text.rectangle")
-                            .foregroundStyle(Color.pink)
-                        Text("ニックネーム")
-                            .foregroundStyle(Color.gray)
+                        ProfileRow(
+                            image: "person.text.rectangle",
+                            title: "ニックネーム"
+                        )
                         
                         Spacer()
                         
@@ -68,11 +68,19 @@ struct MyPageView: View {
                     }
                     
                     NavigationLink(value: MyPagePath.pathAddress) {
-                        ProfileRow(image: "mappin.and.ellipse", title: "居住地", detail: showingProfile.address)
+                        ProfileRow(
+                            image: "mappin.and.ellipse",
+                            title: "居住地",
+                            detail: showingProfile.address
+                        )
                     }
                     
                     NavigationLink(value: MyPagePath.pathBirth) {
-                        ProfileRow(image: "birthday.cake", title: "生年月日", detail: showingProfile.birth)
+                        ProfileRow(
+                            image: "birthday.cake",
+                            title: "生年月日",
+                            detail: showingProfile.birth
+                        )
                     }
                 } header: {
                     Text("プロフィール情報")
@@ -80,6 +88,9 @@ struct MyPageView: View {
                 
                 Section {
                     NavigationLink(value: MyPagePath.pathIntroduction) {
+                        ProfileRow(
+                            image: "pencil.line"
+                        )
                         Text(showingProfile.introduction)
                             .fixedSize(horizontal: false, vertical: true)
                     }
@@ -117,11 +128,16 @@ struct MyPageView: View {
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Image(systemName: "gearshape")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: iconSize)
-                        .foregroundStyle(Color.white)
+                    Button {
+                        navigationPath.append(.pathSetting)
+                    } label: {
+                        Image(systemName: "gearshape")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: iconSize)
+                            .foregroundStyle(Color.white)
+                    }
+
                 }
             }
             // 画面遷移を制御
@@ -135,6 +151,16 @@ struct MyPageView: View {
                     AddressEditView(address: $showingProfile.address, path: $navigationPath).toolbar(.hidden, for: .tabBar)
                 case .pathBirth:
                     BirthEditView(birth: $showingProfile.birth, path: $navigationPath).toolbar(.hidden, for: .tabBar)
+                case .pathSetting:
+                    SettingView(path: $navigationPath).toolbar(.hidden, for: .tabBar)
+                case .pathPrivacy:
+                    PrivacyView().toolbar(.hidden, for: .tabBar)
+                case .pathService:
+                    ServiceView().toolbar(.hidden, for: .tabBar)
+                case .pathForm:
+                    FormView().toolbar(.hidden, for: .tabBar)
+                case .pathDeleteAccount:
+                    DeleteAccountView().toolbar(.hidden, for: .tabBar)
                 }
             }
         }.onAppear { // profile取得
@@ -213,20 +239,32 @@ enum MyPagePath {
     case pathAddress
     case pathBirth
     case pathIntroduction
+    case pathSetting
+    case pathPrivacy
+    case pathService
+    case pathForm
+    case pathDeleteAccount
 }
 
 struct ProfileRow: View {
     var image: String
-    var title: String
+    var title: String?
     var detail: String?
+    let iconSize = UIScreen.main.bounds.width / 20
 
     var body: some View {
         HStack {
             Image(systemName: image)
-                .foregroundStyle(Color.pink)
-            Text(title)
-                .foregroundColor(.gray)
-            Spacer()
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: iconSize, height: iconSize)
+                .foregroundStyle(Color.pink.opacity(0.8))
+
+            if let title = title {
+                Text(title)
+                    .foregroundColor(.gray)
+                Spacer()
+            }
             if let detail = detail {
                 Text(detail)
             }

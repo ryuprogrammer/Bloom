@@ -9,8 +9,8 @@ class SwipeViewModel: ObservableObject {
     @Published var fetchedUidCount: Int = 0
     let db = Firestore.firestore()
     private let collectionName = "profiles"
-    private let fetchProfilesLimit: Int = 5
-    
+    private let fetchProfilesLimit: Int = 10
+
     /// friendsをListtに追加
     func addFriendsToList(
         state: FriendStatus,

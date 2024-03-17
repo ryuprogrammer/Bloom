@@ -1,10 +1,3 @@
-//
-//  SwipeCardView.swift
-//  Bloom
-//
-//  Created by トム・クルーズ on 2024/02/28.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -64,7 +57,7 @@ struct SwipeView: View {
                                                 swipeFriendElement: SwipeFriendElement(profile: firstCard.profile.toMyProfileElement())
                                             )
                                             // 20以下になったら追加する
-                                            if showingCard.count <= 5 {
+                                            if showingCard.count <= 10 {
                                                 print("少なくなってきたから追加")
                                                 swipeViewModel.fetchSignInUser()
                                             }
@@ -122,7 +115,7 @@ struct SwipeView: View {
         .onAppear {
             print("swipeViewModel.friendProfiles.count: \(swipeViewModel.friendProfiles.count)")
             print("初期データ数: \(swipeFriendElement.count)個")
-            if swipeFriendElement.count >= 5 {
+            if swipeFriendElement.count >= 10 {
                 cardId = swipeFriendElement.count
                 for friendElement in swipeFriendElement {
                     showingCard.append(CardModel(
@@ -131,7 +124,7 @@ struct SwipeView: View {
                     ))
                     cardId += 1
                 }
-            } else if !swipeFriendElement.isEmpty && swipeFriendElement.count < 5 {
+            } else if !swipeFriendElement.isEmpty && swipeFriendElement.count < 10 {
                 cardId = swipeFriendElement.count
                 
                 for friendElement in swipeFriendElement {
