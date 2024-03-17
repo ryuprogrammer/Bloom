@@ -17,8 +17,13 @@ class UserDataModel {
     let friendListCollectionName = "friendList"
     private var db = Firestore.firestore()
     private let storage = Storage.storage()
-    
-    /// 友達関係を指定して、リアルタイム監視
+    // アカウントが停止する通報数
+    let accountStopReportCount = 20
+
+    /// 自分が通報されているかチェック
+    func checkMyReportLimit
+
+    /// 友達関係を指定して、リアルタイム監視: トークしてる人を取得したり
     func listenFriends(friendStatus: FriendStatus, completion: @escaping ([FriendsElement]?, Error?) -> Void) -> ListenerRegistration {
         let uid = fetchUid()
         let listener = db.collection(friendCollectionName).document(uid).collection(friendListCollectionName).addSnapshotListener { (querySnapshot, error) in
@@ -113,21 +118,25 @@ class UserDataModel {
             status: state
         )
         
-        // Firestoreに保存するために、Codableオブジェクトを辞書に変換
-        do {
-            try myDocumentRef.document(friendUid).setData(from: friendUidAndState) { error in
-                if let error = error {
-                    // エラー処理
-                    completion(error)
-                } else {
-                    // 成功した場合、nilをコールバックに渡す
-                    completion(nil)
+        // 自分のRefに保存
+        if state != .reportByFriend {
+            // Firestoreに保存するために、Codableオブジェクトを辞書に変換
+            do {
+                try myDocumentRef.document(friendUid).setData(from: friendUidAndState) { error in
+                    if let error = error {
+                        // エラー処理
+                        completion(error)
+                    } else {
+                        // 成功した場合、nilをコールバックに渡す
+                        completion(nil)
+                    }
                 }
+            } catch let error {
+                completion(error)
             }
-        } catch let error {
-            completion(error)
         }
-        
+
+        // 相手のRefに保存
         if state != .unLikeByMe { // この時だけ相手のRefにはデータを追加しない.
             // Firestoreに保存するために、Codableオブジェクトを辞書に変換
             do {

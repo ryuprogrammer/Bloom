@@ -22,6 +22,8 @@ enum FriendStatus: String, Codable {
     case blockByFriend = "ブロックされた人"
     /// ブロックした人→ 自分
     case blockByMy = "ブロックした人"
-    
+    /// 通報した人
+    case reportByFriend = "この人に通報された"
+
     var id: String { rawValue }
 }

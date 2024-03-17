@@ -80,7 +80,7 @@ struct MessageView: View {
                             .alert("友達を通報", isPresented: $isShowReport) {
                                 Button("通報", role: .destructive) {
                                     messageVM.changeFriendStatus(
-                                        state: .likeByMe,
+                                        state: .reportByFriend,
                                         friendProfile: chatPartnerProfile
                                     )
                                 }
