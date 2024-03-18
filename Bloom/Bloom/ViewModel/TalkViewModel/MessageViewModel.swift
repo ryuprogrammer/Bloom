@@ -12,6 +12,7 @@ import FirebaseAuth
 class MessageViewModel: ObservableObject {
     let userDataModel = UserDataModel()
     let chatDataModel = ChatDataModel()
+    let loadFileDataModel = LoadFileDataModel()
     @Published var messages: [MessageElement] = []
     
     private var lister: ListenerRegistration?
@@ -131,5 +132,21 @@ class MessageViewModel: ObservableObject {
             chatPartnerProfile: chatPartnerProfile,
             message: message
         )
+    }
+
+    // MARK: - ファイル読み込み系
+    /// 文章にNGワードが含まれているかチェック
+    func isCoutainNGWord(message: String) -> Bool {
+        guard let ngWords = loadFileDataModel.loadCsvFile() else { return false }
+
+        for ngWord in ngWords {
+            if message.localizedCaseInsensitiveContains(ngWord) {
+                print("含まれている")
+                return true
+            } else {
+                print("\(ngWord)は含まれていない")
+            }
+        }
+        return false
     }
 }

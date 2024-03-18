@@ -1,17 +1,28 @@
 import SwiftUI
 
+/// メッセージ画面: メッセージの送信, ブロック, 通報
 struct MessageView: View {
+    // MARK: - インスタンス
     let chatPartnerProfile: ProfileElement
     @ObservedObject var messageVM = MessageViewModel()
+
+    // MARK: - 入力系
     @State private var typeMessage = ""
+
+    // MARK: - トグル
+    @State var isShowProfile: Bool = false
     @State private var isSendMessage: Bool = false
     @State private var sendButtonAnimate: Bool = false
     @FocusState private var keybordFocus: Bool
-    @State var isShowProfile: Bool = false
-    let iconSize = UIScreen.main.bounds.width / 14
+
+    // MARK: - 警告系のトグル
     @State var showActionSheet: Bool = false
     @State var isShowBlock: Bool = false
     @State var isShowReport: Bool = false
+    @State var isShowNGWord: Bool = false
+
+    // MARK: - 画面サイズ
+    let iconSize = UIScreen.main.bounds.width / 14
 
     var body: some View {
         VStack {
@@ -116,9 +127,12 @@ struct MessageView: View {
                     }
                 
                 Button(action: {
-                    if isSendMessage {
-                        sendButtonAnimate.toggle()
-                        
+                    sendButtonAnimate.toggle()
+                    let isContainNGWord = messageVM.isCoutainNGWord(message: typeMessage)
+                    if isContainNGWord {
+                        // NGWordが含まれているからアラート
+                        isShowNGWord = true
+                    } else {
                         // メッセージ追加
                         messageVM.addMessage(
                             chatPartnerProfile: chatPartnerProfile,
@@ -135,6 +149,11 @@ struct MessageView: View {
                         .symbolEffect(.bounce.down.byLayer, value: sendButtonAnimate)
                 })
                 .disabled(!isSendMessage)
+                .alert(isPresented: $isShowNGWord) {
+                            Alert(title: Text("不適切な発言"),
+                                  message: Text("不適切な発言が含まれているため送信できません"),
+                                  dismissButton: .default(Text("OK")))
+                        }
             }
             .padding(.horizontal)
             .padding(.vertical, 10)
