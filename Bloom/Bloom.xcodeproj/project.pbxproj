@@ -22,7 +22,6 @@
 		1F1DFD8A2BA6CABE002366DF /* serviceDescription.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F1DFD872BA6CABC002366DF /* serviceDescription.txt */; };
 		1F1DFD8B2BA6CABE002366DF /* deleteDescription.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F1DFD882BA6CABD002366DF /* deleteDescription.txt */; };
 		1F1DFD8C2BA6CABE002366DF /* privacyDescription.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F1DFD892BA6CABD002366DF /* privacyDescription.txt */; };
-		1F1DFD8E2BA6CB6A002366DF /* TextFileDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1DFD8D2BA6CB6A002366DF /* TextFileDataModel.swift */; };
 		1F1DFD902BA6CEAE002366DF /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1DFD8F2BA6CEAD002366DF /* DeleteAccountView.swift */; };
 		1F1FEB2F2B92BF5600F8AEA3 /* AddressEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FEB2E2B92BF5600F8AEA3 /* AddressEntryView.swift */; };
 		1F1FEB322B92C2DA00F8AEA3 /* Prefectures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1FEB312B92C2DA00F8AEA3 /* Prefectures.swift */; };
@@ -87,6 +86,8 @@
 		1FF59CBD2B89BB9A0031C580 /* ProfileElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF59CBC2B89BB9A0031C580 /* ProfileElement.swift */; };
 		1FF59CBF2B89BE600031C580 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF59CBE2B89BE600031C580 /* RegistrationViewModel.swift */; };
 		1FFB98982BA75A49007CDFAC /* AccountStopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB98972BA75A49007CDFAC /* AccountStopView.swift */; };
+		1FFB989A2BA76001007CDFAC /* NGWordList.csv in Resources */ = {isa = PBXBuildFile; fileRef = 1FFB98992BA76001007CDFAC /* NGWordList.csv */; };
+		1FFB989C2BA763F8007CDFAC /* LoadFileDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB989B2BA763F8007CDFAC /* LoadFileDataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,7 +106,6 @@
 		1F1DFD872BA6CABC002366DF /* serviceDescription.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = serviceDescription.txt; sourceTree = "<group>"; };
 		1F1DFD882BA6CABD002366DF /* deleteDescription.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = deleteDescription.txt; sourceTree = "<group>"; };
 		1F1DFD892BA6CABD002366DF /* privacyDescription.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = privacyDescription.txt; sourceTree = "<group>"; };
-		1F1DFD8D2BA6CB6A002366DF /* TextFileDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFileDataModel.swift; sourceTree = "<group>"; };
 		1F1DFD8F2BA6CEAD002366DF /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		1F1FEB2E2B92BF5600F8AEA3 /* AddressEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEntryView.swift; sourceTree = "<group>"; };
 		1F1FEB312B92C2DA00F8AEA3 /* Prefectures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefectures.swift; sourceTree = "<group>"; };
@@ -158,6 +158,8 @@
 		1FF59CBC2B89BB9A0031C580 /* ProfileElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileElement.swift; sourceTree = "<group>"; };
 		1FF59CBE2B89BE600031C580 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		1FFB98972BA75A49007CDFAC /* AccountStopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStopView.swift; sourceTree = "<group>"; };
+		1FFB98992BA76001007CDFAC /* NGWordList.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = NGWordList.csv; sourceTree = "<group>"; };
+		1FFB989B2BA763F8007CDFAC /* LoadFileDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFileDataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +207,7 @@
 				1F1DFD872BA6CABC002366DF /* serviceDescription.txt */,
 				1F2F1FCA2B90C62A00A9615D /* ExplanationText.swift */,
 				1F1FEB312B92C2DA00F8AEA3 /* Prefectures.swift */,
+				1FFB98992BA76001007CDFAC /* NGWordList.csv */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -392,7 +395,7 @@
 				1FEF28482B8A27F500EAFB3E /* MockData.swift */,
 				1F1B3CA82B9C2997001F356E /* SwiftDataModel.swift */,
 				1F1B3CAA2B9C4A12001F356E /* UserDefaultsDataModel.swift */,
-				1F1DFD8D2BA6CB6A002366DF /* TextFileDataModel.swift */,
+				1FFB989B2BA763F8007CDFAC /* LoadFileDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 				1FF59CAA2B8656350031C580 /* GoogleService-Info.plist in Resources */,
 				1FF59C692B84CEEC0031C580 /* Assets.xcassets in Resources */,
 				1F1DFD8B2BA6CABE002366DF /* deleteDescription.txt in Resources */,
+				1FFB989A2BA76001007CDFAC /* NGWordList.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,7 +535,6 @@
 				1F1B3CA92B9C2997001F356E /* SwiftDataModel.swift in Sources */,
 				1F4823012B98C7E300098AAE /* LikedView.swift in Sources */,
 				1F1FEB362B92E31B00F8AEA3 /* ProfileImageEntryView.swift in Sources */,
-				1F1DFD8E2BA6CB6A002366DF /* TextFileDataModel.swift in Sources */,
 				1F1DFD862BA5FDCB002366DF /* FormView.swift in Sources */,
 				1F1252772B9F35FE0040E32F /* MyProfileElement+.swift in Sources */,
 				1FF59C672B84CEEB0031C580 /* ContentView.swift in Sources */,
@@ -552,6 +555,7 @@
 				1FF59CB92B890E490031C580 /* RegistrationView.swift in Sources */,
 				1F2F1FCB2B90C62A00A9615D /* ExplanationText.swift in Sources */,
 				1F1DFD842BA5FCA4002366DF /* SafariView.swift in Sources */,
+				1FFB989C2BA763F8007CDFAC /* LoadFileDataModel.swift in Sources */,
 				1FEF284D2B8B197600EAFB3E /* ChatDataModel.swift in Sources */,
 				1F4822FF2B98C63300098AAE /* LikedCardView.swift in Sources */,
 				1F1FEB3F2B9481C100F8AEA3 /* DataImage.swift in Sources */,

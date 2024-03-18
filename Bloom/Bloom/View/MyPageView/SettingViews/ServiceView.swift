@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ServiceView: View {
-    let textFileDataModel = TextFileDataModel()
+    let loadFileDataModel = LoadFileDataModel()
     @State var explanation = ""
     var body: some View {
         ScrollView {
@@ -11,7 +11,7 @@ struct ServiceView: View {
         .navigationBarTitle("利用規約", displayMode: .inline)
         .onAppear {
             Task {
-                explanation = await textFileDataModel.readFile(fileCase: .service)
+                explanation = await loadFileDataModel.readFile(fileCase: .service)
             }
         }
     }

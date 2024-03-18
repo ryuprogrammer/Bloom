@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct DeleteAccountView: View {
-    let textFileDataModel = TextFileDataModel()
+    let loadFileDataModel = LoadFileDataModel()
     let myPageViewModel = MyPageViewModel()
     @State var explanation = ""
     var body: some View {
@@ -28,7 +28,7 @@ struct DeleteAccountView: View {
         .navigationBarTitle("退会", displayMode: .inline)
         .onAppear {
             Task {
-                explanation = await textFileDataModel.readFile(fileCase: .delete)
+                explanation = await loadFileDataModel.readFile(fileCase: .delete)
             }
         }
     }

@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
     /// タブの選択項目を保持する
     @State var selection: ViewSection = .swipeView
-    
+
     enum ViewSection: Int {
         case swipeView = 1
         case likedView = 2

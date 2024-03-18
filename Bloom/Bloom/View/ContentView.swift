@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var authenticationManager = AuthenticationManager()
     @State private var isShowSheet = false
-    
+
     var body: some View {
             VStack {
                 if authenticationManager.accountStatus == .none {

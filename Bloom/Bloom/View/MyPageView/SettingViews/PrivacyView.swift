@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct PrivacyView: View {
-    let textFileDataModel = TextFileDataModel()
+    let loadFileDataModel = LoadFileDataModel()
     @State var explanation = ""
     var body: some View {
         ScrollView {
@@ -11,7 +11,7 @@ struct PrivacyView: View {
         .navigationBarTitle("プライバシーポリシー", displayMode: .inline)
         .onAppear {
             Task {
-                explanation = await textFileDataModel.readFile(fileCase: .privacy)
+                explanation = await loadFileDataModel.readFile(fileCase: .privacy)
             }
         }
     }
