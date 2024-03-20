@@ -22,9 +22,15 @@ struct SwipeCardView: View {
             Color.blue
             
             if !card.profile.profileImages.isEmpty {
-                DataImage(dataImage: card.profile.profileImages[imageNumber])
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: imageWidth, height: imageHeight)
+//                DataImage(dataImage: card.profile.profileImages[imageNumber])
+//                    .aspectRatio(contentMode: .fill)
+//                    .frame(width: imageWidth, height: imageHeight)
+
+                if let data = card.profile.profileImages.first {
+                    FaceDetectionView(imageData: data)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: imageWidth, height: imageHeight)
+                }
             }
             
             if card.profile.profileImages.count > minImageNumber {

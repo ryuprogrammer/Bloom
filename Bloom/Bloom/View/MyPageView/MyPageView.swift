@@ -38,6 +38,10 @@ struct MyPageView: View {
     var body: some View {
         NavigationStack(path: $navigationPath) {
             List {
+                FaceDetectionView(imageData: showingProfile.homeImage)
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 400, height: 800)
+
                 // ホーム写真
                 VStack(alignment: .center) {
                     homeImageView()

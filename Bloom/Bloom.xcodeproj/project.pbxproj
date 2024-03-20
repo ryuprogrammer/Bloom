@@ -46,6 +46,8 @@
 		1F48230E2B9B250E00098AAE /* AddressEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48230D2B9B250E00098AAE /* AddressEditView.swift */; };
 		1F4823102B9B278E00098AAE /* BirthEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48230F2B9B278E00098AAE /* BirthEditView.swift */; };
 		1F54CFE02B95DD610084D766 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54CFDF2B95DD610084D766 /* SignInView.swift */; };
+		1F567E472BAADCCE0078E2C6 /* FaceDetectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F567E462BAADCCE0078E2C6 /* FaceDetectionViewModel.swift */; };
+		1F567E492BAADD340078E2C6 /* FaceDetectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F567E482BAADD340078E2C6 /* FaceDetectionView.swift */; };
 		1F78BDA12B9B7B8C00E2FE66 /* FriendPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F78BDA02B9B7B8C00E2FE66 /* FriendPreviewView.swift */; };
 		1F9C2DD42B8DD3D500994981 /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */; };
 		1F9C2DD62B8DE54400994981 /* MessageCountElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */; };
@@ -133,6 +135,8 @@
 		1F48230F2B9B278E00098AAE /* BirthEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthEditView.swift; sourceTree = "<group>"; };
 		1F54CFDF2B95DD610084D766 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		1F567E452BA96DDB0078E2C6 /* BloomDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BloomDebug.entitlements; sourceTree = "<group>"; };
+		1F567E462BAADCCE0078E2C6 /* FaceDetectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectionViewModel.swift; sourceTree = "<group>"; };
+		1F567E482BAADD340078E2C6 /* FaceDetectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceDetectionView.swift; sourceTree = "<group>"; };
 		1F78BDA02B9B7B8C00E2FE66 /* FriendPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendPreviewView.swift; sourceTree = "<group>"; };
 		1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountElement.swift; sourceTree = "<group>"; };
@@ -221,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				1F1FEB3A2B93716E00F8AEA3 /* SwipeViewModel.swift */,
+				1F567E462BAADCCE0078E2C6 /* FaceDetectionViewModel.swift */,
 			);
 			path = SwipeViewModel;
 			sourceTree = "<group>";
@@ -245,6 +250,7 @@
 				1F1FEB3E2B9481C100F8AEA3 /* DataImage.swift */,
 				1F1DFD832BA5FCA4002366DF /* SafariView.swift */,
 				1FFB98972BA75A49007CDFAC /* AccountStopView.swift */,
+				1F567E482BAADD340078E2C6 /* FaceDetectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -564,11 +570,13 @@
 				1F2F1FD12B90DB7900A9615D /* BirthEntryView.swift in Sources */,
 				1F2F1FC52B90AE2800A9615D /* SwipeView.swift in Sources */,
 				1F54CFE02B95DD610084D766 /* SignInView.swift in Sources */,
+				1F567E492BAADD340078E2C6 /* FaceDetectionView.swift in Sources */,
 				1F48230C2B9B09C500098AAE /* IntroductionEditView.swift in Sources */,
 				1F4823082B9A27D500098AAE /* MyPageViewModel.swift in Sources */,
 				1F4823102B9B278E00098AAE /* BirthEditView.swift in Sources */,
 				1F1DFD802BA5E95C002366DF /* PrivacyView.swift in Sources */,
 				1FF59CB92B890E490031C580 /* RegistrationView.swift in Sources */,
+				1F567E472BAADCCE0078E2C6 /* FaceDetectionViewModel.swift in Sources */,
 				1F2F1FCB2B90C62A00A9615D /* ExplanationText.swift in Sources */,
 				1F1DFD842BA5FCA4002366DF /* SafariView.swift in Sources */,
 				1FFB989C2BA763F8007CDFAC /* LoadFileDataModel.swift in Sources */,
