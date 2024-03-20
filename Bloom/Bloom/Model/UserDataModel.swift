@@ -23,7 +23,7 @@ class UserDataModel {
     /// 自分が通報されているかチェック（Limitに達していたらアカウント停止にする）
     func checkReportMyAccount() async {
         // UIDを取得
-        let uid = fetchUid()
+        guard let uid = fetchUid() else { return }
 
         let reportedCount = await db.collection("friends").document(uid).collection("friendList").whereField("status", isEqualTo: FriendStatus.likeByMe).count.accessibilityElementCount()
 
@@ -35,8 +35,12 @@ class UserDataModel {
     }
 
     /// 友達関係を指定して、リアルタイム監視: トークしてる人を取得したり
-    func listenFriends(friendStatus: FriendStatus, completion: @escaping ([FriendsElement]?, Error?) -> Void) -> ListenerRegistration {
-        let uid = fetchUid()
+    func listenFriends(friendStatus: FriendStatus, completion: @escaping ([FriendsElement]?, Error?) -> Void) -> ListenerRegistration? {
+
+        guard let uid = fetchUid() else {
+            return nil
+        }
+
         let listener = db.collection(friendCollectionName).document(uid).collection(friendListCollectionName).addSnapshotListener { (querySnapshot, error) in
             if let error = error {
                 completion(nil, error)
@@ -92,8 +96,8 @@ class UserDataModel {
     }
     
     /// uid取得メソッド
-    func fetchUid() -> String {
-        var uid: String = ""
+    func fetchUid() -> String? {
+        var uid: String?
         let user = Auth.auth().currentUser
         
         if let user {
@@ -110,7 +114,7 @@ class UserDataModel {
         completion: @escaping (Error?) -> Void
     ) {
         // UIDを取得
-        let uid = fetchUid()
+        guard let uid = fetchUid() else { return }
         // 自分のRef
         let myDocumentRef = db.collection(friendCollectionName).document(uid).collection(friendListCollectionName)
 
@@ -169,8 +173,8 @@ class UserDataModel {
     /// Profile追加メソッド（更新も可能）
     func addProfile(profile: ProfileElement, completion: @escaping (Error?) -> Void) {
         // UIDを取得
-        let uid = fetchUid()
-        
+        guard let uid = fetchUid() else { return }
+
         // Firestoreに保存するデータを辞書形式で用意
         let firestoreData: [String: Any] = [
             "userName": profile.userName,
@@ -218,8 +222,8 @@ class UserDataModel {
     /// ProfileのprofileImagesを全削除（profileImagesを更新する前に削除する）
     func deleteProfileImages(deleteImageCount: Int, completion: @escaping (Error?) -> Void) async {
         // UIDを取得
-        let uid = fetchUid()
-        
+        guard let uid = fetchUid() else { return }
+
         let storageRef = self.storage.reference()
         
         for index in 0..<deleteImageCount {
@@ -235,8 +239,8 @@ class UserDataModel {
     /// FriendStatus（Userの関係値）を指定してUidを取得
     func fetchProfileWithFriendStatus(friendStatus: FriendStatus, completion: @escaping ([String]?, Error?) -> Void) {
         // UIDを取得
-        let uid = fetchUid()
-        
+        guard let uid = fetchUid() else { return }
+
         db.collection("friends").document(uid).collection("friendList").getDocuments { (querySnapshot, error) in
             if let error = error {
                 completion(nil, error)

@@ -47,8 +47,24 @@ struct SwipeView: View {
                                         if abs(translation.width) > 150 {
                                             if gesture.startLocation.x < gesture.location.x {
                                                 swipeViewModel.addFriendsToList(state: .likeByMe, friendProfile: card.profile)
+
+                                                guard let friendUid = card.profile.id else { return }
+                                                // 相手に通知を送る
+                                                swipeViewModel.sendPushNotification (
+                                                    friendUid: friendUid,
+                                                    title: "いいね",
+                                                    body: "いいねがきたよ！"
+                                                )
                                             } else if gesture.startLocation.x > gesture.location.x {
                                                 swipeViewModel.addFriendsToList(state: .unLikeByMe, friendProfile: card.profile)
+
+                                                guard let friendUid = card.profile.id else { return }
+                                                // 相手に通知を送る
+                                                swipeViewModel.sendPushNotification (
+                                                    friendUid: friendUid,
+                                                    title: "いいね",
+                                                    body: "いいねがきたよ！"
+                                                )
                                             }
                                             
                                             // SwiftDataからデータ削除

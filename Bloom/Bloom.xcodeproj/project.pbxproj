@@ -88,6 +88,8 @@
 		1FFB98982BA75A49007CDFAC /* AccountStopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB98972BA75A49007CDFAC /* AccountStopView.swift */; };
 		1FFB989A2BA76001007CDFAC /* NGWordList.csv in Resources */ = {isa = PBXBuildFile; fileRef = 1FFB98992BA76001007CDFAC /* NGWordList.csv */; };
 		1FFB989C2BA763F8007CDFAC /* LoadFileDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB989B2BA763F8007CDFAC /* LoadFileDataModel.swift */; };
+		1FFB989F2BA82824007CDFAC /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 1FFB989E2BA82824007CDFAC /* FirebaseMessaging */; };
+		1FFB98A12BA82D88007CDFAC /* PushNotificationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFB98A02BA82D88007CDFAC /* PushNotificationSender.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +132,7 @@
 		1F48230D2B9B250E00098AAE /* AddressEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressEditView.swift; sourceTree = "<group>"; };
 		1F48230F2B9B278E00098AAE /* BirthEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthEditView.swift; sourceTree = "<group>"; };
 		1F54CFDF2B95DD610084D766 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		1F567E452BA96DDB0078E2C6 /* BloomDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BloomDebug.entitlements; sourceTree = "<group>"; };
 		1F78BDA02B9B7B8C00E2FE66 /* FriendPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendPreviewView.swift; sourceTree = "<group>"; };
 		1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountElement.swift; sourceTree = "<group>"; };
@@ -160,6 +163,7 @@
 		1FFB98972BA75A49007CDFAC /* AccountStopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStopView.swift; sourceTree = "<group>"; };
 		1FFB98992BA76001007CDFAC /* NGWordList.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = NGWordList.csv; sourceTree = "<group>"; };
 		1FFB989B2BA763F8007CDFAC /* LoadFileDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFileDataModel.swift; sourceTree = "<group>"; };
+		1FFB98A02BA82D88007CDFAC /* PushNotificationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSender.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +171,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FFB989F2BA82824007CDFAC /* FirebaseMessaging in Frameworks */,
 				1FF59C7D2B84E64C0031C580 /* FirebaseAnalyticsSwift in Frameworks */,
 				1FF59C972B8507E70031C580 /* FirebaseAuthUI in Frameworks */,
 				1FF59CA12B8507E70031C580 /* FirebaseGoogleAuthUI in Frameworks */,
@@ -321,6 +326,7 @@
 			children = (
 				1FF59C632B84CEEB0031C580 /* Bloom */,
 				1FF59C622B84CEEB0031C580 /* Products */,
+				1FFB989D2BA82824007CDFAC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -335,6 +341,7 @@
 		1FF59C632B84CEEB0031C580 /* Bloom */ = {
 			isa = PBXGroup;
 			children = (
+				1F567E452BA96DDB0078E2C6 /* BloomDebug.entitlements */,
 				1FF59CA82B850D3C0031C580 /* Info.plist */,
 				1FF59C642B84CEEB0031C580 /* BloomApp.swift */,
 				1FF59CAB2B8660260031C580 /* View */,
@@ -396,6 +403,7 @@
 				1F1B3CA82B9C2997001F356E /* SwiftDataModel.swift */,
 				1F1B3CAA2B9C4A12001F356E /* UserDefaultsDataModel.swift */,
 				1FFB989B2BA763F8007CDFAC /* LoadFileDataModel.swift */,
+				1FFB98A02BA82D88007CDFAC /* PushNotificationSender.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -421,6 +429,13 @@
 				1F12527E2BA0CD280040E32F /* ProfileElement+.swift */,
 			);
 			path = Extentions;
+			sourceTree = "<group>";
+		};
+		1FFB989D2BA82824007CDFAC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,6 +470,7 @@
 				1FF59CA22B8507E70031C580 /* FirebaseOAuthUI */,
 				1FF59CA42B8507E70031C580 /* FirebasePhoneAuthUI */,
 				1FF59CA62B8507E70031C580 /* FirebaseStorageUI */,
+				1FFB989E2BA82824007CDFAC /* FirebaseMessaging */,
 			);
 			productName = Bloom;
 			productReference = 1FF59C612B84CEEB0031C580 /* Bloom.app */;
@@ -562,6 +578,7 @@
 				1F48230E2B9B250E00098AAE /* AddressEditView.swift in Sources */,
 				1F78BDA12B9B7B8C00E2FE66 /* FriendPreviewView.swift in Sources */,
 				1FF59C652B84CEEB0031C580 /* BloomApp.swift in Sources */,
+				1FFB98A12BA82D88007CDFAC /* PushNotificationSender.swift in Sources */,
 				1FF59CB72B89077E0031C580 /* MessageView.swift in Sources */,
 				1F1B3CAD2B9CB8BD001F356E /* FriendTalkElement.swift in Sources */,
 				1F1FEB3B2B93716E00F8AEA3 /* SwipeViewModel.swift in Sources */,
@@ -703,11 +720,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Bloom/Bloom.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = Bloom/BloomDebug.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Bloom/Preview Content\"";
-				DEVELOPMENT_TEAM = 254E5TZV4C;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 254E5TZV4C;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 254E5TZV4C;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -729,6 +749,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ryuprogrammer.Bloom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "BloomApp Provisioning Profiles";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "BloomApp Provisioning Profiles";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -893,6 +916,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1FF59C932B8507E60031C580 /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */;
 			productName = FirebaseStorageUI;
+		};
+		1FFB989E2BA82824007CDFAC /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FF59C772B84E64B0031C580 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

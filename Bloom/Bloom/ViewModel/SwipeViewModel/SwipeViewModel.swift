@@ -3,6 +3,7 @@ import SwiftData
 import FirebaseFirestore
 
 class SwipeViewModel: ObservableObject {
+    let pushNotificationSender = PushNotificationSender()
     let swiftDataModel = SwiftDataModel()
     private var userDataModel = UserDataModel()
     @Published private(set) var friendProfiles: [ProfileElement] = []
@@ -80,5 +81,24 @@ class SwipeViewModel: ObservableObject {
         swiftDataModel.deleteAllSwipeFriendElement(
             context: context
         )
+    }
+
+    /// uid取得
+    func fetchUid() -> String? {
+        return userDataModel.fetchUid()
+    }
+
+    // MARK: - Push通知
+    /// ライクをしたことを通知
+    func sendPushNotification(friendUid: String, title: String, body: String) {
+        if let uid = fetchUid() {
+            pushNotificationSender.sendPushNotification(
+                friendUid: friendUid,
+                userId: uid,
+                title: "いいね",
+                body: "いいねがきたよ！") {
+                    print("通知完了")
+                }
+        }
     }
 }

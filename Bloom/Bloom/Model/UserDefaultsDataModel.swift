@@ -13,7 +13,7 @@ struct UserDefaultsDataModel {
     
     /// MyProfileのデータの追加・更新
     func addMyProfile(myProfile: ProfileElement) {
-        let uid = userDataModel.fetchUid()
+        guard let uid = userDataModel.fetchUid() else { return }
         let myProfileElement: MyProfileElement = MyProfileElement(
             id: myProfile.id ?? uid,
             userName: myProfile.userName,

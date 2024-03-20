@@ -57,6 +57,7 @@ class AuthenticationManager: ObservableObject {
             // プロフィールある
             self.accountStatus = .valid
         } else { // userDefaultsにはプロフィールない
+            print("userDefaultsにはプロフィールない")
             // 既存のリスナーがあれば削除
             if let handle = handle {
                 Auth.auth().removeStateDidChangeListener(handle)
@@ -86,6 +87,7 @@ class AuthenticationManager: ObservableObject {
                     })
                 } else {
                     print("Sign-out")
+                    print("サインイン画面を表示")
                     self.accountStatus = .none
                 }
             }
@@ -95,7 +97,7 @@ class AuthenticationManager: ObservableObject {
     /// 自分が通報されているかチェック（Limitに達していたらアカウント停止にする）
     func checkReportMyAccount() async {
         // UIDを取得
-        let uid = userDataModel.fetchUid()
+        guard let uid = userDataModel.fetchUid() else { return }
 
         do {
             let reportedCountSnapshot = try await db.collection("friends").document(uid).collection("friendList").whereField("status", isEqualTo: FriendStatus.reportByFriend.rawValue).getDocuments()
@@ -112,8 +114,8 @@ class AuthenticationManager: ObservableObject {
 
     // firebaseのプロフィールをuserDefaultsに追加
     func addProfileToDevice() {
-        let uid = userDataModel.fetchUid()
-        
+        guard let uid = userDataModel.fetchUid() else { return }
+
         /// uidを指定して、プロフィールを1つ取得 （画像データまで取得）
         userDataModel.fetchProfile(uid: uid) { profile, error in
             if let profile = profile, error == nil {

@@ -5,6 +5,7 @@ struct MessageView: View {
     // MARK: - インスタンス
     let chatPartnerProfile: ProfileElement
     @ObservedObject var messageVM = MessageViewModel()
+//    @EnvironmentObject var session: FirebaseSession
 
     // MARK: - 入力系
     @State private var typeMessage = ""
