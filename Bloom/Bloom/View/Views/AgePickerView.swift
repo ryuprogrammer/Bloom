@@ -26,6 +26,7 @@ struct AgePickerView: View {
                 HStack {
                     Spacer()
                     Text("閉じる")
+                        .foregroundStyle(Color.blue)
                         .padding(.horizontal, 16)
                 }
             }
@@ -57,15 +58,16 @@ struct AgePickerView: View {
             }
         }
         .frame(height: pickerHeight)
+        .background(Color.white)
         .onChange(of: maxAge) {
-            if maxAge < minAge {
+            if maxAge <= minAge {
                 withAnimation {
                     minAge = maxAge - 1
                 }
             }
         }
         .onChange(of: minAge) {
-            if minAge > maxAge {
+            if minAge >= maxAge {
                 withAnimation {
                     maxAge = minAge + 1
                 }
