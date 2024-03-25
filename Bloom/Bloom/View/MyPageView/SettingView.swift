@@ -51,7 +51,7 @@ struct SettingView: View {
 
             Section {
                 Button {
-                    path.append(.pathDeleteAccount)
+                    path.append(.pathPranWeb)
                 } label: {
                     NavigationRow(rowString: "プラン")
                 }

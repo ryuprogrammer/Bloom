@@ -11,7 +11,7 @@ struct ButtonView: View {
         } label: {
             ZStack {
                 if isValid {
-                    Color.pink.opacity(0.8)
+                    Color.main
                         .frame(height: 55)
                         .frame(maxWidth: .infinity)
                         .clipShape(Capsule())

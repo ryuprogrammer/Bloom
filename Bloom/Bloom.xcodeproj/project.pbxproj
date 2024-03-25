@@ -65,6 +65,8 @@
 		1F7F4B1F2BB148E300311630 /* FilterElement+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F4B1E2BB148E300311630 /* FilterElement+.swift */; };
 		1F7F4B232BB17E6E00311630 /* ProfessionFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F4B222BB17E6E00311630 /* ProfessionFilterView.swift */; };
 		1F7F4B252BB1808500311630 /* ProfessionList.csv in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F4B242BB1808500311630 /* ProfessionList.csv */; };
+		1F7F4B272BB1CBF300311630 /* PranWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F4B262BB1CBF300311630 /* PranWebView.swift */; };
+		1F7F4B292BB1E26800311630 /* AdvertisementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F4B282BB1E26800311630 /* AdvertisementView.swift */; };
 		1F9C2DD42B8DD3D500994981 /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */; };
 		1F9C2DD62B8DE54400994981 /* MessageCountElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */; };
 		1F9C2DDA2B8DFE7A00994981 /* FriendListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */; };
@@ -170,6 +172,8 @@
 		1F7F4B1E2BB148E300311630 /* FilterElement+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterElement+.swift"; sourceTree = "<group>"; };
 		1F7F4B222BB17E6E00311630 /* ProfessionFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessionFilterView.swift; sourceTree = "<group>"; };
 		1F7F4B242BB1808500311630 /* ProfessionList.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = ProfessionList.csv; sourceTree = "<group>"; };
+		1F7F4B262BB1CBF300311630 /* PranWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PranWebView.swift; sourceTree = "<group>"; };
+		1F7F4B282BB1E26800311630 /* AdvertisementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisementView.swift; sourceTree = "<group>"; };
 		1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountElement.swift; sourceTree = "<group>"; };
 		1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListRowView.swift; sourceTree = "<group>"; };
@@ -236,6 +240,7 @@
 				1F1DFD812BA5FA0E002366DF /* ServiceView.swift */,
 				1F1DFD852BA5FDCB002366DF /* FormView.swift */,
 				1F1DFD8F2BA6CEAD002366DF /* DeleteAccountView.swift */,
+				1F7F4B262BB1CBF300311630 /* PranWebView.swift */,
 			);
 			path = SettingViews;
 			sourceTree = "<group>";
@@ -290,6 +295,7 @@
 				1F7F4B052BAED52800311630 /* ListRowView.swift */,
 				1F7F4B072BAEF98D00311630 /* VipTicketView.swift */,
 				1F7F4B162BAF39B800311630 /* AgePickerView.swift */,
+				1F7F4B282BB1E26800311630 /* AdvertisementView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -605,6 +611,7 @@
 				1FF59C8E2B84FC800031C580 /* AuthenticationManager.swift in Sources */,
 				1F7F4B082BAEF98D00311630 /* VipTicketView.swift in Sources */,
 				1FF59CBF2B89BE600031C580 /* RegistrationViewModel.swift in Sources */,
+				1F7F4B292BB1E26800311630 /* AdvertisementView.swift in Sources */,
 				1F12527F2BA0CD280040E32F /* ProfileElement+.swift in Sources */,
 				1FF59CAF2B86667F0031C580 /* MessageElement.swift in Sources */,
 				1F2F1FC92B90BC5300A9615D /* NameEntryView.swift in Sources */,
@@ -627,6 +634,7 @@
 				1F48230A2B9AE38000098AAE /* ProfileImageEditView.swift in Sources */,
 				1F1DFD7C2BA5E0DD002366DF /* SettingView.swift in Sources */,
 				1F2F1FD32B90F1FA00A9615D /* String+.swift in Sources */,
+				1F7F4B272BB1CBF300311630 /* PranWebView.swift in Sources */,
 				1F12527D2BA097860040E32F /* SwipeFriendElement.swift in Sources */,
 				1FF59CBB2B89B1860031C580 /* HomeView.swift in Sources */,
 				1F2F1FD12B90DB7900A9615D /* BirthEntryView.swift in Sources */,

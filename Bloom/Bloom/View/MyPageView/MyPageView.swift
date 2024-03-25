@@ -247,6 +247,8 @@ struct MyPageView: View {
             FormView().toolbar(.hidden, for: .tabBar)
         case .pathDeleteAccount:
             DeleteAccountView().toolbar(.hidden, for: .tabBar)
+        case .pathPranWeb:
+            PranWebView().toolbar(.hidden, for: .tabBar)
         }
     }
 }
@@ -261,6 +263,7 @@ enum MyPagePath {
     case pathService
     case pathForm
     case pathDeleteAccount
+    case pathPranWeb
 }
 
 #Preview {
