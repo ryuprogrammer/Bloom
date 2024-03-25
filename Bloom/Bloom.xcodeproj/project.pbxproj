@@ -70,6 +70,7 @@
 		1F9C2DD42B8DD3D500994981 /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */; };
 		1F9C2DD62B8DE54400994981 /* MessageCountElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */; };
 		1F9C2DDA2B8DFE7A00994981 /* FriendListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */; };
+		1FA3DD012BB1E55600B94556 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FA3DD002BB1E55600B94556 /* GoogleService-Info.plist */; };
 		1FEF28452B8A149900EAFB3E /* UserDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF28442B8A149900EAFB3E /* UserDataModel.swift */; };
 		1FEF28472B8A217100EAFB3E /* FriendListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF28462B8A217100EAFB3E /* FriendListView.swift */; };
 		1FEF28492B8A27F500EAFB3E /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF28482B8A27F500EAFB3E /* MockData.swift */; };
@@ -96,7 +97,6 @@
 		1FF59CA32B8507E70031C580 /* FirebaseOAuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1FF59CA22B8507E70031C580 /* FirebaseOAuthUI */; };
 		1FF59CA52B8507E70031C580 /* FirebasePhoneAuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1FF59CA42B8507E70031C580 /* FirebasePhoneAuthUI */; };
 		1FF59CA72B8507E70031C580 /* FirebaseStorageUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1FF59CA62B8507E70031C580 /* FirebaseStorageUI */; };
-		1FF59CAA2B8656350031C580 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FF59CA92B8656350031C580 /* GoogleService-Info.plist */; };
 		1FF59CAF2B86667F0031C580 /* MessageElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF59CAE2B86667F0031C580 /* MessageElement.swift */; };
 		1FF59CB12B8667860031C580 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF59CB02B8667860031C580 /* MessageViewModel.swift */; };
 		1FF59CB42B8670570031C580 /* MessageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF59CB32B8670570031C580 /* MessageRowView.swift */; };
@@ -177,6 +177,7 @@
 		1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountElement.swift; sourceTree = "<group>"; };
 		1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListRowView.swift; sourceTree = "<group>"; };
+		1FA3DD002BB1E55600B94556 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1FEF28442B8A149900EAFB3E /* UserDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataModel.swift; sourceTree = "<group>"; };
 		1FEF28462B8A217100EAFB3E /* FriendListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListView.swift; sourceTree = "<group>"; };
 		1FEF28482B8A27F500EAFB3E /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
@@ -191,7 +192,6 @@
 		1FF59C8D2B84FC800031C580 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		1FF59C8F2B84FCD80031C580 /* FirebaseAuthUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthUIView.swift; sourceTree = "<group>"; };
 		1FF59CA82B850D3C0031C580 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		1FF59CA92B8656350031C580 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1FF59CAE2B86667F0031C580 /* MessageElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageElement.swift; sourceTree = "<group>"; };
 		1FF59CB02B8667860031C580 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
 		1FF59CB32B8670570031C580 /* MessageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRowView.swift; sourceTree = "<group>"; };
@@ -414,8 +414,8 @@
 				1F1FEB302B92C1F400F8AEA3 /* Data */,
 				1FF59CB52B8901A20031C580 /* Extentions */,
 				1FF59C682B84CEEC0031C580 /* Assets.xcassets */,
+				1FA3DD002BB1E55600B94556 /* GoogleService-Info.plist */,
 				1FF59C6A2B84CEEC0031C580 /* Bloom.entitlements */,
-				1FF59CA92B8656350031C580 /* GoogleService-Info.plist */,
 				1FF59C6B2B84CEEC0031C580 /* Preview Content */,
 			);
 			path = Bloom;
@@ -588,8 +588,8 @@
 			files = (
 				1FF59C6D2B84CEEC0031C580 /* Preview Assets.xcassets in Resources */,
 				1F1DFD8A2BA6CABE002366DF /* serviceDescription.txt in Resources */,
+				1FA3DD012BB1E55600B94556 /* GoogleService-Info.plist in Resources */,
 				1F1DFD8C2BA6CABE002366DF /* privacyDescription.txt in Resources */,
-				1FF59CAA2B8656350031C580 /* GoogleService-Info.plist in Resources */,
 				1FF59C692B84CEEC0031C580 /* Assets.xcassets in Resources */,
 				1F1DFD8B2BA6CABE002366DF /* deleteDescription.txt in Resources */,
 				1FFB989A2BA76001007CDFAC /* NGWordList.csv in Resources */,
