@@ -61,10 +61,10 @@ extension String {
     }
 
     /// 文字列の横幅を計算
-    func getWidthOfString() -> CGFloat {
-        let font = UIFont.systemFont(ofSize: UIFont.systemFontSize) // デフォルトのフォントサイズを使用
-        let attributes = [NSAttributedString.Key.font: font]
-        let size = (self as NSString).size(withAttributes: attributes)
-        return ceil(size.width) // 切り上げて返す
-    }
+        func getWidthOfString() -> CGFloat {
+            let font = UIFont.preferredFont(forTextStyle: .title3) // SwiftUIの.font(.title)に相当するUIFontを取得
+            let attributes = [NSAttributedString.Key.font: font]
+            let size = (self as NSString).size(withAttributes: attributes)
+            return ceil(size.width) // 切り上げて返す
+        }
 }

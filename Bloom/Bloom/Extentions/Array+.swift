@@ -7,14 +7,14 @@
 
 import Foundation
 
-extension Array {
+extension Array where Element == String {
 
     /// 画面の横幅に合わせて配列を整形
-    func splitArrayByWidth(_ array: [String], maxWidth: CGFloat) -> [[String]] {
+    func splitArrayByWidth(maxWidth: CGFloat) -> [[String]] {
         var result: [[String]] = [[]]
         var currentRowWidth: CGFloat = 0
 
-        for item in array {
+        for item in self {
             let itemWidth = item.getWidthOfString()
             if currentRowWidth + itemWidth > maxWidth {
                 currentRowWidth = 0

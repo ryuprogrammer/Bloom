@@ -10,62 +10,122 @@ import SwiftUI
 struct HobbyFilterView: View {
     let filterViewModel = FilterViewModel()
     @Binding var hobbys: [String]
+    @State var hobbyData: [[String]] = [[]]
     @State var isHobbyValid: Bool = true
     let maxSelectNumber = 3
     let barHeight = UIScreen.main.bounds.height / 12
 
     @Environment(\.dismiss) private var dismiss
+    let maxWidth: CGFloat = UIScreen.main.bounds.width - 100 // マージンを取る
 
-    let items = ["Apple", "Banana", "Orange", "Grapes", "Watermelon", "Pineapple", "Strawberry", "Blueberry", "Kiwi", "Mango", "Peach", "Pear", "Plum"]
-        let maxWidth: CGFloat = UIScreen.main.bounds.width - 120 // マージンを取る
+    var body: some View {
+        ZStack {
+            ScrollView {
+                Spacer()
+                    .frame(height: barHeight)
 
-        var body: some View {
-            VStack(alignment: .leading, spacing: 10) {
-                ForEach(splitArrayByWidth(items, maxWidth: maxWidth), id: \.self) { row in
-                    HStack(spacing: 10) {
-                        ForEach(row, id: \.self) { item in
-                            Text(item)
-                                .padding(10)
-                                .background(Color.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                                .lineLimit(1)
-                                .fixedSize()
+                VStack(alignment: .leading) {
+                    ForEach(hobbyData, id: \.self) { row in
+                        HStack(spacing: 3) {
+                            ForEach(row, id: \.self) { item in
+                                if self.hobbys.contains(item) {
+                                    Text(item)
+                                        .font(.title2)
+                                        .foregroundStyle(Color.pink.opacity(0.8))
+                                        .padding(.vertical, 5)
+                                        .padding(.horizontal, 8)
+                                        .background {
+                                            Capsule().stroke(Color.pink.opacity(0.8), lineWidth: 5)
+                                        }
+                                        .padding(5)
+                                        .lineLimit(1)
+                                        .fixedSize()
+                                        .onTapGesture {
+                                            withAnimation {
+                                                self.hobbys.removeAll(where: {
+                                                    $0 == item
+                                                })
+                                            }
+                                        }
+                                } else {
+                                    Text(item)
+                                        .font(.title3)
+                                        .foregroundStyle(.gray)
+                                        .padding(5)
+                                        .padding(.horizontal, 8)
+                                        .lineLimit(1)
+                                        .fixedSize()
+                                        .onTapGesture {
+                                            withAnimation {
+                                                if self.hobbys.count < maxSelectNumber {
+                                                    self.hobbys.append(item)
+                                                }
+                                            }
+                                        }
+                                }
+                            }
                         }
                     }
                 }
+
+                Spacer()
+                    .frame(height: 130)
             }
-            .padding()
-        }
 
-        func splitArrayByWidth(_ array: [String], maxWidth: CGFloat) -> [[String]] {
-            var result: [[String]] = [[]]
-            var currentRowWidth: CGFloat = 0
+            VStack {
+                VStack {
+                    Text("趣味を３つまで選択してください")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color.white)
 
-            for item in array {
-                let itemWidth = item.getWidthOfString()
-                if currentRowWidth + itemWidth > maxWidth {
-                    currentRowWidth = 0
-                    result.append([])
+                    if hobbys.isEmpty {
+                        Text("まだ選択されてません")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Color.white)
+                            .padding(5)
+                    } else {
+                        HStack {
+                            ForEach(hobbys, id: \.self) { hobby in
+                                Text(hobby)
+                                    .font(.callout)
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(Color.pink.opacity(0.8))
+                                    .padding(.vertical, 5)
+                                    .padding(.horizontal, 8)
+                                    .background(Color.white)
+                                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                            }
+                        }
+                        .padding(.bottom, 10)
+                    }
                 }
-                result[result.count - 1].append(item)
-                currentRowWidth += itemWidth + 10 // スペースの幅を考慮
+                .frame(maxWidth: .infinity)
+                .frame(height: barHeight)
+                .background(Color.pink.opacity(0.8))
+
+                Spacer()
+
+                ButtonView(
+                    title: "趣味を選択",
+                    imageName: "mappin.and.ellipse",
+                    isValid: $isHobbyValid,
+                    action: {
+                        dismiss()
+                    }
+                )
             }
-
-            return result
         }
-
-        func getWidthOfString(_ string: String) -> CGFloat {
-            let font = UIFont.systemFont(ofSize: UIFont.systemFontSize) // デフォルトのフォントサイズを使用
-            let attributes = [NSAttributedString.Key.font: font]
-            let size = (string as NSString).size(withAttributes: attributes)
-            return ceil(size.width) // 切り上げて返す
+        .onAppear {
+            hobbyData = filterViewModel.fetchHobbyData().splitArrayByWidth(maxWidth: maxWidth)
         }
+    }
 }
 
 #Preview {
     struct PreviewView: View {
-        @State var hobbys: [String] = []
+        @State var hobbys: [String] = ["カフェ巡り"]
         var body: some View {
             HobbyFilterView(hobbys: $hobbys)
         }

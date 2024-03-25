@@ -1,10 +1,3 @@
-//
-//  FilterView.swift
-//  Bloom
-//
-//  Created by トム・クルーズ on 2024/03/23.
-//
-
 import SwiftUI
 
 struct FilterView: View {
@@ -22,10 +15,15 @@ struct FilterView: View {
     /// 距離
     @State var distance: Double = 30
     /// 趣味
-    @State var hobby: String? = nil
+    @State var hobbys: [String] = []
+    /// 職業
+    @State var professions: [String] = []
+    /// グレード
+    @State var grade: Int? = nil
 
     // MARK: - シートのトグル
     @State var isShowAddressView: Bool = false
+    @State var isShowHobbyView: Bool = false
 
     // MARK: - ボタンが有効か
     @State var isValidButton: Bool = false
@@ -87,15 +85,18 @@ struct FilterView: View {
                             isVip: true,
                             image: "birthday.cake",
                             title: "趣味",
-                            detail: hobby
+                            detail: hobbys.isEmpty ? nil : hobbys.joined(separator: "・")
                         )
+                        .onTapGesture {
+                            isShowHobbyView = true
+                        }
 
                         ListRowView(
                             viewType: .FilterView,
                             isVip: true,
                             image: "wallet.pass",
                             title: "職業",
-                            detail: hobby
+                            detail: professions.isEmpty ? nil : professions.joined(separator: "・")
                         )
 
                         ListRowView(
@@ -103,7 +104,7 @@ struct FilterView: View {
                             isVip: true,
                             image: "wallet.pass",
                             title: "グレード",
-                            detail: hobby
+                            detail: (grade != nil) ? String(grade!) : nil
                         )
                     } header: {
                         Text("VIPプラン限定フィルター")
@@ -139,6 +140,9 @@ struct FilterView: View {
             // 画面遷移を制御
             .sheet(isPresented: $isShowAddressView, content: {
                 AddressFilterView(address: $address)
+            })
+            .sheet(isPresented: $isShowHobbyView, content: {
+                HobbyFilterView(hobbys: $hobbys)
             })
         }
     }
