@@ -1,29 +1,27 @@
 import SwiftUI
 
 struct FilterView: View {
+    // MARK: - インスタンス
+    @ObservedObject var filterVM = FilterViewModel()
+
     // MARK: - 検索条件
+    /// 画面描画用のフィルターデータ
+    @State var filter: FilterElement = FilterElement(address: [], hobbys: [], professions: [])
     /// vipか
     @State var isVip: Bool = true
-    /// 居住地
-    @State var address: [String] = []
-    /// 年齢
-    @State var age: String? = nil
-    /// 最小年齢
-    @State var minAge: Int = 18
-    /// 最長年齢
-    @State var maxAge: Int = 30
-    /// 距離
+    /// 距離: ピッカー用
     @State var distance: Double = 30
-    /// 趣味
-    @State var hobbys: [String] = []
-    /// 職業
-    @State var professions: [String] = []
-    /// グレード
-    @State var grade: Int? = nil
+    /// 最大年齢: ピッカー用
+    @State var maxAge: Int = 25
+    /// 最小年齢: ピッカー用
+    @State var minAge: Int = 20
+    /// グレード: ピッカー用
+    @State var grade: Double = 10
 
-    // MARK: - シートのトグル
+    // MARK: - 画面遷移
     @State var isShowAddressView: Bool = false
     @State var isShowHobbyView: Bool = false
+    @Environment(\.presentationMode) var presentation
 
     // MARK: - ボタンが有効か
     @State var isValidButton: Bool = false
@@ -41,7 +39,7 @@ struct FilterView: View {
                             viewType: .FilterView,
                             image: "mappin.and.ellipse",
                             title: "居住地",
-                            detail: address.isEmpty ? nil : address.joined(separator: "・")
+                            detail: filter.toString(filterType: .address)
                         )
                         .onTapGesture {
                             isShowAddressView = true
@@ -51,7 +49,7 @@ struct FilterView: View {
                             viewType: .FilterView,
                             image: "birthday.cake",
                             title: "年齢",
-                            detail: String(minAge) + "〜" + String(maxAge)
+                            detail: filter.toString(filterType: .age)
                         )
                         .onTapGesture {
                             withAnimation(.linear) {
@@ -63,29 +61,14 @@ struct FilterView: View {
                     }
 
                     Section {
-                        VStack {
-                            ListRowView(
-                                viewType: .FilterView,
-                                isVip: true,
-                                image: "arrow.left.and.right",
-                                title: "距離",
-                                detail: isVip ? (String(floor(distance)) + "km") : nil
-                            )
-
-                            Slider(
-                                value: $distance,
-                                in: 5...100,
-                                step: 1.0
-                            )
-                            .tint(.pink.opacity(0.8))
-                        }
+                        distanceSection()
 
                         ListRowView(
                             viewType: .FilterView,
                             isVip: true,
                             image: "birthday.cake",
                             title: "趣味",
-                            detail: hobbys.isEmpty ? nil : hobbys.joined(separator: "・")
+                            detail: isVip ? filter.toString(filterType: .hobbys) : nil
                         )
                         .onTapGesture {
                             isShowHobbyView = true
@@ -96,16 +79,10 @@ struct FilterView: View {
                             isVip: true,
                             image: "wallet.pass",
                             title: "職業",
-                            detail: professions.isEmpty ? nil : professions.joined(separator: "・")
+                            detail: isVip ? filter.toString(filterType: .professions) : nil
                         )
 
-                        ListRowView(
-                            viewType: .FilterView,
-                            isVip: true,
-                            image: "wallet.pass",
-                            title: "グレード",
-                            detail: (grade != nil) ? String(grade!) : nil
-                        )
+                        gradeSection()
                     } header: {
                         Text("VIPプラン限定フィルター")
                             .foregroundStyle(
@@ -125,7 +102,9 @@ struct FilterView: View {
                         imageName: "magnifyingglass",
                         isValid: $isValidButton,
                         action: {
-                            
+                            filterVM.addFilter(filter: filter)
+                            // 画面遷移
+                            self.presentation.wrappedValue.dismiss()
                         }
                     )
 
@@ -133,17 +112,84 @@ struct FilterView: View {
                     AgePickerView(minAge: $minAge, maxAge: $maxAge, isShowing: $isShowAgePicker)
                         .frame(height: self.isShowAgePicker ? pickerHeight : 0)
                         .offset(y: self.isShowAgePicker ? 0 : pickerOffset)
+                        .onChange(of: minAge) { 
+                            filter.maxAge = maxAge
+                            filter.minAge = minAge
+                        }
+                        .onChange(of: maxAge) {
+                            filter.maxAge = maxAge
+                            filter.minAge = minAge
+                        }
                 }
             }
             .listStyle(PlainListStyle())
             .navigationBarTitle("フィルター", displayMode: .inline)
             // 画面遷移を制御
-            .sheet(isPresented: $isShowAddressView, content: {
-                AddressFilterView(address: $address)
-            })
-            .sheet(isPresented: $isShowHobbyView, content: {
-                HobbyFilterView(hobbys: $hobbys)
-            })
+            .sheet(isPresented: $isShowAddressView) {
+                AddressFilterView(address: $filter.address)
+            }
+            .sheet(isPresented: $isShowHobbyView) {
+                HobbyFilterView(hobbys: $filter.hobbys)
+            }
+            .onChange(of: filter) {
+                if filter != filterVM.filter {
+                    isValidButton = true
+                } else {
+                    isValidButton = false
+                }
+            }
+        }
+        .toolbar(.hidden, for: .tabBar)
+        .onAppear {
+            filterVM.fetchFilter()
+            filter = filterVM.filter
+            distance = filter.distance ?? 30
+        }
+    }
+
+    @ViewBuilder
+    func distanceSection() -> some View {
+        VStack {
+            ListRowView(
+                viewType: .FilterView,
+                isVip: true,
+                image: "arrow.left.and.right",
+                title: "距離",
+                detail: isVip ? filter.toString(filterType: .distance) : nil
+            )
+
+            Slider(
+                value: $distance,
+                in: 5...100,
+                step: 1.0
+            )
+            .tint(.pink.opacity(0.8))
+            .onChange(of: distance) {
+                filter.distance = distance
+            }
+        }
+    }
+
+    @ViewBuilder
+    func gradeSection() -> some View {
+        VStack {
+            ListRowView(
+                viewType: .FilterView,
+                isVip: true,
+                image: "wallet.pass",
+                title: "グレード",
+                detail: isVip ? filter.toString(filterType: .grade) : nil
+            )
+
+            Slider(
+                value: $grade,
+                in: 10...100,
+                step: 1
+            )
+            .tint(.pink.opacity(0.8))
+            .onChange(of: grade) {
+                filter.grade = Int(grade)
+            }
         }
     }
 }

@@ -61,6 +61,8 @@
 		1F7F4B172BAF39B800311630 /* AgePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F4B162BAF39B800311630 /* AgePickerView.swift */; };
 		1F7F4B192BB08D8200311630 /* HobbyFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F4B182BB08D8200311630 /* HobbyFilterView.swift */; };
 		1F7F4B1B2BB1266C00311630 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F4B1A2BB1266C00311630 /* Array+.swift */; };
+		1F7F4B1D2BB1406200311630 /* FilterElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F4B1C2BB1406200311630 /* FilterElement.swift */; };
+		1F7F4B1F2BB148E300311630 /* FilterElement+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F4B1E2BB148E300311630 /* FilterElement+.swift */; };
 		1F9C2DD42B8DD3D500994981 /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */; };
 		1F9C2DD62B8DE54400994981 /* MessageCountElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */; };
 		1F9C2DDA2B8DFE7A00994981 /* FriendListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */; };
@@ -162,6 +164,8 @@
 		1F7F4B162BAF39B800311630 /* AgePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgePickerView.swift; sourceTree = "<group>"; };
 		1F7F4B182BB08D8200311630 /* HobbyFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyFilterView.swift; sourceTree = "<group>"; };
 		1F7F4B1A2BB1266C00311630 /* Array+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
+		1F7F4B1C2BB1406200311630 /* FilterElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterElement.swift; sourceTree = "<group>"; };
+		1F7F4B1E2BB148E300311630 /* FilterElement+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterElement+.swift"; sourceTree = "<group>"; };
 		1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountElement.swift; sourceTree = "<group>"; };
 		1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListRowView.swift; sourceTree = "<group>"; };
@@ -289,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				1FF59CBC2B89BB9A0031C580 /* ProfileElement.swift */,
+				1F7F4B1C2BB1406200311630 /* FilterElement.swift */,
 				1FF59CAE2B86667F0031C580 /* MessageElement.swift */,
 				1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */,
 				1F1FEB412B94929900F8AEA3 /* FriendsElement.swift */,
@@ -477,6 +482,7 @@
 				1F7F4B1A2BB1266C00311630 /* Array+.swift */,
 				1F1252762B9F35FE0040E32F /* MyProfileElement+.swift */,
 				1F12527E2BA0CD280040E32F /* ProfileElement+.swift */,
+				1F7F4B1E2BB148E300311630 /* FilterElement+.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -622,6 +628,7 @@
 				1F48230C2B9B09C500098AAE /* IntroductionEditView.swift in Sources */,
 				1F7F4B062BAED52800311630 /* ListRowView.swift in Sources */,
 				1F7F4B0F2BAF1C1500311630 /* AddressFilterView.swift in Sources */,
+				1F7F4B1F2BB148E300311630 /* FilterElement+.swift in Sources */,
 				1F4823082B9A27D500098AAE /* MyPageViewModel.swift in Sources */,
 				1F4823102B9B278E00098AAE /* BirthEditView.swift in Sources */,
 				1F1DFD802BA5E95C002366DF /* PrivacyView.swift in Sources */,
@@ -652,6 +659,7 @@
 				1FEF28452B8A149900EAFB3E /* UserDataModel.swift in Sources */,
 				1FF59C902B84FCD80031C580 /* FirebaseAuthUIView.swift in Sources */,
 				1F1B3CAB2B9C4A12001F356E /* UserDefaultsDataModel.swift in Sources */,
+				1F7F4B1D2BB1406200311630 /* FilterElement.swift in Sources */,
 				1F1DFD902BA6CEAE002366DF /* DeleteAccountView.swift in Sources */,
 				1F1FEB322B92C2DA00F8AEA3 /* Prefectures.swift in Sources */,
 				1F1FEB342B92DAE200F8AEA3 /* GenderEntryView.swift in Sources */,

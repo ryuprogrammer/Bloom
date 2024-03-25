@@ -10,8 +10,10 @@ import Foundation
 struct UserDefaultsDataModel {
     let userDataModel = UserDataModel()
     let myProfileKey: String = "myProfileKey"
-    
-    /// MyProfileのデータの追加・更新
+    let filterKey: String = "filterKey"
+
+    // MARK: - MyProfile
+    /// MyProfileデータの追加・更新
     func addMyProfile(myProfile: ProfileElement) {
         guard let uid = userDataModel.fetchUid() else { return }
         let myProfileElement: MyProfileElement = MyProfileElement(
@@ -55,5 +57,36 @@ struct UserDefaultsDataModel {
     /// MyProfileのデータの削除
     func deleteMyProfile() {
         UserDefaults.standard.removeObject(forKey: myProfileKey)
+    }
+
+    // MARK: - フィルター
+    /// フィルターデータの追加・更新
+    func addFilter(filter: FilterElement) {
+        let jsonEncoder = JSONEncoder()
+        jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
+        guard let filterStrData = try? jsonEncoder.encode(filter) else {
+            print("encodeでエラー")
+            return
+        }
+
+        UserDefaults.standard.set(filterStrData, forKey: filterKey)
+    }
+
+    /// フィルターデータの取得
+    func fetchFilter() -> FilterElement? {
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+        guard let data = UserDefaults.standard.data(forKey: filterKey),
+              let filter = try? jsonDecoder.decode(FilterElement.self, from: data) else {
+            print("error: filterの取得に失敗")
+            return nil
+        }
+
+        return filter
+    }
+
+    /// フィルターデータの削除
+    func deleteFilter() {
+        UserDefaults.standard.removeObject(forKey: filterKey)
     }
 }
