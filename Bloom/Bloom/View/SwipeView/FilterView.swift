@@ -10,17 +10,18 @@ struct FilterView: View {
     /// vipか
     @State var isVip: Bool = true
     /// 距離: ピッカー用
-    @State var distance: Double = 30
+    @State var distance: Double = 60
     /// 最大年齢: ピッカー用
     @State var maxAge: Int = 25
     /// 最小年齢: ピッカー用
     @State var minAge: Int = 20
     /// グレード: ピッカー用
-    @State var grade: Double = 10
+    @State var grade: Double = 60
 
     // MARK: - 画面遷移
     @State var isShowAddressView: Bool = false
     @State var isShowHobbyView: Bool = false
+    @State var isShowProfessionView: Bool = false
     @Environment(\.presentationMode) var presentation
 
     // MARK: - ボタンが有効か
@@ -81,6 +82,9 @@ struct FilterView: View {
                             title: "職業",
                             detail: isVip ? filter.toString(filterType: .professions) : nil
                         )
+                        .onTapGesture {
+                            isShowProfessionView = true
+                        }
 
                         gradeSection()
                     } header: {
@@ -112,7 +116,7 @@ struct FilterView: View {
                     AgePickerView(minAge: $minAge, maxAge: $maxAge, isShowing: $isShowAgePicker)
                         .frame(height: self.isShowAgePicker ? pickerHeight : 0)
                         .offset(y: self.isShowAgePicker ? 0 : pickerOffset)
-                        .onChange(of: minAge) { 
+                        .onChange(of: minAge) {
                             filter.maxAge = maxAge
                             filter.minAge = minAge
                         }
@@ -124,12 +128,32 @@ struct FilterView: View {
             }
             .listStyle(PlainListStyle())
             .navigationBarTitle("フィルター", displayMode: .inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        filterVM.deleteFilter()
+                        filter = FilterElement(address: [], hobbys: [], professions: [])
+                        distance = 60
+                        grade = 60
+                    } label: {
+                        Text("リセット")
+                            .fontWeight(.bold)
+                            .foregroundStyle(Color.pink.opacity(0.8))
+                            .frame(width: 80, height: 28)
+                            .background(Color.white)
+                            .clipShape(Capsule())
+                    }
+                }
+            }
             // 画面遷移を制御
             .sheet(isPresented: $isShowAddressView) {
                 AddressFilterView(address: $filter.address)
             }
             .sheet(isPresented: $isShowHobbyView) {
                 HobbyFilterView(hobbys: $filter.hobbys)
+            }
+            .sheet(isPresented: $isShowProfessionView) {
+                ProfessionFilterView(professions: $filter.professions)
             }
             .onChange(of: filter) {
                 if filter != filterVM.filter {
@@ -149,7 +173,7 @@ struct FilterView: View {
 
     @ViewBuilder
     func distanceSection() -> some View {
-        VStack {
+        VStack(alignment: .leading) {
             ListRowView(
                 viewType: .FilterView,
                 isVip: true,
@@ -157,6 +181,10 @@ struct FilterView: View {
                 title: "距離",
                 detail: isVip ? filter.toString(filterType: .distance) : nil
             )
+
+            Text("登録した現在地と友達との距離")
+                .font(.callout)
+                .foregroundStyle(Color.gray)
 
             Slider(
                 value: $distance,
@@ -172,7 +200,7 @@ struct FilterView: View {
 
     @ViewBuilder
     func gradeSection() -> some View {
-        VStack {
+        VStack(alignment: .leading) {
             ListRowView(
                 viewType: .FilterView,
                 isVip: true,
@@ -180,6 +208,10 @@ struct FilterView: View {
                 title: "グレード",
                 detail: isVip ? filter.toString(filterType: .grade) : nil
             )
+
+            Text("人気度を数値化したもの")
+                .font(.callout)
+                .foregroundStyle(Color.gray)
 
             Slider(
                 value: $grade,

@@ -13,7 +13,7 @@ struct AddressFilterView: View {
     @Binding var address: [String]
     @State var isAddressValid: Bool = true
     let maxSelectNumber = 3
-    let barHeight = UIScreen.main.bounds.height / 12
+    let barHeight = UIScreen.main.bounds.height / 10
 
     @Environment(\.dismiss) private var dismiss
 
@@ -67,6 +67,7 @@ struct AddressFilterView: View {
                         .font(.title3)
                         .fontWeight(.bold)
                         .foregroundStyle(Color.white)
+                        .padding(.top)
 
                     if address.isEmpty {
                         Text("まだ選択されてません")

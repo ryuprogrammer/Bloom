@@ -63,6 +63,8 @@
 		1F7F4B1B2BB1266C00311630 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F4B1A2BB1266C00311630 /* Array+.swift */; };
 		1F7F4B1D2BB1406200311630 /* FilterElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F4B1C2BB1406200311630 /* FilterElement.swift */; };
 		1F7F4B1F2BB148E300311630 /* FilterElement+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F4B1E2BB148E300311630 /* FilterElement+.swift */; };
+		1F7F4B232BB17E6E00311630 /* ProfessionFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F4B222BB17E6E00311630 /* ProfessionFilterView.swift */; };
+		1F7F4B252BB1808500311630 /* ProfessionList.csv in Resources */ = {isa = PBXBuildFile; fileRef = 1F7F4B242BB1808500311630 /* ProfessionList.csv */; };
 		1F9C2DD42B8DD3D500994981 /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */; };
 		1F9C2DD62B8DE54400994981 /* MessageCountElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */; };
 		1F9C2DDA2B8DFE7A00994981 /* FriendListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */; };
@@ -166,6 +168,8 @@
 		1F7F4B1A2BB1266C00311630 /* Array+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
 		1F7F4B1C2BB1406200311630 /* FilterElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterElement.swift; sourceTree = "<group>"; };
 		1F7F4B1E2BB148E300311630 /* FilterElement+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterElement+.swift"; sourceTree = "<group>"; };
+		1F7F4B222BB17E6E00311630 /* ProfessionFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessionFilterView.swift; sourceTree = "<group>"; };
+		1F7F4B242BB1808500311630 /* ProfessionList.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = ProfessionList.csv; sourceTree = "<group>"; };
 		1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountElement.swift; sourceTree = "<group>"; };
 		1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListRowView.swift; sourceTree = "<group>"; };
@@ -246,6 +250,7 @@
 				1F1FEB312B92C2DA00F8AEA3 /* Prefectures.swift */,
 				1FFB98992BA76001007CDFAC /* NGWordList.csv */,
 				1F567E4A2BABE9720078E2C6 /* HobbyList.csv */,
+				1F7F4B242BB1808500311630 /* ProfessionList.csv */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -369,6 +374,7 @@
 			children = (
 				1F7F4B0E2BAF1C1500311630 /* AddressFilterView.swift */,
 				1F7F4B182BB08D8200311630 /* HobbyFilterView.swift */,
+				1F7F4B222BB17E6E00311630 /* ProfessionFilterView.swift */,
 			);
 			path = FilterViews;
 			sourceTree = "<group>";
@@ -581,6 +587,7 @@
 				1FF59C692B84CEEC0031C580 /* Assets.xcassets in Resources */,
 				1F1DFD8B2BA6CABE002366DF /* deleteDescription.txt in Resources */,
 				1FFB989A2BA76001007CDFAC /* NGWordList.csv in Resources */,
+				1F7F4B252BB1808500311630 /* ProfessionList.csv in Resources */,
 				1F567E4B2BABE9720078E2C6 /* HobbyList.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -606,6 +613,7 @@
 				1F1FEB422B94929900F8AEA3 /* FriendsElement.swift in Sources */,
 				1F9C2DD42B8DD3D500994981 /* FriendListViewModel.swift in Sources */,
 				1FEF28492B8A27F500EAFB3E /* MockData.swift in Sources */,
+				1F7F4B232BB17E6E00311630 /* ProfessionFilterView.swift in Sources */,
 				1F1B3CA92B9C2997001F356E /* SwiftDataModel.swift in Sources */,
 				1F4823012B98C7E300098AAE /* LikedView.swift in Sources */,
 				1F1FEB362B92E31B00F8AEA3 /* ProfileImageEntryView.swift in Sources */,

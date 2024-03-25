@@ -1,22 +1,15 @@
-//
-//  HobbyFilterView.swift
-//  Bloom
-//
-//  Created by トム・クルーズ on 2024/03/25.
-//
-
 import SwiftUI
 
-struct HobbyFilterView: View {
+struct ProfessionFilterView: View {
     let filterViewModel = FilterViewModel()
-    @Binding var hobbys: [String]
-    @State var hobbyData: [[String]] = [[]]
+    @Binding var professions: [String]
+    @State var professionData: [[String]] = [[]]
     @State var isHobbyValid: Bool = true
     let maxSelectNumber = 3
     let barHeight = UIScreen.main.bounds.height / 10
 
     @Environment(\.dismiss) private var dismiss
-    let maxWidth: CGFloat = UIScreen.main.bounds.width - 100 // マージンを取る
+    let maxWidth: CGFloat = UIScreen.main.bounds.width - 90 // マージンを取る
 
     var body: some View {
         ZStack {
@@ -25,10 +18,10 @@ struct HobbyFilterView: View {
                     .frame(height: barHeight)
 
                 VStack(alignment: .leading) {
-                    ForEach(hobbyData, id: \.self) { row in
+                    ForEach(professionData, id: \.self) { row in
                         HStack(spacing: 3) {
                             ForEach(row, id: \.self) { item in
-                                if self.hobbys.contains(item) {
+                                if self.professions.contains(item) {
                                     Text(item)
                                         .font(.title2)
                                         .foregroundStyle(Color.pink.opacity(0.8))
@@ -42,7 +35,7 @@ struct HobbyFilterView: View {
                                         .fixedSize()
                                         .onTapGesture {
                                             withAnimation {
-                                                self.hobbys.removeAll(where: {
+                                                self.professions.removeAll(where: {
                                                     $0 == item
                                                 })
                                             }
@@ -57,8 +50,8 @@ struct HobbyFilterView: View {
                                         .fixedSize()
                                         .onTapGesture {
                                             withAnimation {
-                                                if self.hobbys.count < maxSelectNumber {
-                                                    self.hobbys.append(item)
+                                                if self.professions.count < maxSelectNumber {
+                                                    self.professions.append(item)
                                                 }
                                             }
                                         }
@@ -81,7 +74,7 @@ struct HobbyFilterView: View {
                         .foregroundStyle(Color.white)
                         .padding(.top)
 
-                    if hobbys.isEmpty {
+                    if professions.isEmpty {
                         Text("まだ選択されてません")
                             .font(.title3)
                             .fontWeight(.semibold)
@@ -89,8 +82,8 @@ struct HobbyFilterView: View {
                             .padding(5)
                     } else {
                         HStack {
-                            ForEach(hobbys, id: \.self) { hobby in
-                                Text(hobby)
+                            ForEach(professions, id: \.self) { profession in
+                                Text(profession)
                                     .font(.callout)
                                     .fontWeight(.bold)
                                     .foregroundStyle(Color.pink.opacity(0.8))
@@ -111,7 +104,7 @@ struct HobbyFilterView: View {
 
                 ButtonView(
                     title: "趣味を選択",
-                    imageName: "gamecontroller",
+                    imageName: "mappin.and.ellipse",
                     isValid: $isHobbyValid,
                     action: {
                         dismiss()
@@ -120,16 +113,16 @@ struct HobbyFilterView: View {
             }
         }
         .onAppear {
-            hobbyData = filterViewModel.fetchHobbyData().splitArrayByWidth(maxWidth: maxWidth)
+            professionData = filterViewModel.fetchProfessionData().splitArrayByWidth(maxWidth: maxWidth)
         }
     }
 }
 
 #Preview {
     struct PreviewView: View {
-        @State var hobbys: [String] = ["カフェ巡り"]
+        @State var professions: [String] = ["マジシャン"]
         var body: some View {
-            HobbyFilterView(hobbys: $hobbys)
+            ProfessionFilterView(professions: $professions)
         }
     }
 
