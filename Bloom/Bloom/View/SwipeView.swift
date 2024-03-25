@@ -16,8 +16,17 @@ struct SwipeView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                // 広告
-                Text("a")
+                // TODO: - このVStackいらない
+                VStack {
+                    // 広告
+                    NavigationLink {
+                        PranWebView().toolbar(.hidden, for: .tabBar)
+                    } label: {
+                        AdvertisementView()
+                    }
+
+                    Spacer()
+                }
 
                 ZStack {
                     ForEach(Array($showingCard.enumerated()), id: \.element.id) { index, $card in

@@ -9,7 +9,12 @@ import SwiftUI
 
 struct AdvertisementView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("マッチを加速させよう")
+            .font(.largeTitle)
+            .fontWeight(.bold)
+            .frame(maxWidth: .infinity)
+            .frame(height: 80)
+            .background(Color.cyan.opacity(0.5))
     }
 }
 
