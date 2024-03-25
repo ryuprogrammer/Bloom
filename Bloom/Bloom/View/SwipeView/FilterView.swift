@@ -31,9 +31,6 @@ struct FilterView: View {
     @State var isValidButton: Bool = false
     @State var isShowAgePicker: Bool = false
 
-    // MARK: - 画面遷移
-    @State private var navigationPath: [FilterPath] = []
-
     let pickerHeight = UIScreen.main.bounds.height / 4
     let pickerOffset = UIScreen.main.bounds.height
 
@@ -123,10 +120,12 @@ struct FilterView: View {
                     Spacer()
 
                     ButtonView(
-                        title: "条件を更新",
+                        title: "条件を保存",
                         imageName: "magnifyingglass",
                         isValid: $isValidButton,
-                        acction: {}()
+                        action: {
+                            
+                        }
                     )
 
                     // 年齢選択のPicker
@@ -141,21 +140,6 @@ struct FilterView: View {
             .sheet(isPresented: $isShowAddressView, content: {
                 AddressFilterView(address: $address)
             })
-        }
-    }
-
-    // MARK: - 画面遷移メソッド
-    @ViewBuilder
-    func navigationDestination(for path: FilterPath) -> some View {
-        switch path {
-        case .filterPath:
-            FilterView()
-        case .addressPath:
-            FilterView()
-        case .birthPath:
-            FilterView()
-        case .introductionPath:
-            FilterView()
         }
     }
 }

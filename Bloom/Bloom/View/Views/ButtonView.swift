@@ -4,10 +4,10 @@ struct ButtonView: View {
     let title: String
     let imageName: String?
     @Binding var isValid: Bool
-    let acction: Void
+    var action: () -> Void
     var body: some View {
         Button {
-            acction
+            action()
         } label: {
             ZStack {
                 if isValid {
@@ -48,13 +48,13 @@ struct ButtonView: View {
 #Preview {
     struct PreviewView: View {
         @State var isValid: Bool = true
-        let action: Void = {}()
+        let action: () -> Void = {}
         var body: some View {
             ButtonView(
                 title: "ボタン",
                 imageName: "magnifyingglass",
                 isValid: $isValid,
-                acction: action
+                action: action
             )
         }
     }

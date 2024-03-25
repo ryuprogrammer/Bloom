@@ -137,7 +137,7 @@ class MessageViewModel: ObservableObject {
     // MARK: - ファイル読み込み系
     /// 文章にNGワードが含まれているかチェック
     func isCoutainNGWord(message: String) -> Bool {
-        guard let ngWords = loadFileDataModel.loadCsvFile() else { return false }
+        guard let ngWords = loadFileDataModel.loadCsvFile(fileName: "NGWordList") else { return false }
 
         for ngWord in ngWords {
             if message.localizedCaseInsensitiveContains(ngWord) {

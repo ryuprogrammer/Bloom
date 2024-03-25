@@ -100,9 +100,9 @@ struct AddressFilterView: View {
                     title: "居住地を選択",
                     imageName: "mappin.and.ellipse",
                     isValid: $isAddressValid,
-                    acction: {
+                    action: {
                         dismiss()
-                    }()
+                    }
                 )
             }
         }

@@ -19,11 +19,11 @@ struct LoadFileDataModel {
     }
 
     /// csvファイルの読み込み
-    func loadCsvFile() -> [String]? {
+    func loadCsvFile(fileName: String) -> [String]? {
         var csvLines: [String] = []
 
         // ファイルが存在するかチェック
-        guard let path = Bundle.main.path(forResource: "NGWordList", ofType: "csv") else { return nil }
+        guard let path = Bundle.main.path(forResource: fileName, ofType: "csv") else { return nil }
 
         do {
             // ファイルが存在していれば、データを読み込み
