@@ -77,6 +77,19 @@ enum Gender: String, Codable, CaseIterable {
     var id: String { rawValue }
 }
 
+/// ProfileType
+enum ProfileType {
+    case userName
+    case introduction
+    case birth
+    case gender
+    case address
+    case grade
+    case hobby
+    case location
+    case profession
+}
+
 /// profileのモックデータ
 let mockProfileData = ProfileElement(
     userName: "もも",
@@ -105,4 +118,5 @@ let mockMyProfileData = MyProfileElement(
     location: nil,
     profession: "獣医師",
     profileImages: [Data(), Data(), Data(), Data()],
-    homeImage: Data())
+    homeImage: Data()
+)

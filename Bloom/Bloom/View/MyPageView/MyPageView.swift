@@ -7,6 +7,7 @@ struct MyPageView: View {
     @ObservedObject var myPageVM = MyPageViewModel()
     let authenticationManager = AuthenticationManager()
     let userDefaultsDataModel = UserDefaultsDataModel()
+    @ObservedObject var locationManager = LocationManager.shared
 
     // MARK: - UI用サイズ指定
     let iconSize = UIScreen.main.bounds.width / 14
@@ -17,6 +18,7 @@ struct MyPageView: View {
 
     // MARK: - 画面遷移
     @State private var navigationPath: [MyPagePath] = []
+    @State private var isShowHobbyView: Bool = false
 
     // MARK: - その他
     @State var showingProfile: ProfileElement = mockProfileData
@@ -50,7 +52,11 @@ struct MyPageView: View {
                 introduction()
 
                 // プロフィール写真セクション
-                profileImages()
+                Section {
+
+                } header: {
+                    Text("プロフィール情報")
+                }
             }
             .listStyle(PlainListStyle())
             .navigationBarTitle("マイページ", displayMode: .inline)
@@ -80,6 +86,13 @@ struct MyPageView: View {
             .navigationDestination(for: MyPagePath.self, destination: navigationDestination)
         }.onAppear { // profile取得
             myPageVM.fetchMyProfile()
+            print("currentLocation: \(locationManager.currentLocation)")
+            print("showingProfile.location: \(showingProfile.location)")
+            print("showingProfile.location: \(showingProfile.toString(profileType: .location))")
+        }
+        .onChange(of: locationManager.currentLocation) {
+            print("チェンジーーーーーー")
+            showingProfile.location = locationManager.currentLocation
         }
         .accentColor(Color.white)
         .onChange(of: myPageVM.myProfile) { // UserDefaultsのprofileを描画
@@ -146,7 +159,7 @@ struct MyPageView: View {
     // プロフィール
     @ViewBuilder
     func profileInformation() -> some View {
-        Section {
+
             HStack {
                 ListRowView(
                     viewType: .MyPageView,
@@ -170,7 +183,7 @@ struct MyPageView: View {
                     viewType: .MyPageView,
                     image: "mappin.and.ellipse",
                     title: "居住地",
-                    detail: showingProfile.address
+                    detail: showingProfile.toString(profileType: .address)
                 )
             }
 
@@ -179,12 +192,36 @@ struct MyPageView: View {
                     viewType: .MyPageView,
                     image: "birthday.cake",
                     title: "生年月日",
-                    detail: showingProfile.birth
+                    detail: showingProfile.toString(profileType: .birth)
                 )
             }
-        } header: {
-            Text("プロフィール情報")
-        }
+
+            ListRowView(
+                viewType: .MyPageView,
+                image: "birthday.cake",
+                title: "趣味",
+                detail: showingProfile.toString(profileType: .hobby)
+            )
+            .onTapGesture {
+                isShowHobbyView = true
+            }
+            .sheet(isPresented: $isShowHobbyView) {
+                HobbyEditView(hobbys: $showingProfile.hobby)
+            }
+
+            ListRowView(
+                viewType: .MyPageView,
+                image: "birthday.cake",
+                title: "現在地",
+                detail: showingProfile.toString(profileType: .location) ?? "nil"
+            )
+
+            ListRowView(
+                viewType: .MyPageView,
+                image: "wallet.pass",
+                title: "職業",
+                detail: showingProfile.toString(profileType: .profession)
+            )
     }
 
     // 自己紹介文

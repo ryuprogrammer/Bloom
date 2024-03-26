@@ -60,6 +60,23 @@ extension String {
         return StringAge
     }
 
+    /// 8桁の数値のString型を年月日に変換
+    func toStringDate() -> String? {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMdd"
+
+            // 8桁の数字をDate型に変換
+            guard let date = dateFormatter.date(from: self) else {
+                return nil
+            }
+
+            // 年月日のフォーマットを指定
+            dateFormatter.dateFormat = "yyyy年MM月dd日"
+
+            // 年月日を付け加えた文字列を返す
+            return dateFormatter.string(from: date)
+        }
+
     /// 文字列の横幅を計算
         func getWidthOfString() -> CGFloat {
             let font = UIFont.preferredFont(forTextStyle: .title3) // SwiftUIの.font(.title)に相当するUIFontを取得

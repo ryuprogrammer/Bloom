@@ -24,7 +24,43 @@ extension ProfileElement {
             profileImages: self.profileImages,
             homeImage: self.homeImage
         )
-        
+
         return profile
+    }
+
+    /// ProfileTypeを指定して、文字列にする
+    func toString(profileType: ProfileType) -> String? {
+        var result: String? = nil
+        let profile = self
+
+        switch profileType {
+        case .userName:
+            result = profile.userName
+        case .introduction:
+            result = profile.introduction
+        case .birth:
+            result = profile.birth.toStringDate()
+        case .gender:
+            result = profile.gender.rawValue
+        case .address:
+            result = profile.address
+        case .grade:
+            result = String(profile.grade)
+        case .hobby:
+            if !profile.hobby.isEmpty {
+                result = profile.hobby.joined(separator: "・")
+            }
+        case .location:
+            if let location = profile.location {
+                location.toAddress(completion: { address in
+                    result = address
+                    return result
+                })
+            }
+        case .profession:
+            result = profile.profession
+        }
+
+        return result
     }
 }
