@@ -62,4 +62,19 @@ extension ProfileElement {
 
         return result
     }
+
+    /// 年齢、出身地、職業を「|」でつなげる
+    func jointProfile() -> String {
+        var result: String = ""
+        var jointingInfo: [String] = []
+
+        jointingInfo.append(self.birth.toAge())
+        jointingInfo.append(self.address)
+        if let profession = profession {
+            jointingInfo.append(profession)
+        }
+        result = jointingInfo.joined(separator: " | ")
+
+        return result
+    }
 }

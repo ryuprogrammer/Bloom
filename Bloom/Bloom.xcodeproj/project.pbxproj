@@ -37,6 +37,7 @@
 		1F2F1FCB2B90C62A00A9615D /* ExplanationText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F1FCA2B90C62A00A9615D /* ExplanationText.swift */; };
 		1F2F1FD12B90DB7900A9615D /* BirthEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F1FD02B90DB7900A9615D /* BirthEntryView.swift */; };
 		1F2F1FD32B90F1FA00A9615D /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F1FD22B90F1FA00A9615D /* String+.swift */; };
+		1F2F6E912BB476F80061B9B8 /* SwipeCardInfomationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F6E902BB476F80061B9B8 /* SwipeCardInfomationView.swift */; };
 		1F43D7282BB2993200ED0365 /* Location+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D7272BB2993200ED0365 /* Location+.swift */; };
 		1F43D72C2BB29BBD00ED0365 /* HobbyEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D72B2BB29BBD00ED0365 /* HobbyEditView.swift */; };
 		1F43D72E2BB29C1900ED0365 /* HobbyEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D72D2BB29C1900ED0365 /* HobbyEditViewModel.swift */; };
@@ -149,6 +150,7 @@
 		1F2F1FCA2B90C62A00A9615D /* ExplanationText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplanationText.swift; sourceTree = "<group>"; };
 		1F2F1FD02B90DB7900A9615D /* BirthEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthEntryView.swift; sourceTree = "<group>"; };
 		1F2F1FD22B90F1FA00A9615D /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		1F2F6E902BB476F80061B9B8 /* SwipeCardInfomationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeCardInfomationView.swift; sourceTree = "<group>"; };
 		1F43D7272BB2993200ED0365 /* Location+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+.swift"; sourceTree = "<group>"; };
 		1F43D72B2BB29BBD00ED0365 /* HobbyEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyEditView.swift; sourceTree = "<group>"; };
 		1F43D72D2BB29C1900ED0365 /* HobbyEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyEditViewModel.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 			children = (
 				1F2F1FC42B90AE2800A9615D /* SwipeView.swift */,
 				1F2F1FC22B90AE1200A9615D /* SwipeCardView.swift */,
+				1F2F6E902BB476F80061B9B8 /* SwipeCardInfomationView.swift */,
 				1F7F4B032BAED2D100311630 /* FilterView.swift */,
 				1F7F4B0D2BAF1BF900311630 /* FilterViews */,
 			);
@@ -713,6 +716,7 @@
 				1F1FEB342B92DAE200F8AEA3 /* GenderEntryView.swift in Sources */,
 				1F7F4B192BB08D8200311630 /* HobbyFilterView.swift in Sources */,
 				1F1DFD822BA5FA0E002366DF /* ServiceView.swift in Sources */,
+				1F2F6E912BB476F80061B9B8 /* SwipeCardInfomationView.swift in Sources */,
 				1F7F4B1B2BB1266C00311630 /* Array+.swift in Sources */,
 				1FEF284B2B8B0DCD00EAFB3E /* AccountStatus.swift in Sources */,
 			);
