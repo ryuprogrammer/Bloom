@@ -73,7 +73,7 @@ struct HomeImageEntryView: View {
                     
                     Spacer()
                 }
-                .navigationTitle("ホーム写真")
+                .navigationBarTitle("ホーム写真", displayMode: .inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button(action: {

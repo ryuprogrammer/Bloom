@@ -99,7 +99,7 @@ struct BirthEntryView: View {
                     Spacer()
                 }
                 .keyboardType(.decimalPad)
-                .navigationTitle("生年月日")
+                .navigationBarTitle("生年月日", displayMode: .inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button(action: {

@@ -47,7 +47,7 @@ struct AddressEntryView: View {
                     Spacer()
                         .frame(height: 130)
                 }
-                .navigationTitle("居住地")
+                .navigationBarTitle("居住地", displayMode: .inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button(action: {

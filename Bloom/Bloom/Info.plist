@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>現在地を取得するために使います。他の人に現在地は表示されません。</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -11,7 +9,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.265400916341-qpma4knj4d89im2uv3gk8kpmu02ofsid</string>
+				<string>com.googleusercontent.apps.265400916341-d3gpbk7q12je9m4osb4t7pqs9hb51nqs</string>
 			</array>
 		</dict>
 	</array>

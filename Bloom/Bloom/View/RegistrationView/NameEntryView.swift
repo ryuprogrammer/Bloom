@@ -52,7 +52,7 @@ struct NameEntryView: View {
                     
                     Spacer()
                 }
-                .navigationTitle("ニックネーム")
+                .navigationBarTitle("ニックネーム", displayMode: .inline)
             }
             
             VStack {

@@ -178,10 +178,15 @@ class UserDataModel {
         // Firestoreに保存するデータを辞書形式で用意
         let firestoreData: [String: Any] = [
             "userName": profile.userName,
-            "introduction": profile.introduction,
+            "introduction": profile.introduction as Any,
             "birth": profile.birth,
             "gender": profile.gender.rawValue,
-            "address": profile.address
+            "address": profile.address,
+            "grade": profile.grade,
+            "hobby": profile.hobby,
+            "location": profile.location as Any,
+            "profession": profile.profession as Any,
+            "point": profile.point
         ]
 
         // 指定したUIDを持つドキュメントにデータを追加（または更新）
@@ -325,26 +330,33 @@ class UserDataModel {
                 return
             }
 
+            // nilを許容するデータたち
+            var introduction: String? = nil
+            var location: Location? = nil
+            var profession: String? = nil
+
+            if let introductionData = data["introduction"] as? String? {
+                introduction = introductionData
+            }
+            if let locationData = data["location"] as? Location? {
+                location = locationData
+            }
+            if let professionData = data["profession"] as? String? {
+                profession = professionData
+            }
+
             guard let userName = data["userName"] as? String,
-                  let introduction = data["introduction"] as? String,
                   let birth = data["birth"] as? String,
                   let genderRaw = data["gender"] as? String,
                   let gender = Gender(rawValue: genderRaw),
                   let address = data["address"] as? String,
                   let grade = data["grade"] as? Int,
                   let hobby = data["hobby"] as? [String],
-                  let locationData = data["location"] as? Location,
-                  let profession = data["profession"] as? String,
                   let point = data["point"] as? Int else {
                 completion(nil, NSError(domain: "DataError", code: 100, userInfo: [NSLocalizedDescriptionKey: "Data format error."]))
                 return
             }
 
-            // 画像データは含まれません
-            let location = Location(
-                longitude: locationData.longitude,
-                latitude: locationData.latitude
-            )
             let profile = ProfileElement(userName: userName, introduction: introduction, birth: birth, gender: gender, address: address, grade: grade, hobby: hobby, location: location, profession: profession, profileImages: [], homeImage: Data(), point: point)
             completion(profile, nil)
         }
@@ -364,26 +376,32 @@ class UserDataModel {
                 return
             }
 
+            // nilを許容するデータたち
+            var introduction: String? = nil
+            var location: Location? = nil
+            var profession: String? = nil
+
+            if let introductionData = data["introduction"] as? String? {
+                introduction = introductionData
+            }
+            if let locationData = data["location"] as? Location? {
+                location = locationData
+            }
+            if let professionData = data["profession"] as? String? {
+                profession = professionData
+            }
+
             guard let userName = data["userName"] as? String,
-                  let introduction = data["introduction"] as? String,
                   let birth = data["birth"] as? String,
                   let genderRaw = data["gender"] as? String,
                   let gender = Gender(rawValue: genderRaw),
                   let address = data["address"] as? String,
                   let grade = data["grade"] as? Int,
                   let hobby = data["hobby"] as? [String],
-                  let locationData = data["location"] as? Location,
-                  let profession = data["profession"] as? String,
                   let point = data["point"] as? Int else {
                 completion(nil, NSError(domain: "DataError", code: 100, userInfo: [NSLocalizedDescriptionKey: "Data format error."]))
                 return
             }
-
-            // 画像データは含まれません
-            let location = Location(
-                longitude: locationData.longitude,
-                latitude: locationData.latitude
-            )
 
             // プロファイル画像とホーム画像のパスを準備
             let storageRef = self.storage.reference()

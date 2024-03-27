@@ -43,6 +43,7 @@
 		1F43D7322BB41AE900ED0365 /* ProfessionEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D7312BB41AE900ED0365 /* ProfessionEditView.swift */; };
 		1F43D7342BB41B2300ED0365 /* ProfessionEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D7332BB41B2200ED0365 /* ProfessionEditViewModel.swift */; };
 		1F43D7362BB4261800ED0365 /* PointIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D7352BB4261800ED0365 /* PointIconView.swift */; };
+		1F43D7382BB4493800ED0365 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F43D7372BB4493800ED0365 /* GoogleService-Info.plist */; };
 		1F4822FF2B98C63300098AAE /* LikedCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4822FE2B98C63300098AAE /* LikedCardView.swift */; };
 		1F4823012B98C7E300098AAE /* LikedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4823002B98C7E300098AAE /* LikedView.swift */; };
 		1F4823032B99803D00098AAE /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4823022B99803D00098AAE /* MyPageView.swift */; };
@@ -76,7 +77,6 @@
 		1F9C2DD42B8DD3D500994981 /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */; };
 		1F9C2DD62B8DE54400994981 /* MessageCountElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */; };
 		1F9C2DDA2B8DFE7A00994981 /* FriendListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */; };
-		1FA3DD012BB1E55600B94556 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FA3DD002BB1E55600B94556 /* GoogleService-Info.plist */; };
 		1FEF28452B8A149900EAFB3E /* UserDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF28442B8A149900EAFB3E /* UserDataModel.swift */; };
 		1FEF28472B8A217100EAFB3E /* FriendListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF28462B8A217100EAFB3E /* FriendListView.swift */; };
 		1FEF28492B8A27F500EAFB3E /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF28482B8A27F500EAFB3E /* MockData.swift */; };
@@ -155,6 +155,7 @@
 		1F43D7312BB41AE900ED0365 /* ProfessionEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessionEditView.swift; sourceTree = "<group>"; };
 		1F43D7332BB41B2200ED0365 /* ProfessionEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessionEditViewModel.swift; sourceTree = "<group>"; };
 		1F43D7352BB4261800ED0365 /* PointIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointIconView.swift; sourceTree = "<group>"; };
+		1F43D7372BB4493800ED0365 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1F4822FE2B98C63300098AAE /* LikedCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedCardView.swift; sourceTree = "<group>"; };
 		1F4823002B98C7E300098AAE /* LikedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedView.swift; sourceTree = "<group>"; };
 		1F4823022B99803D00098AAE /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
@@ -189,7 +190,6 @@
 		1F9C2DD32B8DD3D500994981 /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountElement.swift; sourceTree = "<group>"; };
 		1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListRowView.swift; sourceTree = "<group>"; };
-		1FA3DD002BB1E55600B94556 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1FEF28442B8A149900EAFB3E /* UserDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataModel.swift; sourceTree = "<group>"; };
 		1FEF28462B8A217100EAFB3E /* FriendListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListView.swift; sourceTree = "<group>"; };
 		1FEF28482B8A27F500EAFB3E /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
@@ -439,7 +439,7 @@
 				1F1FEB302B92C1F400F8AEA3 /* Data */,
 				1FF59CB52B8901A20031C580 /* Extentions */,
 				1FF59C682B84CEEC0031C580 /* Assets.xcassets */,
-				1FA3DD002BB1E55600B94556 /* GoogleService-Info.plist */,
+				1F43D7372BB4493800ED0365 /* GoogleService-Info.plist */,
 				1FF59C6A2B84CEEC0031C580 /* Bloom.entitlements */,
 				1FF59C6B2B84CEEC0031C580 /* Preview Content */,
 			);
@@ -614,12 +614,12 @@
 			files = (
 				1FF59C6D2B84CEEC0031C580 /* Preview Assets.xcassets in Resources */,
 				1F1DFD8A2BA6CABE002366DF /* serviceDescription.txt in Resources */,
-				1FA3DD012BB1E55600B94556 /* GoogleService-Info.plist in Resources */,
 				1F1DFD8C2BA6CABE002366DF /* privacyDescription.txt in Resources */,
 				1FF59C692B84CEEC0031C580 /* Assets.xcassets in Resources */,
 				1F1DFD8B2BA6CABE002366DF /* deleteDescription.txt in Resources */,
 				1FFB989A2BA76001007CDFAC /* NGWordList.csv in Resources */,
 				1F7F4B252BB1808500311630 /* ProfessionList.csv in Resources */,
+				1F43D7382BB4493800ED0365 /* GoogleService-Info.plist in Resources */,
 				1F567E4B2BABE9720078E2C6 /* HobbyList.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -852,6 +852,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bloom/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "現在地を取得するために使います。他の人に現在地は表示されません。";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -894,6 +895,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bloom/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "現在地を取得するために使います。他の人に現在地は表示されません。";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

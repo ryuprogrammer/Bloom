@@ -1,10 +1,3 @@
-//
-//  AdvertisementView.swift
-//  Bloom
-//
-//  Created by トム・クルーズ on 2024/03/26.
-//
-
 import SwiftUI
 
 struct AdvertisementView: View {

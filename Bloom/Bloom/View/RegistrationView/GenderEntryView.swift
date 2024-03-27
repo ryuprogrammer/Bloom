@@ -44,7 +44,7 @@ struct GenderEntryView: View {
                     
                     Spacer()
                 }
-                .navigationTitle("性別")
+                .navigationBarTitle("性別", displayMode: .inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button(action: {

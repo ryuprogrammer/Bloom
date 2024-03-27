@@ -157,7 +157,7 @@ struct ProfileImageEntryView: View {
                     
                     Spacer()
                 }
-                .navigationTitle("プロフィール写真")
+                .navigationBarTitle("プロフィール写真", displayMode: .inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button(action: {
