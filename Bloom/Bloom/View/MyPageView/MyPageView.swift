@@ -22,6 +22,7 @@ struct MyPageView: View {
     @State private var isShowAddressView: Bool = false
     @State private var isShowBirthView: Bool = false
     @State private var isShowIntroductionView: Bool = false
+    @State private var isShowProfessionView: Bool = false
     @State private var isShowProfileImageView: Bool = false
 
     // MARK: - その他
@@ -37,16 +38,27 @@ struct MyPageView: View {
         NavigationStack(path: $navigationPath) {
             List {
                 // ホーム写真と基本情報
-                VStack {
+                VStack(spacing: 10) {
                     // ホーム写真
                     homeImageView()
-
                     HStack {
                         VipTicketView()
                         Text(showingProfile.userName)
-                            .font(.largeTitle)
+                            .font(.title)
                     }
-                    Text(myPageVM.locationString ?? "取得中...")
+
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Image(systemName: "p.circle.fill")
+                                .foregroundStyle(Color.yellow)
+                            Text(showingProfile.toString(profileType: .point) ?? "0ポイント")
+                        }
+
+                        HStack {
+                            Image(systemName: "location.circle.fill")
+                            Text(myPageVM.locationString ?? "取得中...")
+                        }
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 .listRowSeparator(.hidden)
@@ -187,7 +199,8 @@ struct MyPageView: View {
             ListRowView(
                 viewType: .MyPageView,
                 image: "person.text.rectangle",
-                title: "ニックネーム"
+                title: "ニックネーム",
+                detail: ""
             )
 
             Spacer()
@@ -242,30 +255,45 @@ struct MyPageView: View {
 
         ListRowView(
             viewType: .MyPageView,
-            image: "location",
-            title: "現在地",
-            detail: myPageVM.locationString ?? "取得中..."
-        )
-
-        ListRowView(
-            viewType: .MyPageView,
             image: "wallet.pass",
             title: "職業",
             detail: showingProfile.toString(profileType: .profession)
         )
+        .onTapGesture {
+            isShowProfessionView = true
+        }
+        .sheet(isPresented: $isShowProfessionView) {
+            ProfessionEditView(profession: $showingProfile.profession)
+        }
     }
 
     // 自己紹介文
     @ViewBuilder
     func introduction() -> some View {
-        Text(showingProfile.introduction ?? "")
-            .fixedSize(horizontal: false, vertical: true)
+        if let introduction = showingProfile.introduction {
+            Text(introduction)
+                .fixedSize(horizontal: false, vertical: true)
+                .onTapGesture {
+                    isShowIntroductionView = true
+                }
+                .sheet(isPresented: $isShowIntroductionView) {
+                    IntroductionEditView(introduction: $showingProfile.introduction)
+                }
+        } else {
+            HStack {
+                Text("自己紹介文を入力しよう！")
+
+                Spacer()
+
+                PointIconView(point: 10)
+            }
             .onTapGesture {
                 isShowIntroductionView = true
             }
             .sheet(isPresented: $isShowIntroductionView) {
                 IntroductionEditView(introduction: $showingProfile.introduction)
             }
+        }
     }
 
     // プロフィール写真

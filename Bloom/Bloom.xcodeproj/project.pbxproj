@@ -42,6 +42,7 @@
 		1F43D72E2BB29C1900ED0365 /* HobbyEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D72D2BB29C1900ED0365 /* HobbyEditViewModel.swift */; };
 		1F43D7322BB41AE900ED0365 /* ProfessionEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D7312BB41AE900ED0365 /* ProfessionEditView.swift */; };
 		1F43D7342BB41B2300ED0365 /* ProfessionEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D7332BB41B2200ED0365 /* ProfessionEditViewModel.swift */; };
+		1F43D7362BB4261800ED0365 /* PointIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D7352BB4261800ED0365 /* PointIconView.swift */; };
 		1F4822FF2B98C63300098AAE /* LikedCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4822FE2B98C63300098AAE /* LikedCardView.swift */; };
 		1F4823012B98C7E300098AAE /* LikedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4823002B98C7E300098AAE /* LikedView.swift */; };
 		1F4823032B99803D00098AAE /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4823022B99803D00098AAE /* MyPageView.swift */; };
@@ -153,6 +154,7 @@
 		1F43D72D2BB29C1900ED0365 /* HobbyEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyEditViewModel.swift; sourceTree = "<group>"; };
 		1F43D7312BB41AE900ED0365 /* ProfessionEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessionEditView.swift; sourceTree = "<group>"; };
 		1F43D7332BB41B2200ED0365 /* ProfessionEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessionEditViewModel.swift; sourceTree = "<group>"; };
+		1F43D7352BB4261800ED0365 /* PointIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointIconView.swift; sourceTree = "<group>"; };
 		1F4822FE2B98C63300098AAE /* LikedCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedCardView.swift; sourceTree = "<group>"; };
 		1F4823002B98C7E300098AAE /* LikedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedView.swift; sourceTree = "<group>"; };
 		1F4823022B99803D00098AAE /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
@@ -284,10 +286,6 @@
 			isa = PBXGroup;
 			children = (
 				1F4823022B99803D00098AAE /* MyPageView.swift */,
-				1F48230D2B9B250E00098AAE /* AddressEditView.swift */,
-				1F48230F2B9B278E00098AAE /* BirthEditView.swift */,
-				1F48230B2B9B09C500098AAE /* IntroductionEditView.swift */,
-				1F4823092B9AE38000098AAE /* ProfileImageEditView.swift */,
 				1F1DFD7B2BA5E0DD002366DF /* SettingView.swift */,
 				1F43D72A2BB29B8D00ED0365 /* MyPageEditViews */,
 				1F1DFD7E2BA5E931002366DF /* SettingViews */,
@@ -305,6 +303,7 @@
 				1F567E482BAADD340078E2C6 /* FaceDetectionView.swift */,
 				1F7F4B052BAED52800311630 /* ListRowView.swift */,
 				1F7F4B072BAEF98D00311630 /* VipTicketView.swift */,
+				1F43D7352BB4261800ED0365 /* PointIconView.swift */,
 				1F7F4B162BAF39B800311630 /* AgePickerView.swift */,
 				1F7F4B282BB1E26800311630 /* AdvertisementView.swift */,
 			);
@@ -372,6 +371,10 @@
 		1F43D72A2BB29B8D00ED0365 /* MyPageEditViews */ = {
 			isa = PBXGroup;
 			children = (
+				1F48230D2B9B250E00098AAE /* AddressEditView.swift */,
+				1F48230F2B9B278E00098AAE /* BirthEditView.swift */,
+				1F48230B2B9B09C500098AAE /* IntroductionEditView.swift */,
+				1F4823092B9AE38000098AAE /* ProfileImageEditView.swift */,
 				1F43D72B2BB29BBD00ED0365 /* HobbyEditView.swift */,
 				1F43D7312BB41AE900ED0365 /* ProfessionEditView.swift */,
 			);
@@ -640,6 +643,7 @@
 				1F2F1FC92B90BC5300A9615D /* NameEntryView.swift in Sources */,
 				1F9C2DDA2B8DFE7A00994981 /* FriendListRowView.swift in Sources */,
 				1F9C2DD62B8DE54400994981 /* MessageCountElement.swift in Sources */,
+				1F43D7362BB4261800ED0365 /* PointIconView.swift in Sources */,
 				1F1FEB422B94929900F8AEA3 /* FriendsElement.swift in Sources */,
 				1F9C2DD42B8DD3D500994981 /* FriendListViewModel.swift in Sources */,
 				1FEF28492B8A27F500EAFB3E /* MockData.swift in Sources */,

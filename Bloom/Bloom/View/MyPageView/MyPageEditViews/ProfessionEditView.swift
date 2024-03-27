@@ -2,8 +2,8 @@ import SwiftUI
 
 struct ProfessionEditView: View {
     let professionEditViewModel = ProfessionEditViewModel()
-    @Binding var profession: String
-    @State var showProfession: String
+    @Binding var profession: String?
+    @State var showProfession: String = ""
     @State var professionData: [[String]] = [[]]
     @State var isHobbyValid: Bool = true
     let barHeight = UIScreen.main.bounds.height / 10
@@ -102,14 +102,16 @@ struct ProfessionEditView: View {
         }
         .onAppear {
             professionData = professionEditViewModel.fetchProfessionData().splitArrayByWidth(maxWidth: maxWidth)
-            showProfession = profession
+            if let profession {
+                showProfession = profession
+            }
         }
     }
 }
 
 #Preview {
     struct PreviewView: View {
-        @State var profession: String = "マジシャン"
+        @State var profession: String? = "マジシャン"
         var body: some View {
             ProfessionEditView(profession: $profession)
         }

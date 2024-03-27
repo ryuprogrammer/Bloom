@@ -22,7 +22,8 @@ extension ProfileElement {
             location: self.location,
             profession: self.profession,
             profileImages: self.profileImages,
-            homeImage: self.homeImage
+            homeImage: self.homeImage,
+            point: self.point
         )
 
         return profile
@@ -55,6 +56,8 @@ extension ProfileElement {
             result = String(profile.location.debugDescription)
         case .profession:
             result = profile.profession
+        case .point:
+            result = String(profile.point) + "ポイント"
         }
 
         return result

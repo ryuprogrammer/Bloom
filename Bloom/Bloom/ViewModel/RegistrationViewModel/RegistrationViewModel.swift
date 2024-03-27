@@ -56,7 +56,8 @@ class RegistrationViewModel: ObservableObject {
                 location: profile.location,
                 profession: profile.profession,
                 profileImages: profile.profileImages,
-                homeImage: profile.homeImage
+                homeImage: profile.homeImage,
+                point: profile.point
             )) { error in
                 print("error: error")
             }

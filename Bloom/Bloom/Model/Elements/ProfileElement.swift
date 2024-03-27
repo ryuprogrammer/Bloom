@@ -34,6 +34,8 @@ struct ProfileElement: Codable, Equatable {
     var profileImages: [Data]
     /// ホーム写真
     var homeImage: Data
+    /// 保有ポイント
+    var point: Int
 }
 
 // UserDefaults用にProfileElementのidを削除, swiftDataでも使用
@@ -61,6 +63,8 @@ struct MyProfileElement: Codable {
     var profileImages: [Data]
     /// ホーム写真
     var homeImage: Data
+    /// 保有ポイント
+    var point: Int
 }
 
 /// 位置情報
@@ -88,6 +92,7 @@ enum ProfileType {
     case hobby
     case location
     case profession
+    case point
 }
 
 /// profileのモックデータ
@@ -98,11 +103,12 @@ let mockProfileData = ProfileElement(
     gender: .men,
     address: "栃木県🍓",
     grade: 1,
-    hobby: ["マジック", "おままごと"],
+    hobby: [],
     location: nil,
     profession: "獣医師",
     profileImages: [Data(), Data(), Data(), Data()],
-    homeImage: Data()
+    homeImage: Data(),
+    point: 10
 )
 
 /// MyProfileのモックデータ
@@ -118,5 +124,6 @@ let mockMyProfileData = MyProfileElement(
     location: nil,
     profession: "獣医師",
     profileImages: [Data(), Data(), Data(), Data()],
-    homeImage: Data()
+    homeImage: Data(), 
+    point: 10
 )

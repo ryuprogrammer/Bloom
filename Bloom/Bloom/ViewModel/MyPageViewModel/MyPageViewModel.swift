@@ -30,7 +30,8 @@ class MyPageViewModel: ObservableObject {
                 location: profile.location,
                 profession: profile.profession,
                 profileImages: profile.profileImages,
-                homeImage: profile.homeImage
+                homeImage: profile.homeImage,
+                point: profile.point
             )
         } else {
             print("error: fetchMyProfile")

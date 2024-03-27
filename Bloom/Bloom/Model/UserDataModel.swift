@@ -334,7 +334,8 @@ class UserDataModel {
                   let grade = data["grade"] as? Int,
                   let hobby = data["hobby"] as? [String],
                   let locationData = data["location"] as? Location,
-                  let profession = data["profession"] as? String else {
+                  let profession = data["profession"] as? String,
+                  let point = data["point"] as? Int else {
                 completion(nil, NSError(domain: "DataError", code: 100, userInfo: [NSLocalizedDescriptionKey: "Data format error."]))
                 return
             }
@@ -344,7 +345,7 @@ class UserDataModel {
                 longitude: locationData.longitude,
                 latitude: locationData.latitude
             )
-            let profile = ProfileElement(userName: userName, introduction: introduction, birth: birth, gender: gender, address: address, grade: grade, hobby: hobby, location: location, profession: profession, profileImages: [], homeImage: Data())
+            let profile = ProfileElement(userName: userName, introduction: introduction, birth: birth, gender: gender, address: address, grade: grade, hobby: hobby, location: location, profession: profession, profileImages: [], homeImage: Data(), point: point)
             completion(profile, nil)
         }
     }
@@ -372,7 +373,8 @@ class UserDataModel {
                   let grade = data["grade"] as? Int,
                   let hobby = data["hobby"] as? [String],
                   let locationData = data["location"] as? Location,
-                  let profession = data["profession"] as? String else {
+                  let profession = data["profession"] as? String,
+                  let point = data["point"] as? Int else {
                 completion(nil, NSError(domain: "DataError", code: 100, userInfo: [NSLocalizedDescriptionKey: "Data format error."]))
                 return
             }
@@ -420,7 +422,7 @@ class UserDataModel {
 
                     group.notify(queue: .main) {
                         // すべてのプロファイル画像がダウンロードされた後に実行
-                        let profile = ProfileElement(userName: userName, introduction: introduction, birth: birth, gender: gender, address: address, grade: grade, hobby: hobby, location: location, profession: profession, profileImages: profileImagesData, homeImage: homeImageData)
+                        let profile = ProfileElement(userName: userName, introduction: introduction, birth: birth, gender: gender, address: address, grade: grade, hobby: hobby, location: location, profession: profession, profileImages: profileImagesData, homeImage: homeImageData, point: point)
 
                         completion(profile, nil)
                     }

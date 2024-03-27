@@ -64,7 +64,8 @@ class FriendListViewModel: ObservableObject {
             location: talkFriend.location,
             profession: talkFriend.profession,
             profileImages: talkFriend.profileImages,
-            homeImage: talkFriend.homeImage
+            homeImage: talkFriend.homeImage,
+            point: talkFriend.point
         )
         
         let friendListRowElement = FriendListRowElement(
@@ -100,7 +101,8 @@ class FriendListViewModel: ObservableObject {
                 location: friend.location,
                 profession: friend.profession,
                 profileImages: friend.profileImages,
-                homeImage: friend.homeImage
+                homeImage: friend.homeImage, 
+                point: friend.point
             )
             
             let friendListRowElement = FriendListRowElement(

@@ -39,6 +39,8 @@ struct ListRowView: View {
             } else {
                 if viewType == .FilterView {
                     Text("こだわらない")
+                } else if viewType == .MyPageView {
+                    PointIconView(point: 10)
                 }
             }
         }

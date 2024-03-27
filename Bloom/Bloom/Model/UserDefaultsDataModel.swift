@@ -28,7 +28,8 @@ struct UserDefaultsDataModel {
             location: myProfile.location,
             profession: myProfile.profession,
             profileImages: myProfile.profileImages,
-            homeImage: myProfile.homeImage
+            homeImage: myProfile.homeImage,
+            point: myProfile.point
         )
         
         let jsonEncoder = JSONEncoder()

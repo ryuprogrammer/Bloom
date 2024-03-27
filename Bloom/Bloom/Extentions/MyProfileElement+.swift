@@ -22,7 +22,8 @@ extension MyProfileElement {
             location: self.location,
             profession: self.profession,
             profileImages: self.profileImages,
-            homeImage: self.homeImage
+            homeImage: self.homeImage,
+            point: self.point
         )
         
         return profile

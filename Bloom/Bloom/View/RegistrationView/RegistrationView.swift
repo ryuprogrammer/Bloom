@@ -98,7 +98,8 @@ struct RegistrationView: View {
                                     location: nil,
                                     profession: "獣医師",
                                     profileImages: profileImages,
-                                    homeImage: homeImage
+                                    homeImage: homeImage,
+                                    point: 0
                                 )
                             )
                             
