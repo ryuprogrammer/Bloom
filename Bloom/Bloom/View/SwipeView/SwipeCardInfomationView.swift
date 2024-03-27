@@ -1,14 +1,8 @@
-//
-//  SwipeCardInfomationView.swift
-//  Bloom
-//
-//  Created by トム・クルーズ on 2024/03/28.
-//
-
 import SwiftUI
 
 struct SwipeCardInfomationView: View {
     let profile: ProfileElement
+    let myProfile: ProfileElement?
     // 画面横幅取得→写真の横幅と縦幅に利用
     let iconSize = UIScreen.main.bounds.width / 8
     let imageWidth = UIScreen.main.bounds.width - 35
@@ -19,9 +13,9 @@ struct SwipeCardInfomationView: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 25)
-                .foregroundStyle(Color.blue)
-                .frame(width: imageWidth, height: imageHeight)
+//            RoundedRectangle(cornerRadius: 25)
+//                .foregroundStyle(Color.blue)
+//                .frame(width: imageWidth, height: imageHeight)
 
             VStack {
                 Spacer()
@@ -43,13 +37,19 @@ struct SwipeCardInfomationView: View {
                         .shadow(color: .black.opacity(0.3), radius: 20, y: 20)
 
                     VStack(alignment: .leading, spacing: 8) {
-                        // 名前
+                        // 名前、距離
                         HStack(alignment: .bottom) {
                             Text(profile.userName)
                                 .font(.title)
                                 .fontWeight(.semibold)
                                 .foregroundStyle(Color.white)
                                 .padding([.leading, .top])
+
+                            if let myProfile,
+                               let location = myProfile.location,
+                               let distance = location.distance(to: myProfile.location) {
+                                Text(String(distance) + "km")
+                            }
 
                             Spacer()
                         }
@@ -64,15 +64,44 @@ struct SwipeCardInfomationView: View {
                         // 趣味
                         HStack {
                             ForEach(profile.hobby, id: \.self) { hobby in
-                                Text(hobby)
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(Color.white)
-                                    .padding(.vertical, 4)
-                                    .padding(.horizontal, 8)
-                                    .background {
-                                        Capsule().stroke(Color.white, lineWidth: 3)
+                                if let myProfile {
+                                    if myProfile.hobby.contains(hobby) {
+                                        Text(hobby)
+                                            .fontWeight(.semibold)
+                                            .foregroundStyle(Color.white)
+                                            .padding(.vertical, 4)
+                                            .padding(.horizontal, 8)
+                                            .background {
+                                                ZStack {
+                                                    Capsule()
+                                                        .foregroundStyle(Color.main)
+                                                    Capsule()
+                                                        .stroke(Color.white, lineWidth: 3)
+                                                }
+                                            }
+                                            .padding(.horizontal, 2)
+                                    } else {
+                                        Text(hobby)
+                                            .fontWeight(.semibold)
+                                            .foregroundStyle(Color.white)
+                                            .padding(.vertical, 4)
+                                            .padding(.horizontal, 8)
+                                            .background {
+                                                Capsule().stroke(Color.white, lineWidth: 3)
+                                            }
+                                            .padding(.horizontal, 2)
                                     }
-                                    .padding(.horizontal, 2)
+                                } else {
+                                    Text(hobby)
+                                        .fontWeight(.semibold)
+                                        .foregroundStyle(Color.white)
+                                        .padding(.vertical, 4)
+                                        .padding(.horizontal, 8)
+                                        .background {
+                                            Capsule().stroke(Color.white, lineWidth: 3)
+                                        }
+                                        .padding(.horizontal, 2)
+                                }
                             }
                         }
                         .padding([.leading, .bottom])
@@ -86,5 +115,5 @@ struct SwipeCardInfomationView: View {
 }
 
 #Preview {
-    SwipeCardInfomationView(profile: mockProfileData)
+    SwipeCardInfomationView(profile: mockProfileData, myProfile: mockProfileDataMe)
 }

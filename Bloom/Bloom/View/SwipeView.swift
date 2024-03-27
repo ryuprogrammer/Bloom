@@ -30,7 +30,10 @@ struct SwipeView: View {
 
                 ZStack {
                     ForEach(Array($showingCard.enumerated()), id: \.element.id) { index, $card in
-                        SwipeCardView(card: card)
+                        SwipeCardView(
+                            card: card,
+                            myProfile: swipeViewModel.myProfile
+                        )
                             .offset(x: card.id == showingCard.first?.id ? card.offset.width : 0,
                                     y: card.id == showingCard.first?.id ? card.offset.height : -CGFloat(index) * 30)
                             .scaleEffect(card.id == showingCard.first?.id ? 1 : 1 - CGFloat(index) * 0.05)
@@ -148,6 +151,8 @@ struct SwipeView: View {
             }
         }
         .onAppear {
+            // 自分のプロフィール取得
+            swipeViewModel.fetchMyProfile()
             print("swipeViewModel.friendProfiles.count: \(swipeViewModel.friendProfiles.count)")
             print("初期データ数: \(swipeFriendElement.count)個")
             if swipeFriendElement.count >= 10 {

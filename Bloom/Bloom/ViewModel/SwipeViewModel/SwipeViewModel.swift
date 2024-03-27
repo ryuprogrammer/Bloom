@@ -12,6 +12,32 @@ class SwipeViewModel: ObservableObject {
     private let collectionName = "profiles"
     private let fetchProfilesLimit: Int = 10
 
+    let userDefaultsDataModel = UserDefaultsDataModel()
+    // 自分のプロフィール: 共通の趣味、距離を算出するために使用
+    @Published var myProfile: ProfileElement? = nil
+
+    /// UserDefaultsから自分のプロフィール取得
+    func fetchMyProfile() {
+        if let profile = userDefaultsDataModel.fetchMyProfile() {
+            myProfile = ProfileElement(
+                userName: profile.userName,
+                introduction: profile.introduction,
+                birth: profile.birth,
+                gender: profile.gender,
+                address: profile.address,
+                grade: profile.grade,
+                hobby: profile.hobby,
+                location: profile.location,
+                profession: profile.profession,
+                profileImages: profile.profileImages,
+                homeImage: profile.homeImage,
+                point: profile.point
+            )
+        } else {
+            print("error: fetchMyProfile")
+        }
+    }
+
     /// friendsをListtに追加: ライクしたりできるお
     func addFriendsToList(
         state: FriendStatus,

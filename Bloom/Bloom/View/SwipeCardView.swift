@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SwipeCardView: View {
     var card: CardModel
+    let myProfile: ProfileElement?
     @State var imageNumber: Int = 0
     @State var isShowProfile: Bool = true
     let minImageNumber = 1
@@ -76,50 +77,56 @@ struct SwipeCardView: View {
                 
                 Spacer()
                 
-                // プロフィール情報
-                VStack {
-                    HStack(alignment: .bottom) {
-                        VStack(alignment: .leading) {
-                            Text(card.profile.userName)
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
-                                .foregroundStyle(Color.black)
-                            
-                            Text(card.profile.birth.toAge() + card.profile.address)
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .foregroundStyle(Color.black)
-                        }
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            withAnimation {
-                                isShowProfile.toggle()
-                            }
-                        }, label: {
-                            Image(systemName: isShowProfile ? "arrowshape.down.circle.fill":"arrowshape.up.circle.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 40, height: 40)
-                                .foregroundStyle(Color.pink.opacity(0.8))
-                        })
-                    }
-                    .padding(5)
-                    
-                    if isShowProfile {
-                        Text("プロフィール文章がないよ！プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章")
-                            .fixedSize(horizontal: false, vertical: true)
-                            .fontWeight(.bold)
-                            .foregroundStyle(Color.black)
-                    }
-                }
-                .padding()
-                .frame(width: imageWidth)
-                .background(Color.white)
-                .shadow(radius: 20)
+//                // プロフィール情報
+//                VStack {
+//                    HStack(alignment: .bottom) {
+//                        VStack(alignment: .leading) {
+//                            Text(card.profile.userName)
+//                                .font(.largeTitle)
+//                                .fontWeight(.bold)
+//                                .foregroundStyle(Color.black)
+//                            
+//                            Text(card.profile.birth.toAge() + card.profile.address)
+//                                .font(.title)
+//                                .fontWeight(.bold)
+//                                .foregroundStyle(Color.black)
+//                        }
+//                        
+//                        Spacer()
+//                        
+//                        Button(action: {
+//                            withAnimation {
+//                                isShowProfile.toggle()
+//                            }
+//                        }, label: {
+//                            Image(systemName: isShowProfile ? "arrowshape.down.circle.fill":"arrowshape.up.circle.fill")
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+//                                .frame(width: 40, height: 40)
+//                                .foregroundStyle(Color.pink.opacity(0.8))
+//                        })
+//                    }
+//                    .padding(5)
+//                    
+//                    if isShowProfile {
+//                        Text("プロフィール文章がないよ！プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章プロフィール文章")
+//                            .fixedSize(horizontal: false, vertical: true)
+//                            .fontWeight(.bold)
+//                            .foregroundStyle(Color.black)
+//                    }
+//                }
+//                .padding()
+//                .frame(width: imageWidth)
+//                .background(Color.white)
+//                .shadow(radius: 20)
             }
-            
+
+            // カード上の文字情報
+            SwipeCardInfomationView(
+                profile: card.profile,
+                myProfile: myProfile
+            )
+
             if let isLike = card.isLike {
                 if isLike {
                     ZStack {
@@ -162,7 +169,7 @@ struct SwipeCardView: View {
                 card: CardModel(
                     id: 1,
                     profile: mockProfileData
-                )
+                ), myProfile: mockProfileDataMe
             )
         }
     }

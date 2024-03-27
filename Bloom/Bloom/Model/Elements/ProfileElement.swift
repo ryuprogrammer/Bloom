@@ -111,6 +111,22 @@ let mockProfileData = ProfileElement(
     point: 10
 )
 
+/// profileのモックデータ
+let mockProfileDataMe = ProfileElement(
+    userName: "もも",
+    introduction: "自己紹介文自己紹介文自己紹介",
+    birth: "20000421",
+    gender: .men,
+    address: "栃木県🍓",
+    grade: 1,
+    hobby: ["マジック", "おままごと"],
+    location: nil,
+    profession: "獣医師",
+    profileImages: [Data(), Data(), Data(), Data()],
+    homeImage: Data(),
+    point: 10
+)
+
 /// MyProfileのモックデータ
 let mockMyProfileData = MyProfileElement(
     id: "",

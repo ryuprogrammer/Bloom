@@ -37,4 +37,14 @@ extension Location {
             return nil
         }
     }
+
+    /// 他の位置との距離をキロメートルで返す
+    func distance(to destination: Location?) -> Double? {
+        guard let destination else { return nil }
+        let coordinate₀ = CLLocation(latitude: self.latitude, longitude: self.longitude)
+        let coordinate₁ = CLLocation(latitude: destination.latitude, longitude: destination.longitude)
+        let meters = coordinate₀.distance(from: coordinate₁)
+        let kilometers = meters / 1000.0 // メートルからキロメートルに変換
+        return kilometers
+    }
 }
