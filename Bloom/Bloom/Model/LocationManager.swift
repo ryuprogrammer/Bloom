@@ -11,7 +11,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         super.init()
         self.locationManager.delegate = self
         self.locationManager.requestWhenInUseAuthorization()
-        self.locationManager.startUpdatingLocation()
+        self.locationManager.requestLocation() // 位置情報を一度だけ取得する
     }
 
     /// 現在地取得

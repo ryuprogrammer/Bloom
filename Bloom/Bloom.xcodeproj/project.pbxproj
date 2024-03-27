@@ -40,7 +40,8 @@
 		1F43D7282BB2993200ED0365 /* Location+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D7272BB2993200ED0365 /* Location+.swift */; };
 		1F43D72C2BB29BBD00ED0365 /* HobbyEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D72B2BB29BBD00ED0365 /* HobbyEditView.swift */; };
 		1F43D72E2BB29C1900ED0365 /* HobbyEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D72D2BB29C1900ED0365 /* HobbyEditViewModel.swift */; };
-		1F43D7302BB29F1E00ED0365 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D72F2BB29F1E00ED0365 /* MapView.swift */; };
+		1F43D7322BB41AE900ED0365 /* ProfessionEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D7312BB41AE900ED0365 /* ProfessionEditView.swift */; };
+		1F43D7342BB41B2300ED0365 /* ProfessionEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F43D7332BB41B2200ED0365 /* ProfessionEditViewModel.swift */; };
 		1F4822FF2B98C63300098AAE /* LikedCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4822FE2B98C63300098AAE /* LikedCardView.swift */; };
 		1F4823012B98C7E300098AAE /* LikedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4823002B98C7E300098AAE /* LikedView.swift */; };
 		1F4823032B99803D00098AAE /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4823022B99803D00098AAE /* MyPageView.swift */; };
@@ -150,7 +151,8 @@
 		1F43D7272BB2993200ED0365 /* Location+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+.swift"; sourceTree = "<group>"; };
 		1F43D72B2BB29BBD00ED0365 /* HobbyEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyEditView.swift; sourceTree = "<group>"; };
 		1F43D72D2BB29C1900ED0365 /* HobbyEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyEditViewModel.swift; sourceTree = "<group>"; };
-		1F43D72F2BB29F1E00ED0365 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		1F43D7312BB41AE900ED0365 /* ProfessionEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessionEditView.swift; sourceTree = "<group>"; };
+		1F43D7332BB41B2200ED0365 /* ProfessionEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessionEditViewModel.swift; sourceTree = "<group>"; };
 		1F4822FE2B98C63300098AAE /* LikedCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedCardView.swift; sourceTree = "<group>"; };
 		1F4823002B98C7E300098AAE /* LikedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedView.swift; sourceTree = "<group>"; };
 		1F4823022B99803D00098AAE /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
@@ -305,7 +307,6 @@
 				1F7F4B072BAEF98D00311630 /* VipTicketView.swift */,
 				1F7F4B162BAF39B800311630 /* AgePickerView.swift */,
 				1F7F4B282BB1E26800311630 /* AdvertisementView.swift */,
-				1F43D72F2BB29F1E00ED0365 /* MapView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -372,6 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				1F43D72B2BB29BBD00ED0365 /* HobbyEditView.swift */,
+				1F43D7312BB41AE900ED0365 /* ProfessionEditView.swift */,
 			);
 			path = MyPageEditViews;
 			sourceTree = "<group>";
@@ -390,6 +392,7 @@
 			children = (
 				1F4823072B9A27D500098AAE /* MyPageViewModel.swift */,
 				1F43D72D2BB29C1900ED0365 /* HobbyEditViewModel.swift */,
+				1F43D7332BB41B2200ED0365 /* ProfessionEditViewModel.swift */,
 			);
 			path = MyPageViewModel;
 			sourceTree = "<group>";
@@ -654,6 +657,7 @@
 				1F48230A2B9AE38000098AAE /* ProfileImageEditView.swift in Sources */,
 				1F1DFD7C2BA5E0DD002366DF /* SettingView.swift in Sources */,
 				1F2F1FD32B90F1FA00A9615D /* String+.swift in Sources */,
+				1F43D7322BB41AE900ED0365 /* ProfessionEditView.swift in Sources */,
 				1F7F4B272BB1CBF300311630 /* PranWebView.swift in Sources */,
 				1F12527D2BA097860040E32F /* SwipeFriendElement.swift in Sources */,
 				1FF59CBB2B89B1860031C580 /* HomeView.swift in Sources */,
@@ -682,9 +686,9 @@
 				1F4822FF2B98C63300098AAE /* LikedCardView.swift in Sources */,
 				1F1FEB3F2B9481C100F8AEA3 /* DataImage.swift in Sources */,
 				1F48230E2B9B250E00098AAE /* AddressEditView.swift in Sources */,
+				1F43D7342BB41B2300ED0365 /* ProfessionEditViewModel.swift in Sources */,
 				1F7F4B042BAED2D100311630 /* FilterView.swift in Sources */,
 				1F78BDA12B9B7B8C00E2FE66 /* FriendPreviewView.swift in Sources */,
-				1F43D7302BB29F1E00ED0365 /* MapView.swift in Sources */,
 				1FF59C652B84CEEB0031C580 /* BloomApp.swift in Sources */,
 				1FFB98A12BA82D88007CDFAC /* PushNotificationSender.swift in Sources */,
 				1FF59CB72B89077E0031C580 /* MessageView.swift in Sources */,

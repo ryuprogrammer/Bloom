@@ -12,13 +12,17 @@ struct MyPageView: View {
     // MARK: - UI用サイズ指定
     let iconSize = UIScreen.main.bounds.width / 14
     /// 画面横幅取得→写真の横幅と縦幅に利用
-    let homeImageSize = UIScreen.main.bounds.width / 3
+    let homeImageSize = UIScreen.main.bounds.width / 4
     let imageWidth = UIScreen.main.bounds.width / 3 - 20
     let imageHeight = UIScreen.main.bounds.height / 5
 
     // MARK: - 画面遷移
     @State private var navigationPath: [MyPagePath] = []
     @State private var isShowHobbyView: Bool = false
+    @State private var isShowAddressView: Bool = false
+    @State private var isShowBirthView: Bool = false
+    @State private var isShowIntroductionView: Bool = false
+    @State private var isShowProfileImageView: Bool = false
 
     // MARK: - その他
     @State var showingProfile: ProfileElement = mockProfileData
@@ -33,29 +37,48 @@ struct MyPageView: View {
         NavigationStack(path: $navigationPath) {
             List {
                 // ホーム写真と基本情報
-                VStack(alignment: .center) {
+                VStack {
                     // ホーム写真
                     homeImageView()
 
-                    Text(showingProfile.userName)
-                        .font(.largeTitle)
-
-                    Text(showingProfile.birth.toAge() + "・" + showingProfile.address)
+                    HStack {
+                        VipTicketView()
+                        Text(showingProfile.userName)
+                            .font(.largeTitle)
+                    }
+                    Text(myPageVM.locationString ?? "取得中...")
                 }
                 .frame(maxWidth: .infinity)
                 .listRowSeparator(.hidden)
 
                 // プロフィール情報セクション
-                profileInformation()
+                Section {
+                    profileInformation()
+                } header: {
+                    HStack {
+                        Image(systemName: "info.circle")
+                        Text("プロフィール情報")
+                    }
+                }
 
                 // 自己紹介文セクション
-                introduction()
+                Section {
+                    introduction()
+                } header: {
+                    HStack {
+                        Image(systemName: "pencil.line")
+                        Text("自己紹介文")
+                    }
+                }
 
                 // プロフィール写真セクション
                 Section {
-
+                    profileImages()
                 } header: {
-                    Text("プロフィール情報")
+                    HStack {
+                        Image(systemName: "person.crop.square")
+                        Text("プロフィール写真")
+                    }
                 }
             }
             .listStyle(PlainListStyle())
@@ -86,9 +109,6 @@ struct MyPageView: View {
             .navigationDestination(for: MyPagePath.self, destination: navigationDestination)
         }.onAppear { // profile取得
             myPageVM.fetchMyProfile()
-            print("currentLocation: \(locationManager.currentLocation)")
-            print("showingProfile.location: \(showingProfile.location)")
-            print("showingProfile.location: \(showingProfile.toString(profileType: .location))")
         }
         .onChange(of: locationManager.currentLocation) {
             print("チェンジーーーーーー")
@@ -99,6 +119,10 @@ struct MyPageView: View {
             if let profile = myPageVM.myProfile {
                 self.showingProfile = profile
                 self.editName = profile.userName
+                // Locationから住所取得
+                Task {
+                    await myPageVM.fetchAddress(location: showingProfile.location)
+                }
             }
         }
         .onChange(of: showingProfile) { // profileの更新
@@ -117,7 +141,7 @@ struct MyPageView: View {
         }
     }
 
-// MARK: - セクション毎のViewBuilder達
+    // MARK: - セクション毎のViewBuilder達
     // ホーム写真
     @ViewBuilder
     func homeImageView() -> some View {
@@ -159,106 +183,109 @@ struct MyPageView: View {
     // プロフィール
     @ViewBuilder
     func profileInformation() -> some View {
+        HStack {
+            ListRowView(
+                viewType: .MyPageView,
+                image: "person.text.rectangle",
+                title: "ニックネーム"
+            )
 
-            HStack {
-                ListRowView(
-                    viewType: .MyPageView,
-                    image: "person.text.rectangle",
-                    title: "ニックネーム"
-                )
+            Spacer()
 
-                Spacer()
-
-                TextField("ニックネームを入力", text: $editName)
-                    .foregroundStyle(Color.pink)
-                // TextFieldを右寄せにする
+            TextField("ニックネームを入力", text: $editName)
+                .foregroundStyle(Color.pink)
+            // TextFieldを右寄せにする
                 .multilineTextAlignment(TextAlignment.trailing)
                 .onSubmit {
                     showingProfile.userName = editName
                 }
-            }
+        }
 
-            NavigationLink(value: MyPagePath.pathAddress) {
-                ListRowView(
-                    viewType: .MyPageView,
-                    image: "mappin.and.ellipse",
-                    title: "居住地",
-                    detail: showingProfile.toString(profileType: .address)
-                )
-            }
+        ListRowView(
+            viewType: .MyPageView,
+            image: "mappin.and.ellipse",
+            title: "居住地",
+            detail: showingProfile.toString(profileType: .address)
+        )
+        .onTapGesture {
+            isShowAddressView = true
+        }
+        .sheet(isPresented: $isShowAddressView) {
+            AddressEditView(address: $showingProfile.address)
+        }
 
-            NavigationLink(value: MyPagePath.pathBirth) {
-                ListRowView(
-                    viewType: .MyPageView,
-                    image: "birthday.cake",
-                    title: "生年月日",
-                    detail: showingProfile.toString(profileType: .birth)
-                )
-            }
+        ListRowView(
+            viewType: .MyPageView,
+            image: "birthday.cake",
+            title: "生年月日",
+            detail: showingProfile.toString(profileType: .birth)
+        )
+        .onTapGesture {
+            isShowBirthView = true
+        }
+        .sheet(isPresented: $isShowBirthView) {
+            BirthEditView(birth: $showingProfile.birth)
+        }
 
-            ListRowView(
-                viewType: .MyPageView,
-                image: "birthday.cake",
-                title: "趣味",
-                detail: showingProfile.toString(profileType: .hobby)
-            )
-            .onTapGesture {
-                isShowHobbyView = true
-            }
-            .sheet(isPresented: $isShowHobbyView) {
-                HobbyEditView(hobbys: $showingProfile.hobby)
-            }
+        ListRowView(
+            viewType: .MyPageView,
+            image: "gamecontroller",
+            title: "趣味",
+            detail: showingProfile.toString(profileType: .hobby)
+        )
+        .onTapGesture {
+            isShowHobbyView = true
+        }
+        .sheet(isPresented: $isShowHobbyView) {
+            HobbyEditView(hobbys: $showingProfile.hobby)
+        }
 
-            ListRowView(
-                viewType: .MyPageView,
-                image: "birthday.cake",
-                title: "現在地",
-                detail: showingProfile.toString(profileType: .location) ?? "nil"
-            )
+        ListRowView(
+            viewType: .MyPageView,
+            image: "location",
+            title: "現在地",
+            detail: myPageVM.locationString ?? "取得中..."
+        )
 
-            ListRowView(
-                viewType: .MyPageView,
-                image: "wallet.pass",
-                title: "職業",
-                detail: showingProfile.toString(profileType: .profession)
-            )
+        ListRowView(
+            viewType: .MyPageView,
+            image: "wallet.pass",
+            title: "職業",
+            detail: showingProfile.toString(profileType: .profession)
+        )
     }
 
     // 自己紹介文
     @ViewBuilder
     func introduction() -> some View {
-        Section {
-            NavigationLink(value: MyPagePath.pathIntroduction) {
-                ListRowView(
-                    viewType: .MyPageView,
-                    image: "pencil.line"
-                )
-                Text(showingProfile.introduction ?? "")
-                    .fixedSize(horizontal: false, vertical: true)
+        Text(showingProfile.introduction ?? "")
+            .fixedSize(horizontal: false, vertical: true)
+            .onTapGesture {
+                isShowIntroductionView = true
             }
-        } header: {
-            Text("自己紹介文")
-        }
+            .sheet(isPresented: $isShowIntroductionView) {
+                IntroductionEditView(introduction: $showingProfile.introduction)
+            }
     }
 
     // プロフィール写真
     @ViewBuilder
     func profileImages() -> some View {
-        Section {
-            NavigationLink(value: MyPagePath.pathImage) {
-                LazyVGrid(columns: columns) {
-                    ForEach(showingProfile.profileImages, id: \.self) { image in
-                            DataImage(dataImage: image)
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: imageWidth, height: imageHeight)
-                            .background(Color.blue)
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                    }
-                }
-                .frame(maxWidth: .infinity)
+        LazyVGrid(columns: columns) {
+            ForEach(showingProfile.profileImages, id: \.self) { image in
+                DataImage(dataImage: image)
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: imageWidth, height: imageHeight)
+                    .background(Color.blue)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
             }
-        } header: {
-            Text("プロフィール写真")
+        }
+        .frame(maxWidth: .infinity)
+        .onTapGesture {
+            isShowProfileImageView = true
+        }
+        .sheet(isPresented: $isShowProfileImageView) {
+            ProfileImageEditView(profileImages: $showingProfile.profileImages)
         }
     }
 
@@ -266,14 +293,6 @@ struct MyPageView: View {
     @ViewBuilder
     func navigationDestination(for path: MyPagePath) -> some View {
         switch path {
-        case .pathImage:
-            ProfileImageEditView(profileImages: $showingProfile.profileImages, path: $navigationPath).toolbar(.hidden, for: .tabBar)
-        case .pathIntroduction:
-            IntroductionEditView(introduction: $showingProfile.introduction, path: $navigationPath).toolbar(.hidden, for: .tabBar)
-        case .pathAddress:
-            AddressEditView(address: $showingProfile.address, path: $navigationPath).toolbar(.hidden, for: .tabBar)
-        case .pathBirth:
-            BirthEditView(birth: $showingProfile.birth, path: $navigationPath).toolbar(.hidden, for: .tabBar)
         case .pathSetting:
             SettingView(path: $navigationPath).toolbar(.hidden, for: .tabBar)
         case .pathPrivacy:
@@ -291,10 +310,6 @@ struct MyPageView: View {
 }
 
 enum MyPagePath {
-    case pathImage
-    case pathAddress
-    case pathBirth
-    case pathIntroduction
     case pathSetting
     case pathPrivacy
     case pathService

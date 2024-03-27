@@ -14,7 +14,8 @@ class MyPageViewModel: ObservableObject {
     let userDefaultsDataModel = UserDefaultsDataModel()
     let authenticationManager = AuthenticationManager()
     @Published var myProfile: ProfileElement? = nil
-    
+    @Published var locationString: String? = nil
+
     /// プロフィール取得：UserDefaultsから
     func fetchMyProfile() {
         if let profile = userDefaultsDataModel.fetchMyProfile() {
@@ -60,5 +61,15 @@ class MyPageViewModel: ObservableObject {
     func deleteUser() {
 //        authenticationManager.deleteUser()
         userDefaultsDataModel.deleteMyProfile()
+    }
+
+    // MARK: - extention系メソッド
+    /// Locationから住所取得
+    func fetchAddress(location: Location?) async {
+        guard let location = location else { return }
+        let address = await location.toAddress()
+        DispatchQueue.main.async {
+            self.locationString = address
+        }
     }
 }

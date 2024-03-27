@@ -23,121 +23,125 @@ struct ProfileImageEditView: View {
     let imageHeight = UIScreen.main.bounds.height / 5
     
     // 画面遷移用
-    @Binding var path: [MyPagePath]
+    @Environment(\.dismiss) private var dismiss
     var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
     
     var body: some View {
-        ZStack {
-            VStack {
-                Text(explanationText.photoEntryDescription)
-                    .font(.title3)
-                    .padding()
-                
-                LazyVGrid(columns: columns) {
-                    ForEach(0..<6) { number in
-                        if number == uiImages.count { // 写真が0枚の時
-                            PhotosPicker(
-                                selection: $selectedItems,
-                                maxSelectionCount: restMaxCount,
-                                selectionBehavior: .ordered,
-                                matching: .images
-                            ) {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .fill(Color.pink.opacity(0.5))
-                                        .strokeBorder(Color.black, lineWidth: 2)
-                                        .frame(width: imageWidth, height: imageHeight)
-                                    
-                                    Image(systemName: "plus")
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
-                                        .foregroundStyle(Color.white)
-                                }
-                            }
-                        } else if uiImages.count > number { // 写真がある時
-                            ZStack {
-                                Image(uiImage: uiImages[number])
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: imageWidth, height: imageHeight)
-                                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                                
-                                // 削除ボタン
-                                Image(systemName: "minus.circle")
-                                    .resizable()
-                                    .frame(width: 26, height: 26)
-                                    .foregroundStyle(Color.white)
-                                    .background(Color.red)
-                                    .clipShape(Circle())
-                                    .offset(x: imageWidth/2-8, y: -imageHeight/2+5)
-                                    .onTapGesture {
-                                        uiImages.remove(at: number)
-                                    }
-                            }
-                        } else { // 写真がないフレーム
-                            RoundedRectangle(cornerRadius: 20)
-                                .strokeBorder(Color.black, lineWidth: 2)
-                                .frame(width: imageWidth, height: imageHeight)
-                        }
-                    }
-                }
-                
-                if !isPhotoValid {
-                    Text(explanationText.photoEntryError)
-                        .foregroundStyle(Color.red)
+        NavigationStack {
+            ZStack {
+                VStack {
+                    Text(explanationText.photoEntryDescription)
                         .font(.title3)
-                        .frame(maxWidth: .infinity)
                         .padding()
-                }
-                
-                Spacer()
-            }
-            .onChange(of: uiImages) {
-                // 選択できる写真の数を更新
-                restMaxCount = maxSelectionCount - uiImages.count
-                
-                if uiImages.count >= minSelectionCount {
-                    isPhotoValid = true
-                } else {
-                    isPhotoValid = false
-                }
-            }
-            .onChange(of: selectedItems) {
-                // 選択できる写真の数を更新
-                restMaxCount = maxSelectionCount - uiImages.count
-                Task {
-                    for item in selectedItems {
-                        guard let data = try await item.loadTransferable(type: Data.self) else { continue }
-                        guard let uiImage = UIImage(data: data) else { continue }
-                        uiImages.append(uiImage)
-                    }
-                    selectedItems.removeAll()
-                }
-            }
-            
-            VStack {
-                Spacer()
-                
-                Button(action: {
-                    profileImages.removeAll()
-                    for uiImage in uiImages {
-                        if let imageData = uiImage.jpegData(compressionQuality: 0.1) {
-                            profileImages.append(imageData)
+
+                    LazyVGrid(columns: columns) {
+                        ForEach(0..<6) { number in
+                            if number == uiImages.count { // 写真が0枚の時
+                                PhotosPicker(
+                                    selection: $selectedItems,
+                                    maxSelectionCount: restMaxCount,
+                                    selectionBehavior: .ordered,
+                                    matching: .images
+                                ) {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .fill(Color.pink.opacity(0.5))
+                                            .strokeBorder(Color.black, lineWidth: 2)
+                                            .frame(width: imageWidth, height: imageHeight)
+
+                                        Image(systemName: "plus")
+                                            .resizable()
+                                            .frame(width: 30, height: 30)
+                                            .foregroundStyle(Color.white)
+                                    }
+                                }
+                            } else if uiImages.count > number { // 写真がある時
+                                ZStack {
+                                    Image(uiImage: uiImages[number])
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: imageWidth, height: imageHeight)
+                                        .clipShape(RoundedRectangle(cornerRadius: 20))
+
+                                    // 削除ボタン
+                                    Image(systemName: "minus.circle")
+                                        .resizable()
+                                        .frame(width: 26, height: 26)
+                                        .foregroundStyle(Color.white)
+                                        .background(Color.red)
+                                        .clipShape(Circle())
+                                        .offset(x: imageWidth/2-8, y: -imageHeight/2+5)
+                                        .onTapGesture {
+                                            uiImages.remove(at: number)
+                                        }
+                                }
+                            } else { // 写真がないフレーム
+                                RoundedRectangle(cornerRadius: 20)
+                                    .strokeBorder(Color.black, lineWidth: 2)
+                                    .frame(width: imageWidth, height: imageHeight)
+                            }
                         }
                     }
-                    path.removeAll()
-                }, label: {
-                    Text("プロフィール写真を更新")
-                        .font(.title2)
-                        .foregroundStyle(Color.white)
-                        .frame(height: 55)
-                        .frame(maxWidth: .infinity)
-                        .background(isPhotoValid ? Color.pink.opacity(0.8) : Color(UIColor.lightGray))
-                        .clipShape(Capsule())
-                        .padding()
-                })
-                .disabled(!isPhotoValid)
+
+                    if !isPhotoValid {
+                        Text(explanationText.photoEntryError)
+                            .foregroundStyle(Color.red)
+                            .font(.title3)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                    }
+
+                    Spacer()
+                }
+                .onChange(of: uiImages) {
+                    // 選択できる写真の数を更新
+                    restMaxCount = maxSelectionCount - uiImages.count
+
+                    if uiImages.count >= minSelectionCount {
+                        isPhotoValid = true
+                    } else {
+                        isPhotoValid = false
+                    }
+                }
+                .onChange(of: selectedItems) {
+                    // 選択できる写真の数を更新
+                    restMaxCount = maxSelectionCount - uiImages.count
+                    Task {
+                        for item in selectedItems {
+                            guard let data = try await item.loadTransferable(type: Data.self) else { continue }
+                            guard let uiImage = UIImage(data: data) else { continue }
+                            uiImages.append(uiImage)
+                        }
+                        selectedItems.removeAll()
+                    }
+                }
+
+                VStack {
+                    Spacer()
+
+                    Button(action: {
+                        profileImages.removeAll()
+                        for uiImage in uiImages {
+                            if let imageData = uiImage.jpegData(compressionQuality: 0.1) {
+                                profileImages.append(imageData)
+                            }
+                        }
+                        dismiss()
+                    }, label: {
+                        Text("プロフィール写真を更新")
+                            .font(.title2)
+                            .foregroundStyle(Color.white)
+                            .frame(height: 55)
+                            .frame(maxWidth: .infinity)
+                            .background(isPhotoValid ? Color.pink.opacity(0.8) : Color(UIColor.lightGray))
+                            .clipShape(Capsule())
+                            .padding()
+                    })
+                    .disabled(!isPhotoValid)
+                }
             }
+            .navigationTitle("プロフィール写真")
+            .toolbarTitleDisplayMode(.inline)
         }
         .onAppear {
             // 選択できる写真の数を更新
@@ -159,9 +163,8 @@ struct ProfileImageEditView: View {
 #Preview {
     struct PreviewView: View {
         @State var images: [Data] = []
-        @State var path: [MyPagePath] = []
         var body: some View {
-            ProfileImageEditView(profileImages: $images, path: $path)
+            ProfileImageEditView(profileImages: $images)
         }
     }
     

@@ -14,64 +14,68 @@ struct AddressEditView: View {
     @State var isAddressValid: Bool = false
     let registrationVM = RegistrationViewModel()
     
-    @Binding var path: [MyPagePath]
-    
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
-        ZStack {
-            ScrollView {
-                ForEach(registrationVM.prefectures.prefectures, id: \.self) { prefecture in
-                    if self.prefecture == prefecture {
-                        Text(prefecture)
-                            .font(.title)
-                            .foregroundStyle(Color.pink.opacity(0.8))
-                            .padding(.vertical, 5)
-                            .padding(.horizontal, 15)
-                            .background {
-                                Capsule().stroke(Color.pink.opacity(0.8), lineWidth: 5)
-                            }
-                            .padding(2)
-                    } else {
-                        Text(prefecture)
-                            .font(.title)
-                            .foregroundStyle(Color(UIColor.lightGray))
-                            .onTapGesture {
-                                withAnimation {
-                                    self.prefecture = prefecture
-                                    
-                                    if !address.isEmpty && prefecture != address {
-                                        isAddressValid = true
-                                    } else if prefecture == address {
-                                        isAddressValid = false
+        NavigationStack {
+            ZStack {
+                ScrollView {
+                    ForEach(registrationVM.prefectures.prefectures, id: \.self) { prefecture in
+                        if self.prefecture == prefecture {
+                            Text(prefecture)
+                                .font(.title)
+                                .foregroundStyle(Color.pink.opacity(0.8))
+                                .padding(.vertical, 5)
+                                .padding(.horizontal, 15)
+                                .background {
+                                    Capsule().stroke(Color.pink.opacity(0.8), lineWidth: 5)
+                                }
+                                .padding(2)
+                        } else {
+                            Text(prefecture)
+                                .font(.title)
+                                .foregroundStyle(Color(UIColor.lightGray))
+                                .onTapGesture {
+                                    withAnimation {
+                                        self.prefecture = prefecture
+
+                                        if !address.isEmpty && prefecture != address {
+                                            isAddressValid = true
+                                        } else if prefecture == address {
+                                            isAddressValid = false
+                                        }
                                     }
                                 }
-                            }
-                            .padding(2)
+                                .padding(2)
+                        }
                     }
+                    .frame(maxWidth: .infinity)
+
+                    Spacer()
+                        .frame(height: 130)
                 }
-                .frame(maxWidth: .infinity)
-                
-                Spacer()
-                    .frame(height: 130)
+
+                VStack {
+                    Spacer()
+
+                    Button(action: {
+                        address = prefecture
+                        dismiss()
+                    }, label: {
+                        Text("居住地を更新")
+                            .font(.title2)
+                            .foregroundStyle(Color.white)
+                            .frame(height: 55)
+                            .frame(maxWidth: .infinity)
+                            .background(isAddressValid ? Color.pink.opacity(0.8) : Color(UIColor.lightGray))
+                            .clipShape(Capsule())
+                            .padding()
+                    })
+                    .disabled(!isAddressValid)
+                }
             }
-            
-            VStack {
-                Spacer()
-                
-                Button(action: {
-                    address = prefecture
-                    path.removeAll()
-                }, label: {
-                    Text("居住地を更新")
-                        .font(.title2)
-                        .foregroundStyle(Color.white)
-                        .frame(height: 55)
-                        .frame(maxWidth: .infinity)
-                        .background(isAddressValid ? Color.pink.opacity(0.8) : Color(UIColor.lightGray))
-                        .clipShape(Capsule())
-                        .padding()
-                })
-                .disabled(!isAddressValid)
-            }
+            .navigationTitle("居住地を入力")
+            .toolbarTitleDisplayMode(.inline)
         }
         .onAppear {
             prefecture = address
@@ -82,9 +86,8 @@ struct AddressEditView: View {
 #Preview {
     struct PreviewView: View {
         @State var address: String = ""
-        @State var path: [MyPagePath] = []
         var body: some View {
-            AddressEditView(address: $address, path: $path)
+            AddressEditView(address: $address)
         }
     }
     

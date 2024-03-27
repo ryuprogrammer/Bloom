@@ -51,12 +51,8 @@ extension ProfileElement {
                 result = profile.hobby.joined(separator: "・")
             }
         case .location:
-            if let location = profile.location {
-                location.toAddress(completion: { address in
-                    result = address
-                    return result
-                })
-            }
+            /// 使用しない。
+            result = String(profile.location.debugDescription)
         case .profession:
             result = profile.profession
         }

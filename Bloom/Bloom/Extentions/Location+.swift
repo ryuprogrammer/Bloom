@@ -3,7 +3,7 @@ import CoreLocation
 
 extension Location {
     /// 位置情報から住所を抽出
-    func toAddress(completion: @escaping (String?) -> Void) {
+    func toAddress() async -> String? {
         let geocoder = CLGeocoder()
         var formattedAddress: String?
 
@@ -13,14 +13,9 @@ extension Location {
         // Reverse geocode the location to get address information
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
 
-        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-            guard error == nil else {
-                print("Reverse geocode failed with error: \(error!.localizedDescription)")
-                completion(nil)
-                return
-            }
-
-            if let placemark = placemarks?.first {
+        do {
+            let placemarks = try await geocoder.reverseGeocodeLocation(location)
+            if let placemark = placemarks.first {
                 // Format the address using city and locality information
                 var addressComponents = [String]()
 
@@ -32,11 +27,14 @@ extension Location {
                 }
 
                 formattedAddress = addressComponents.joined(separator: "")
-                completion(formattedAddress)
+                return formattedAddress
             } else {
                 print("No placemarks found.")
-                completion(nil)
+                return nil
             }
+        } catch {
+            print("Reverse geocode failed with error: \(error.localizedDescription)")
+            return nil
         }
     }
 }
