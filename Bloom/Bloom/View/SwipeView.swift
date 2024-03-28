@@ -153,6 +153,7 @@ struct SwipeView: View {
         .onAppear {
             // 自分のプロフィール取得
             swipeViewModel.fetchMyProfile()
+            showingCard.removeAll()
             print("swipeViewModel.friendProfiles.count: \(swipeViewModel.friendProfiles.count)")
             print("初期データ数: \(swipeFriendElement.count)個")
             if swipeFriendElement.count >= 10 {

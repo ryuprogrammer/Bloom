@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>265400916341-d3gpbk7q12je9m4osb4t7pqs9hb51nqs.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.265400916341-d3gpbk7q12je9m4osb4t7pqs9hb51nqs</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAWPs8_Raq5R6wZ6YocRgLVe49AS6uorpY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>265400916341</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>ryuprogrammer.Bloom</string>
+	<key>PROJECT_ID</key>
+	<string>bloom-ab185</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bloom-ab185.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:265400916341:ios:ba653977e443ef4f3adb3c</string>
+	<key>DATABASE_URL</key>
+	<string>https://bloom-ab185-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
