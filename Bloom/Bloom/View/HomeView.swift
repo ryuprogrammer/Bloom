@@ -10,6 +10,9 @@ import SwiftUI
 struct HomeView: View {
     /// タブの選択項目を保持する
     @State var selection: ViewSection = .swipeView
+    @ObservedObject var locationManager = LocationManager()
+    let userDataModel = UserDataModel()
+    let userDefaultsDataModel = UserDefaultsDataModel()
 
     enum ViewSection: Int {
         case swipeView = 1
@@ -81,6 +84,36 @@ struct HomeView: View {
                     }
                 }
                 .tag(ViewSection.myPageView)
+        }
+        .onAppear {
+            locationManager.getCurrentLocation { location in
+                if let myProfile = userDefaultsDataModel.fetchMyProfile() {
+                    let profile = myProfile.toProfileElement()
+
+                    let setProfile = ProfileElement(
+                        userName: profile.userName,
+                        introduction: profile.introduction,
+                        birth: profile.birth,
+                        gender: profile.gender,
+                        address: profile.address,
+                        grade: profile.grade,
+                        hobby: profile.hobby,
+                        location: location,
+                        profession: profile.profession,
+                        profileImages: profile.profileImages,
+                        homeImage: profile.homeImage,
+                        point: profile.point
+                    )
+
+                    userDataModel.addProfile(profile: setProfile) { error in
+                        if let error {
+                            print("データの更新失敗: \(error)")
+                        } else {
+                            print("位置情報の更新に成功")
+                        }
+                    }
+                }
+            }
         }
     }
 }
