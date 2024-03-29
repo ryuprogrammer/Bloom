@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import FirebaseFirestore
+import FirebaseStorage
 
 struct MockData {
     let prefectures = Prefectures()
@@ -69,8 +71,8 @@ struct MockData {
     }
 
     // モックデータを生成する関数
-    func generateMockData() -> [ProfileElement] {
-        var mockData: [ProfileElement] = []
+    func generateMockData() -> [ProfileAndId] {
+        var mockData: [ProfileAndId] = []
         for num in 0..<100 {
             let profile = ProfileElement(userName: "User_\(num))",
                                          introduction: "This is a sample introduction.",
@@ -84,8 +86,83 @@ struct MockData {
                                          profileImages: [imageDataFromAsset() ?? Data()],
                                          homeImage: imageDataFromAsset() ?? Data(),
                                          point: Int.random(in: 0...100))
-            mockData.append(profile)
+            mockData.append(ProfileAndId(profile: profile))
         }
         return mockData
     }
+
+    // MARK: - Firebaseにするメソッド系
+    /// コレクションの名称
+    private let collectionName = "profiles"
+    private var db = Firestore.firestore()
+    private let storage = Storage.storage()
+
+    /// Profile追加メソッド
+    func addProfile(uid: String, profile: ProfileElement, completion: @escaping (Error?) -> Void) {
+        // Firestoreに保存するデータを辞書形式で用意
+        let firestoreData: [String: Any] = [
+            "userName": profile.userName,
+            "introduction": profile.introduction as Any,
+            "birth": profile.birth,
+            "gender": profile.gender.rawValue,
+            "address": profile.address,
+            "grade": profile.grade,
+            "hobby": profile.hobby,
+            "location": profile.location as Any,
+            "profession": profile.profession as Any,
+            "point": profile.point
+        ]
+
+        // 指定したUIDを持つドキュメントにデータを追加（または更新）
+        db.collection(collectionName).document(uid).setData(firestoreData) { error in
+            guard error == nil else {
+                completion(error)
+                return
+            }
+
+            // Firebase Storageにプロファイル画像をアップロード
+            let storageRef = self.storage.reference()
+
+            // profileImagesのアップロード
+            for (index, imageData) in profile.profileImages.enumerated() {
+                let imageRef = storageRef.child("profileImages/\(uid)/image\(index).jpg")
+                imageRef.putData(imageData, metadata: nil) { metadata, error in
+                    guard error == nil else {
+                        completion(error)
+                        return
+                    }
+                }
+            }
+
+            // homeImageのアップロード
+            let homeImageRef = storageRef.child("homeImages/\(uid)/home.jpg")
+            homeImageRef.putData(profile.homeImage, metadata: nil) { metadata, error in
+                guard error == nil else {
+                    completion(error)
+                    return
+                }
+            }
+
+            // すべてのアップロードが完了したことをコールバック
+            completion(nil)
+        }
+    }
+
+    /// モックデータを全て追加
+    func addProfileData() {
+        let profiles = generateMockData()
+
+        for profile in profiles {
+            addProfile(uid: profile.uuid.uuidString, profile: profile.profile) { error in
+                if let error {
+                    print("error: \(String(describing: error))")
+                }
+            }
+        }
+    }
+}
+
+struct ProfileAndId {
+    let uuid = UUID()
+    let profile: ProfileElement
 }
