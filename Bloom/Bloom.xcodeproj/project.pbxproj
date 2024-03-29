@@ -78,9 +78,9 @@
 		1F9C2DD62B8DE54400994981 /* MessageCountElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */; };
 		1F9C2DDA2B8DFE7A00994981 /* FriendListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */; };
 		1FD3A0E62BB54FCD0028495E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FD3A0E52BB54FCD0028495E /* GoogleService-Info.plist */; };
+		1FD3A0EA2BB68D520028495E /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD3A0E92BB68D520028495E /* MockData.swift */; };
 		1FEF28452B8A149900EAFB3E /* UserDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF28442B8A149900EAFB3E /* UserDataModel.swift */; };
 		1FEF28472B8A217100EAFB3E /* FriendListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF28462B8A217100EAFB3E /* FriendListView.swift */; };
-		1FEF28492B8A27F500EAFB3E /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF28482B8A27F500EAFB3E /* MockData.swift */; };
 		1FEF284B2B8B0DCD00EAFB3E /* AccountStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF284A2B8B0DCD00EAFB3E /* AccountStatus.swift */; };
 		1FEF284D2B8B197600EAFB3E /* ChatDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF284C2B8B197600EAFB3E /* ChatDataModel.swift */; };
 		1FF59C652B84CEEB0031C580 /* BloomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF59C642B84CEEB0031C580 /* BloomApp.swift */; };
@@ -192,9 +192,9 @@
 		1F9C2DD52B8DE54400994981 /* MessageCountElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountElement.swift; sourceTree = "<group>"; };
 		1F9C2DD92B8DFE7A00994981 /* FriendListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListRowView.swift; sourceTree = "<group>"; };
 		1FD3A0E52BB54FCD0028495E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1FD3A0E92BB68D520028495E /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		1FEF28442B8A149900EAFB3E /* UserDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataModel.swift; sourceTree = "<group>"; };
 		1FEF28462B8A217100EAFB3E /* FriendListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListView.swift; sourceTree = "<group>"; };
-		1FEF28482B8A27F500EAFB3E /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		1FEF284A2B8B0DCD00EAFB3E /* AccountStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatus.swift; sourceTree = "<group>"; };
 		1FEF284C2B8B197600EAFB3E /* ChatDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDataModel.swift; sourceTree = "<group>"; };
 		1FF59C612B84CEEB0031C580 /* Bloom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bloom.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -267,6 +267,7 @@
 				1F1DFD872BA6CABC002366DF /* serviceDescription.txt */,
 				1F2F1FCA2B90C62A00A9615D /* ExplanationText.swift */,
 				1F1FEB312B92C2DA00F8AEA3 /* Prefectures.swift */,
+				1FD3A0E92BB68D520028495E /* MockData.swift */,
 				1FFB98992BA76001007CDFAC /* NGWordList.csv */,
 				1F567E4A2BABE9720078E2C6 /* HobbyList.csv */,
 				1F7F4B242BB1808500311630 /* ProfessionList.csv */,
@@ -491,7 +492,6 @@
 				1FF59C8D2B84FC800031C580 /* AuthenticationManager.swift */,
 				1FEF28442B8A149900EAFB3E /* UserDataModel.swift */,
 				1FEF284C2B8B197600EAFB3E /* ChatDataModel.swift */,
-				1FEF28482B8A27F500EAFB3E /* MockData.swift */,
 				1F1B3CA82B9C2997001F356E /* SwiftDataModel.swift */,
 				1F1B3CAA2B9C4A12001F356E /* UserDefaultsDataModel.swift */,
 				1FFB989B2BA763F8007CDFAC /* LoadFileDataModel.swift */,
@@ -649,7 +649,6 @@
 				1F43D7362BB4261800ED0365 /* PointIconView.swift in Sources */,
 				1F1FEB422B94929900F8AEA3 /* FriendsElement.swift in Sources */,
 				1F9C2DD42B8DD3D500994981 /* FriendListViewModel.swift in Sources */,
-				1FEF28492B8A27F500EAFB3E /* MockData.swift in Sources */,
 				1F7F4B232BB17E6E00311630 /* ProfessionFilterView.swift in Sources */,
 				1F1B3CA92B9C2997001F356E /* SwiftDataModel.swift in Sources */,
 				1F4823012B98C7E300098AAE /* LikedView.swift in Sources */,
@@ -699,6 +698,7 @@
 				1FF59C652B84CEEB0031C580 /* BloomApp.swift in Sources */,
 				1FFB98A12BA82D88007CDFAC /* PushNotificationSender.swift in Sources */,
 				1FF59CB72B89077E0031C580 /* MessageView.swift in Sources */,
+				1FD3A0EA2BB68D520028495E /* MockData.swift in Sources */,
 				1F1B3CAD2B9CB8BD001F356E /* FriendTalkElement.swift in Sources */,
 				1F1FEB3B2B93716E00F8AEA3 /* SwipeViewModel.swift in Sources */,
 				1FFB98982BA75A49007CDFAC /* AccountStopView.swift in Sources */,
